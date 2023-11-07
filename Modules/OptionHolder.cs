@@ -274,6 +274,11 @@ public static class Options
     public static OptionItem NukeRadius;
     public static OptionItem NukeCooldown;
 
+     // exploiter
+    public static OptionItem ExploiterShapeshiftCooldown;
+    public static OptionItem ExploiterShapeshiftDuration;
+    public static OptionItem ExploiterKillCooldown;
+
     // UNDERDOG
     public static OptionItem UnderdogKillCooldown;
     public static OptionItem UnderdogMaximumPlayersNeededToKill;
@@ -1433,6 +1438,20 @@ public static class Options
             .SetValueFormat(OptionFormat.Votes);
         VindicatorHideVote = BooleanOptionItem.Create(3803, "MayorHideVote", false, TabGroup.ImpostorRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Vindicator]);
+
+         /*
+         * Exploiter
+         */
+        SetupRoleOptions(3123, TabGroup.ImpostorRoles, CustomRoles.Exploiter);
+        ExploiterShapeshiftCooldown = FloatOptionItem.Create(3133, "ShapeshiftCooldown", new(0f, 5f, 1f), 0f, TabGroup.ImpostorRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
+            .SetValueFormat(OptionFormat.Seconds);
+        ExploiterShapeshiftDuration = FloatOptionItem.Create(3134, "ShapeshiftDuration", new(40f, 220f, 1f), 120f, TabGroup.ImpostorRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
+            .SetValueFormat(OptionFormat.Seconds);
+        ExploiterKillCooldown = FloatOptionItem.Create(3135, "KillCooldown", new(0f, 5f, 1f), 0f, TabGroup.ImpostorRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
+            .SetValueFormat(OptionFormat.Seconds);
 
         /*
          * Visionary

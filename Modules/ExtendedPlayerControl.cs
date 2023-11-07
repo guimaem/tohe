@@ -1094,6 +1094,9 @@ static class ExtendedPlayerControl
             case CustomRoles.RuthlessRomantic:
                 Main.AllPlayerKillCooldown[player.PlayerId] = Romantic.RuthlessKCD.GetFloat();
                 break;
+            case CustomRoles.Exploiter:
+                Main.AllPlayerKillCooldown[player.PlayerId] = Options.ExploiterKillCooldown.GetFloat();
+                break;
             case CustomRoles.Gangster:
                 Gangster.SetKillCooldown(player.PlayerId);
                 break;

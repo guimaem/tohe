@@ -547,6 +547,7 @@ public enum CustomRoles
     Wildling,
     EvilGuesser,
     Minimalism,
+    Exploiter,
     Zombie,
     Sniper,
     Vampire,

@@ -24,6 +24,7 @@ public static class Medic
     private static OptionItem ShieldDeactivationIsVisible;
     private static OptionItem ResetCooldown;
     public static OptionItem GuesserIgnoreShield;
+    public static OptionItem MedicHasTasks;
 
     public static readonly string[] MedicWhoCanSeeProtectName =
     {
@@ -64,6 +65,8 @@ public static class Medic
             .SetValueFormat(OptionFormat.Seconds);
         GuesserIgnoreShield = BooleanOptionItem.Create(Id + 32, "MedicShieldedCanBeGuessed", false, TabGroup.CrewmateRoles, false)
             .SetParent(Options.CustomRoleSpawnChances[CustomRoles.Medic]);
+        MedicHasTasks = BooleanOptionItem.Create(Id + 33, "HasTasks", false, TabGroup.CrewmateRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Medic]);
     }
     public static void Init()
     {

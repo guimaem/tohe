@@ -540,7 +540,7 @@ public static class Utils
             case CustomRoles.Collector:
             case CustomRoles.ImperiusCurse:
             case CustomRoles.Provocateur:
-            case CustomRoles.Medic:
+            //case CustomRoles.Medic:
             case CustomRoles.BloodKnight:
             case CustomRoles.Camouflager:
             case CustomRoles.Totocalcio:
@@ -570,6 +570,9 @@ public static class Utils
             case CustomRoles.VengefulRomantic:
             case CustomRoles.RuthlessRomantic:
                 hasTasks = false;
+                break;
+            case CustomRoles.Medic:
+                hasTasks = Medic.MedicHasTasks.GetBool()
                 break;
             case CustomRoles.Workaholic:
             case CustomRoles.Terrorist:
@@ -1412,6 +1415,8 @@ public static class Utils
             case "深绿":
             case "green":
             case "Green":
+            case "verde":
+            case "Verde":
             case "verde-escuro":
             case "Verde-Escuro":
             case "Зел":
@@ -1520,6 +1525,8 @@ public static class Utils
             case "浅绿":
             case "lime":
             case "Lime":
+            case "lima":
+            case "Lima":
             case "verde-claro":
             case "Verde-Claro":
             case "Лайм":
@@ -1548,6 +1555,10 @@ public static class Utils
             case "浅粉":
             case "rose":
             case "Rose":
+            case "rosado":
+            case "Rosado":
+            case "rosé":
+            case "Rosé":
             case "rosa-claro":
             case "Rosa-Claro":
             case "Светло роз":
@@ -1589,6 +1600,10 @@ public static class Utils
             case "Tan":
             case "bege":
             case "Bege":
+            case "caqui":
+            case "Caqui":
+            case "creme":
+            case "Creme":
             case "Загар":
             case "загар":
             case "Загаровый":

@@ -40,6 +40,7 @@ static class CustomRolesHelper
                 CustomRoles.Bastion => CustomRoles.Engineer,
                 CustomRoles.Vampire => CustomRoles.Impostor,
                 CustomRoles.Vampiress => CustomRoles.Impostor,
+                CustomRoles.Exploiter => CustomRoles.Shapeshifter,
                 CustomRoles.BountyHunter => CustomRoles.Shapeshifter,
                 CustomRoles.Trickster => CustomRoles.Impostor,
                 CustomRoles.Witch => CustomRoles.Impostor,
@@ -629,6 +630,7 @@ static class CustomRolesHelper
             CustomRoles.ImpostorTOHE or
             CustomRoles.EvilDiviner or
             CustomRoles.Wildling or
+            CustomRoles.Exploiter or
             CustomRoles.Morphling or
             CustomRoles.BountyHunter or
             CustomRoles.Vampire or

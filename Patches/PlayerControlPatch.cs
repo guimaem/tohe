@@ -3456,6 +3456,7 @@ class EnterVentPatch
 
         if (pc.Is(CustomRoles.Mario))
         {
+            CustomSoundsManager.RPCPlayCustomSound("MarioJump");
             Main.MarioVentCount.TryAdd(pc.PlayerId, 0);
             Main.MarioVentCount[pc.PlayerId]++;
             Utils.NotifyRoles(SpecifySeer: pc);

@@ -120,6 +120,10 @@ public class PlayerGameOptionsSender : GameOptionsSender
                 AURoleOptions.ShapeshifterLeaveSkin = false;
                 AURoleOptions.ShapeshifterDuration = Options.ShapeMasterShapeshiftDuration.GetFloat();
                 break;
+            case CustomRoles.Exploiter:
+                AURoleOptions.ShapeshifterCooldown = Options.ExploiterShapeshiftCooldown.GetFloat();
+                AURoleOptions.ShapeshifterDuration = Options.ExploiterShapeshiftDuration.GetFloat();
+                break;
             case CustomRoles.Warlock:
                 AURoleOptions.ShapeshifterCooldown = Main.isCursed ? 1f : Options.DefaultKillCooldown;
                 AURoleOptions.ShapeshifterDuration = Options.WarlockShiftDuration.GetFloat();
