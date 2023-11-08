@@ -1647,7 +1647,9 @@ public static class Options
          */
         SetupRoleOptions(6100, TabGroup.CrewmateRoles, CustomRoles.EngineerTOHE);
         EngineerTOHEVentCooldown = FloatOptionItem.Create(6110, "VentCooldown", new(0f, 20f, 1f), 0f, TabGroup.CrewmateRoles, false)
-            .SetParent(CustomRoleSpawnChances[CustomRoles.EngineerTOHE]);
+            .SetParent(CustomRoleSpawnChances[CustomRoles.EngineerTOHE])
+            .SetValueFormat(OptionFormat.Seconds);
+
         /*
          * Scientist
          */
