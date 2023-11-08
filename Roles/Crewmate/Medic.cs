@@ -66,7 +66,7 @@ public static class Medic
         GuesserIgnoreShield = BooleanOptionItem.Create(Id + 32, "MedicShieldedCanBeGuessed", false, TabGroup.CrewmateRoles, false)
             .SetParent(Options.CustomRoleSpawnChances[CustomRoles.Medic]);
         MedicHasTasks = BooleanOptionItem.Create(Id + 33, "HasTasks", false, TabGroup.CrewmateRoles, false)
-            .SetParent(CustomRoleSpawnChances[CustomRoles.Medic]);
+            .SetParent(Options.CustomRoleSpawnChances[CustomRoles.Medic]);
     }
     public static void Init()
     {
