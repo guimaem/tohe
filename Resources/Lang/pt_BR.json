@@ -1401,6 +1401,7 @@
   "DefaultShapeshiftCooldown": "Recarga Padrão de Metamorfose",
   "ShapeshiftDuration": "Duração da <color=#ff1919>Metamorfose</color>",
   "ShapeshiftCooldown": "Recarga da <color=#ff1919>Metamorfose</color>",
+  "ShapeshiftLeaveSkin": "Deixar pistas de <color=#ff1919>Metamorfose</color>",
   "VitalsDuration": "Duração do Vitals",
   "VitalsCooldown": "Recarga do Vitals",
   "DeadImpCantSabotage": "<color=#ff1919>Impostors</color> não podem sabotar após morrerem",

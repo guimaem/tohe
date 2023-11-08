@@ -98,13 +98,17 @@ public class PlayerGameOptionsSender : GameOptionsSender
             case CustomRoles.Terrorist:
             case CustomRoles.SabotageMaster:
        //     case CustomRoles.Mario:
-            case CustomRoles.EngineerTOHE:
+            //case CustomRoles.EngineerTOHE:
             case CustomRoles.Phantom:
             case CustomRoles.Crewpostor:
             case CustomRoles.Taskinator:
           //  case CustomRoles.Jester:
             case CustomRoles.Monitor:
                 AURoleOptions.EngineerCooldown = 0f;
+                AURoleOptions.EngineerInVentMaxTime = 0f;
+                break;
+            case CustomRoles.EngineerTOHE:
+                AURoleOptions.EngineerCooldown = Options.EngineerTOHEVentCooldown.GetFloat();
                 AURoleOptions.EngineerInVentMaxTime = 0f;
                 break;
             case CustomRoles.Chameleon:
@@ -122,6 +126,7 @@ public class PlayerGameOptionsSender : GameOptionsSender
                 break;
             case CustomRoles.Exploiter:
                 AURoleOptions.ShapeshifterCooldown = Options.ExploiterShapeshiftCooldown.GetFloat();
+                AURoleOptions.ShapeshifterLeaveSkin = false;
                 AURoleOptions.ShapeshifterDuration = Options.ExploiterShapeshiftDuration.GetFloat();
                 break;
             case CustomRoles.Warlock:
@@ -209,6 +214,7 @@ public class PlayerGameOptionsSender : GameOptionsSender
             case CustomRoles.ShapeshifterTOHE:
                 AURoleOptions.ShapeshifterCooldown = Options.ShapeshiftCD.GetFloat();
                 AURoleOptions.ShapeshifterDuration = Options.ShapeshiftDur.GetFloat();
+                AURoleOptions.ShapeshifterLeaveSkin = Options.ShapeshiftSkin.GetBool();
                 break;
             case CustomRoles.Bomber:
                 AURoleOptions.ShapeshifterCooldown = Options.BombCooldown.GetFloat();

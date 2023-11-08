@@ -132,6 +132,7 @@ public static class Options
     public static OptionItem BardChance;
     public static OptionItem CEMode;
     public static OptionItem ConfirmEjectionsNK;
+    public static OptionItem EngineerTOHEVentCooldown;
     public static OptionItem ConfirmEjectionsNonNK;
     public static OptionItem ConfirmEjectionsNeutralAsImp;
     public static OptionItem ShowImpRemainOnEject;
@@ -531,6 +532,7 @@ public static class Options
 
     public static OptionItem ShapeshiftCD;
     public static OptionItem ShapeshiftDur;
+    public static OptionItem ShapeshiftSkin;
 
     public static OptionItem MafiaShapeshiftCD;
     public static OptionItem MafiaShapeshiftDur;
@@ -1143,6 +1145,8 @@ public static class Options
         ShapeshiftDur = FloatOptionItem.Create(403, "ShapeshiftDuration", new(1f, 180f, 1f), 30f, TabGroup.ImpostorRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.ShapeshifterTOHE])
             .SetValueFormat(OptionFormat.Seconds);
+        ShapeshiftSkin = BooleanOptionItem.Create(404, "ShapeshiftLeaveSkin", true, TabGroup.ImpostorRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.ShapeshifterTOHE]);
 
 
         TextOptionItem.Create(10000001, "RoleType.ImpKilling", TabGroup.ImpostorRoles) // KILLING
@@ -1642,7 +1646,8 @@ public static class Options
          * Engineer
          */
         SetupRoleOptions(6100, TabGroup.CrewmateRoles, CustomRoles.EngineerTOHE);
-
+        EngineerTOHEVentCooldown = FloatOptionItem.Create(6110, new(0f, 20f, 1f), 0f, TabGroup.CrewmateRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.EngineerTOHE]);
         /*
          * Scientist
          */

@@ -1394,6 +1394,7 @@
   "DefaultShapeshiftCooldown": "Tiempo de espera para cambiar de forma por defecto",
   "ShapeshiftDuration": "Duración del <color=#ff1919>Cambio de forma</color>",
   "ShapeshiftCooldown": "Tiempo de espera para <color=#ff1919>cambiar de forma</color>",
+  "ShapeshiftLeaveSkin": "Dejar rastros de <color=#ff1919>cambio de forma</color>",
   "VitalsDuration": "Duración de la batería",
   "VitalsCooldown": "Tiempo de espera para ver constantes",
   "DeadImpCantSabotage": "Desactivar sabotajes de <color=#ff1919>Impostores</color> muertos",

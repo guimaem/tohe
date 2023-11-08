@@ -1449,6 +1449,7 @@
   "DefaultShapeshiftCooldown": "Default Shapeshift Cooldown",
   "ShapeshiftDuration": "<color=#ff1919>Shapeshift</color> Duration",
   "ShapeshiftCooldown": "<color=#ff1919>Shapeshift</color> Cooldown",
+  "ShapeshiftLeaveSkin": "Leave <color=#ff1919>Shapeshift</color> skin",
   "VitalsDuration": "Vitals Duration",
   "VitalsCooldown": "Vitals Cooldown",
   "DeadImpCantSabotage": "<color=#ff1919>Impostors</color> can't sabotage after they've died",
