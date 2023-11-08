@@ -26,11 +26,11 @@ public static class Credentials
             sb.Append(Main.credentialsText);
 
             var ping = AmongUsClient.Instance.Ping;
-            string pingcolor = "#ff4500";
-            if (ping < 30) pingcolor = "#44dfcc";
+            string pingcolor = "#ffffff";
+            /*if (ping < 30) pingcolor = "#44dfcc";
             else if (ping < 100) pingcolor = "#7bc690";
             else if (ping < 200) pingcolor = "#f3920e";
-            else if (ping < 400) pingcolor = "#ff146e";
+            else if (ping < 400) pingcolor = "#ff146e";*/
             sb.Append($"\r\n").Append($"<color={pingcolor}>Ping: {ping} ms</color>");
 
             if (!GameStates.IsModHost) sb.Append($"\r\n").Append(Utils.ColorString(Color.red, GetString("Warning.NoModHost")));
