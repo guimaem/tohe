@@ -248,7 +248,7 @@ internal class ChatCommands
                         Utils.SendMessage(GetString("Message.OnlyCanUseInLobby"), PlayerControl.LocalPlayer.PlayerId);
                         break;
                     }
-                    SendRolesInfo(subArgs, PlayerControl.LocalPlayer.PlayerId, isUp: true);
+                    SendRolesInfo(subArgs, PlayerControl.LocalPlayer.PlayerId, true, true);
                     break;
                 case "/setplayers":
                 case "/maxjogadores":
@@ -1134,7 +1134,7 @@ internal class ChatCommands
         }
         return false;
     }
-    public static void SendRolesInfo(string role, byte playerId, bool isDev = false, bool isUp = false)
+    public static void SendRolesInfo(string role, byte playerId, bool isDev = false, bool isUp = true)
     {
         role = role.Trim().ToLower();
         if (role.StartsWith("/r")) role.Replace("/r", string.Empty);
