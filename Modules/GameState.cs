@@ -482,7 +482,7 @@ public class TaskState
             if (player.Is(CustomRoles.ParityCop) && player.IsAlive())
             {
                 ParityCop.MaxCheckLimit[player.PlayerId] += ParityCop.ParityAbilityUseGainWithEachTaskCompleted.GetFloat();
-                /ParityCop.SendRPC(player.PlayerId, 2);
+                ParityCop.SendRPC(player.PlayerId, 2);
             }
             if (player.Is(CustomRoles.Oracle) && player.IsAlive())
             {
