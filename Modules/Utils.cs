@@ -492,6 +492,7 @@ public static class Utils
             case CustomRoles.Sheriff:
             case CustomRoles.Vigilante:
             case CustomRoles.Jailer:
+            case CustomRoles.Exploiter:
             case CustomRoles.CopyCat:
             case CustomRoles.Shaman:
             case CustomRoles.Arsonist:

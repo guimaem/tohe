@@ -440,6 +440,7 @@ static class CustomRolesHelper
         return role is
             CustomRoles.Jackal or
             CustomRoles.Doppelganger or
+            CustomRoles.Exploiter or
             CustomRoles.Bandit or
             CustomRoles.Glitch or
             CustomRoles.Sidekick or
@@ -630,7 +631,7 @@ static class CustomRolesHelper
             CustomRoles.ImpostorTOHE or
             CustomRoles.EvilDiviner or
             CustomRoles.Wildling or
-            CustomRoles.Exploiter or
+            //CustomRoles.Exploiter or
             CustomRoles.Morphling or
             CustomRoles.BountyHunter or
             CustomRoles.Vampire or
@@ -709,6 +710,7 @@ static class CustomRolesHelper
             CustomRoles.HexMaster or
             //CustomRoles.Occultist or
             CustomRoles.Glitch or
+            CustomRoles.Exploiter or
             CustomRoles.Imitator or
             CustomRoles.Shaman or
             CustomRoles.Crewpostor or

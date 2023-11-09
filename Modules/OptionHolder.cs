@@ -1444,22 +1444,6 @@ public static class Options
         VindicatorHideVote = BooleanOptionItem.Create(3803, "MayorHideVote", false, TabGroup.ImpostorRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Vindicator]);
 
-         /*
-         * Exploiter
-         */
-        SetupRoleOptions(3123, TabGroup.ImpostorRoles, CustomRoles.Exploiter);
-        ExploiterShapeshiftCooldown = FloatOptionItem.Create(3133, "ShapeshiftCooldown", new(0f, 5f, 1f), 0f, TabGroup.ImpostorRoles, false)
-            .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
-            .SetValueFormat(OptionFormat.Seconds);
-        ExploiterShapeshiftDuration = FloatOptionItem.Create(3134, "ShapeshiftDuration", new(40f, 220f, 1f), 120f, TabGroup.ImpostorRoles, false)
-            .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
-            .SetValueFormat(OptionFormat.Seconds);
-        ExploiterKillCooldown = FloatOptionItem.Create(3135, "KillCooldown", new(0f, 5f, 1f), 0f, TabGroup.ImpostorRoles, false)
-            .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
-            .SetValueFormat(OptionFormat.Seconds);
-        ExploiterVision = FloatOptionItem.Create(3136, "RoleVision", new(1.5f, 5f, 0.25f), 2f, TabGroup.ImpostorRoles, false)
-            .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
-            .SetValueFormat(OptionFormat.Multiplier);
 
         /*
          * Visionary
@@ -2855,6 +2839,23 @@ public static class Options
             .SetParent(CustomRoleSpawnChances[CustomRoles.God]);
         GodCanGuess = BooleanOptionItem.Create(25104, "CanGuess", false, TabGroup.OtherRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.God]);
+        
+         /*
+         * Exploiter
+         */
+        SetupRoleOptions(3123, TabGroup.OtherRoles, CustomRoles.Exploiter);
+        ExploiterShapeshiftCooldown = FloatOptionItem.Create(3133, "ShapeshiftCooldown", new(0f, 5f, 1f), 0f, TabGroup.ImpostorRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
+            .SetValueFormat(OptionFormat.Seconds);
+        ExploiterShapeshiftDuration = FloatOptionItem.Create(3134, "ShapeshiftDuration", new(40f, 220f, 1f), 120f, TabGroup.ImpostorRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
+            .SetValueFormat(OptionFormat.Seconds);
+        ExploiterKillCooldown = FloatOptionItem.Create(3135, "KillCooldown", new(0f, 5f, 1f), 0f, TabGroup.ImpostorRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
+            .SetValueFormat(OptionFormat.Seconds);
+        ExploiterVision = FloatOptionItem.Create(3136, "RoleVision", new(1.5f, 5f, 0.25f), 2f, TabGroup.ImpostorRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
+            .SetValueFormat(OptionFormat.Multiplier);
         
         Spiritcaller.SetupCustomOption();
 
