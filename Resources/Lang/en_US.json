@@ -1400,6 +1400,7 @@
   "HasTasks": "Has Tasks",
   "CanKill": "Can Kill",
   "CanGuess": "Can Guess in Guesser Mode or as Guesser",
+  "RoleVision": "%role% Vision",
   "BombCooldown": "Bomb Cooldown",
   "SniperCanKill": "<color=#ff1919>Sniper</color> can kill with bullets remaining",
   "CrewmatesCanBeSidekick": "<color=#8cffff>Crewmates</color> can be <color=#00b4eb>Sidekick</color>",
