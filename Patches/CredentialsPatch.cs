@@ -31,7 +31,7 @@ public static class Credentials
             else if (ping < 100) pingcolor = "#7bc690";
             else if (ping < 200) pingcolor = "#f3920e";
             else if (ping < 400) pingcolor = "#ff146e";*/
-            sb.Append($"\r\n").Append($"<color={pingcolor}>Ping: {ping} ms</color>");
+            sb.Append($"\r\n").Append($"<color={pingcolor}>Latência: {ping} ms</color>");
 
             if (!GameStates.IsModHost) sb.Append($"\r\n").Append(Utils.ColorString(Color.red, GetString("Warning.NoModHost")));
 
@@ -72,7 +72,7 @@ public static class Credentials
             Main.credentialsText = $"\r\n<color={Main.ModColor}>{Main.ModName}</color> v{Main.PluginDisplayVersion}";
             var buildtype = "";
 #if RELEASE
-            Main.credentialsText += $"\r\n<color=#a54aff>By <color=#ffc0cb>KARPED1EM</color> & </color><color=#f34c50>Moe</color>";
+            Main.credentialsText += $"\r\n<color=#a54aff>Por <color=#ffc0cb>KARPED1EM</color> e </color><color=#f34c50>Moe</color>";
             buildtype = "Release";
 #endif
 
