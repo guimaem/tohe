@@ -921,6 +921,7 @@ public enum AdditionalWinners
     VengefulRomantic = CustomRoles.VengefulRomantic,
     RuthlessRomantic = CustomRoles.RuthlessRomantic,
     Jackal = CustomRoles.Jackal,
+    Exploiter = CustomRoles.Exploiter,
     Sidekick = CustomRoles.Sidekick,
     Pursuer = CustomRoles.Pursuer,
     Phantom = CustomRoles.Phantom,
