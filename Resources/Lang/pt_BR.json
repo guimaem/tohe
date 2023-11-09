@@ -1452,6 +1452,7 @@
   "SnitchCanGetArrowColor": "Ver setas coloridas com base nas cores das facções",
   "SnitchCanFindNeutralKiller": "Pode encontrar <color=#7f8c8d>Neutros Assassinos</color>",
   "SnitchCanFindMadmate": "Pode encontrar <color=#ff1919>Cúmplices</color>",
+  "SnitchCanFindGod": "Pode encontrar o <color=#f96464>Deus</color>",
   "SnitchRemainingTaskFound": "Tarefas restantes para alertar",
   "SpeedBoosterUpSpeed": "Aumentar a velocidade em",
   "SpeedBoosterTimes": "Número máximo de impulsos",

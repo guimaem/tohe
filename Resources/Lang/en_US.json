@@ -1499,6 +1499,7 @@
   "SnitchCanGetArrowColor": "See Colored Arrows based on Team Colors",
   "SnitchCanFindNeutralKiller": "Can Find <color=#7f8c8d>Neutral Killers</color>",
   "SnitchCanFindMadmate": "Can Find <color=#ff1919>Madmates</color>",
+  "SnitchCanFindGod": "Can Find <color=#f96464>God</color>",
   "SnitchRemainingTaskFound": "Remaining tasks to be known",
   "SpeedBoosterUpSpeed": "Increase Speed by",
   "SpeedBoosterTimes": "Max Boosts",

@@ -14,6 +14,7 @@ public static class Doppelganger
     private static OptionItem KillCooldown;
     public static OptionItem MaxSteals;
     public static OptionItem DoppelgangerCanVent;
+    public static OptionItem DoppelgangerCanSabotage;
 
     public static Dictionary<byte, string> DoppelVictim = new();
     public static Dictionary<byte, GameData.PlayerOutfit> DoppelPresentSkin = new();
@@ -27,6 +28,8 @@ public static class Doppelganger
         KillCooldown = FloatOptionItem.Create(Id + 11, "KillCooldown", new(0f, 180f, 2.5f), 20f, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Doppelganger])
             .SetValueFormat(OptionFormat.Seconds);
         DoppelgangerCanVent = BooleanOptionItem.Create(Id + 12, "CanVent", false, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Doppelganger]);
+        DoppelgangerCanSabotage = BooleanOptionItem.Create(Id + 13, "CanUseSabotage", false, TabGroup.OtherRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Doppelganger]);
     }
 
     public static void Init()
