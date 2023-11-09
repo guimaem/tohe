@@ -26,7 +26,7 @@ static class CustomRolesHelper
                 CustomRoles.Vulture => Vulture.CanVent.GetBool() ? CustomRoles.Engineer : CustomRoles.Crewmate,
                 CustomRoles.Opportunist => CustomRoles.Crewmate,
                 CustomRoles.Vindicator => CustomRoles.Impostor,
-                CustomRoles.Snitch => CustomRoles.Crewmate,
+                CustomRoles.Snitch => Snitch.SnitchCanVent.GetBool() ? CustomRoles.Engineer : CustomRoles.Crewmate,
                 CustomRoles.Masochist => CustomRoles.Crewmate,
                 CustomRoles.Cleanser => CustomRoles.Crewmate,
                 CustomRoles.ParityCop => CustomRoles.Crewmate,

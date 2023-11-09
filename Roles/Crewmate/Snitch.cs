@@ -18,6 +18,7 @@ public static class Snitch
     private static OptionItem OptionCanFindNeutralKiller;
     private static OptionItem OptionCanFindMadmate;
     private static OptionItem OptionRemainingTasks;
+    public static OptionItem SnitchCanVent;
 
     private static bool EnableTargetArrow;
     private static bool CanGetColoredArrow;
@@ -40,6 +41,7 @@ public static class Snitch
         OptionCanFindMadmate = BooleanOptionItem.Create(Id + 14, "SnitchCanFindMadmate", false, TabGroup.CrewmateRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Snitch]);
         OptionRemainingTasks = IntegerOptionItem.Create(Id + 13, "SnitchRemainingTaskFound", new(0, 10, 1), 1, TabGroup.CrewmateRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Snitch]);
         OverrideTasksData.Create(Id + 20, TabGroup.CrewmateRoles, CustomRoles.Snitch);
+        SnitchCanVent = BooleanOptionItem.Create(Id + 15, "CanVent", false, TabGroup.CrewmateRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Snitch]);
     }
     public static void Init()
     {

@@ -279,6 +279,7 @@ public static class Options
     public static OptionItem ExploiterShapeshiftCooldown;
     public static OptionItem ExploiterShapeshiftDuration;
     public static OptionItem ExploiterKillCooldown;
+    public static OptionItem ExploiterVision;
 
     // UNDERDOG
     public static OptionItem UnderdogKillCooldown;
@@ -1456,6 +1457,9 @@ public static class Options
         ExploiterKillCooldown = FloatOptionItem.Create(3135, "KillCooldown", new(0f, 5f, 1f), 0f, TabGroup.ImpostorRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
             .SetValueFormat(OptionFormat.Seconds);
+        ExploiterVision = FloatOptionItem.Create(3136, "RoleVision", new(1.5f, 5f, 0.25f), 2f, TabGroup.ImpostorRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
+            .SetValueFormat(OptionFormat.Multiplier);
 
         /*
          * Visionary

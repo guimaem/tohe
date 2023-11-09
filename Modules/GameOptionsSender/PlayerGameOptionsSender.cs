@@ -96,6 +96,7 @@ public class PlayerGameOptionsSender : GameOptionsSender
         switch (role)
         {
             case CustomRoles.Terrorist:
+            case CustomRoles.Snitch:
             case CustomRoles.SabotageMaster:
        //     case CustomRoles.Mario:
             //case CustomRoles.EngineerTOHE:
@@ -128,6 +129,7 @@ public class PlayerGameOptionsSender : GameOptionsSender
                 AURoleOptions.ShapeshifterCooldown = Options.ExploiterShapeshiftCooldown.GetFloat();
                 AURoleOptions.ShapeshifterLeaveSkin = false;
                 AURoleOptions.ShapeshifterDuration = Options.ExploiterShapeshiftDuration.GetFloat();
+                opt.SetFloat(FloatOptionNames.ImpostorLightMod, Options.ExploiterVision.GetFloat());
                 break;
             case CustomRoles.Warlock:
                 AURoleOptions.ShapeshifterCooldown = Main.isCursed ? 1f : Options.DefaultKillCooldown;
