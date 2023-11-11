@@ -24,14 +24,33 @@ public static class Credentials
             sb.Clear();
 
             sb.Append(Main.credentialsText);
-
+            if (TranslationController.Instance.currentLanguage.languageID == SupportedLangs.Brazilian)
+            {
+                var ping = AmongUsClient.Instance.Ping;
+                string pingcolor = "#ff4500";
+                if (ping < 30) pingcolor = "#44dfcc";
+                else if (ping < 100) pingcolor = "#7bc690";
+                else if (ping < 200) pingcolor = "#f3920e";
+                else if (ping < 400) pingcolor = "#ff146e";
+                sb.Append($"\r\n").Append($"<color={pingcolor}>Latência: {ping} ms</color>");
+            }
+            else
+            {
+                var ping = AmongUsClient.Instance.Ping;
+                string pingcolor = "#ff4500";
+                if (ping < 30) pingcolor = "#44dfcc";
+                else if (ping < 100) pingcolor = "#7bc690";
+                else if (ping < 200) pingcolor = "#f3920e";
+                else if (ping < 400) pingcolor = "#ff146e";
+                sb.Append($"\r\n").Append($"<color={pingcolor}>Ping: {ping} ms</color>");
+            }
             var ping = AmongUsClient.Instance.Ping;
-            string pingcolor = "#ffffff";
-            /*if (ping < 30) pingcolor = "#44dfcc";
+            string pingcolor = "#ff4500";
+            if (ping < 30) pingcolor = "#44dfcc";
             else if (ping < 100) pingcolor = "#7bc690";
             else if (ping < 200) pingcolor = "#f3920e";
-            else if (ping < 400) pingcolor = "#ff146e";*/
-            sb.Append($"\r\n").Append($"<color={pingcolor}>Latência: {ping} ms</color>");
+            else if (ping < 400) pingcolor = "#ff146e";
+            sb.Append($"\r\n").Append($"<color={pingcolor}>Ping: {ping} ms</color>");
 
             if (!GameStates.IsModHost) sb.Append($"\r\n").Append(Utils.ColorString(Color.red, GetString("Warning.NoModHost")));
 
@@ -72,7 +91,8 @@ public static class Credentials
             Main.credentialsText = $"\r\n<color={Main.ModColor}>{Main.ModName}</color> v{Main.PluginDisplayVersion}";
             var buildtype = "";
 #if RELEASE
-            Main.credentialsText += $"\r\n<color=#a54aff>Por <color=#ffc0cb>KARPED1EM</color> e </color><color=#f34c50>Moe</color>";
+            if (TranslationController.Instance.currentLanguage.languageID == SupportedLangs.Brazilian) Main.credentialsText += $"\r\n<color=#a54aff>Por <color=#ffc0cb>KARPED1EM</color> e </color><color=#f34c50>Moe</color>"
+            else Main.credentialsText += $"\r\n<color=#a54aff>By <color=#ffc0cb>KARPED1EM</color> & </color><color=#f34c50>Moe</color>";
             buildtype = "Release";
 #endif
 

@@ -147,7 +147,7 @@ public static class NameColorManager
         }
 
         // Visionary
-        if (seer.Is(CustomRoles.Visionary) && seer.IsAlive())
+        if ((seer.Is(CustomRoles.Visionary) || seer.Is(CustomRoles.Exploiter)) && seer.IsAlive())
         {
             if (target.IsAlive() && !target.Data.IsDead)
             {

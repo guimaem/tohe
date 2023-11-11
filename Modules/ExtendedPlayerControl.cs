@@ -1361,7 +1361,7 @@ static class ExtendedPlayerControl
         && target.Data.IsDead;
 
     public static bool KnowLivingTeam(this PlayerControl seer, PlayerControl target)
-        => (seer.Is(CustomRoles.Visionary))
+        => (seer.Is(CustomRoles.Visionary) || seer.Is(CustomRoles.Exploiter))
         && !target.Data.IsDead;
 
     public static bool KnowRoleTarget(PlayerControl seer, PlayerControl target)

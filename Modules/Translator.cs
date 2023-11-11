@@ -224,6 +224,7 @@ public static class Translator
             if (name.StartsWith("zh_CHT")) return SupportedLangs.TChinese;
             if (name.StartsWith("zh")) return SupportedLangs.SChinese;
             if (name.StartsWith("ru")) return SupportedLangs.Russian;
+            if (name.StartsWith("pt_BR")) return SupportedLangs.Brazilian;
             return TranslationController.Instance.currentLanguage.languageID;
         }
         catch
