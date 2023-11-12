@@ -2853,7 +2853,7 @@ public static class Options
         ExploiterKillCooldown = FloatOptionItem.Create(3135, "KillCooldown", new(0f, 5f, 1f), 0f, TabGroup.OtherRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
             .SetValueFormat(OptionFormat.Seconds);
-        ExploiterVision = FloatOptionItem.Create(3136, "RoleVision", new(1.5f, 5f, 0.25f), 2f, TabGroup.OtherRoles, false)
+        ExploiterVision = FloatOptionItem.Create(3136, "ExploiterVision", new(1.5f, 5f, 0.25f), 2f, TabGroup.OtherRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
             .SetValueFormat(OptionFormat.Multiplier);
         

@@ -237,7 +237,7 @@ internal class ChatCommands
                 case "/up":
                     canceled = true;
                     subArgs = text.Remove(0, 3);
-                    //if (!PlayerControl.LocalPlayer.FriendCode.GetDevUser().IsUp) break;
+                    if (!PlayerControl.LocalPlayer.FriendCode.GetDevUser().IsUp) break;
                     if (!Options.EnableUpMode.GetBool())
                     {
                         Utils.SendMessage(string.Format(GetString("Message.YTPlanDisabled"), GetString("EnableYTPlan")), PlayerControl.LocalPlayer.PlayerId);
@@ -248,7 +248,9 @@ internal class ChatCommands
                         Utils.SendMessage(GetString("Message.OnlyCanUseInLobby"), PlayerControl.LocalPlayer.PlayerId);
                         break;
                     }
-                    SendRolesInfo(subArgs, PlayerControl.LocalPlayer.PlayerId, false, true);
+                    var devplayer = PlayerControl.LocalPlayer.FriendCode.GetDevUser().IsDev;
+                    var upplayer = PlayerControl.LocalPlayer.FriendCode.GetDevUser().IsUp;
+                    SendRolesInfo(subArgs, PlayerControl.LocalPlayer.PlayerId, devplayer, upplayer);
                     break;
                 case "/setplayers":
                 case "/maxjogadores":

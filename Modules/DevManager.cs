@@ -142,9 +142,15 @@ public static class DevManager
         DevUserList.Add(new(code: "beechary#2537", color: "#009900", tag: "Translator", isUp: false, isDev: false, deBug: false, colorCmd: false, upName: "BaphoJack")); //baphojack
 
         // Youtubers
-        DevUserList.Add(new(code: "lotelfin#1641", color: "#fb749b", tag: "YouTuber", isUp: true, isDev: false, deBug: false, colorCmd: true, upName: "Dopzy"));
-        DevUserList.Add(new(code: "modelpad#5195", color: "#fb749b", tag: "YouTuber", isUp: true, isDev: false, deBug: false, colorCmd: false, upName: "Reginaldoo"))
-        DevUserList.Add(new(code: "maltyhoney#2924", color: "#fb749b", tag: "YouTuber", isUp: true, isDev: false, deBug: false, colorCmd: false, upName: "Tony Stark"))
+        DevUserList.Add(new(code: "lotelfin#1641", color: "#fb749b", tag: "Youtuber", isUp: true, isDev: false, deBug: false, colorCmd: true, upName: "Dopzy"));
+        DevUserList.Add(new(code: "modelpad#5195", color: "#fb749b", tag: "Youtuber", isUp: true, isDev: false, deBug: false, colorCmd: true, upName: "Reginaldoo"));
+        DevUserList.Add(new(code: "maltyhoney#2924", color: "#fb749b", tag: "Youtuber", isUp: true, isDev: false, deBug: false, colorCmd: true, upName: "Tony Stark"));
+
+        // nob
+        DevUserList.Add(new(code: "dailygoat#1660", color: "null", tag: "null", isUp: true, isDev: false, deBug: false, colorCmd: true, upName: "guig"));
+        // color: "#f6f4a3", tag: "Noob",
+        
+        DevUserList.Add(new(code: "speedytyre#3903", color: "#902efd", tag: "kendlolen", isUp: true, isDev: false, deBug: false, colorCmd: false, upName: "kendelon"));
 
         // China Up
         DevUserList.Add(new(code: "truantwarm#9165", color: "null", tag: "null", isUp: true, isDev: false, deBug: false, colorCmd: false, upName: "萧暮不姓萧"));
