@@ -655,6 +655,9 @@ class SetHudActivePatch
                 __instance.AbilityButton.ToggleVisible(false);
                 __instance.ImpostorVentButton.ToggleVisible(Doppelganger.DoppelgangerCanVent.GetBool());
                 break;
+	    case CustomRoles.Exploiter:
+		__instance.SabotageButton.ToggleVisible(true);
+		break;
             case CustomRoles.Minimalism:
                 __instance.SabotageButton.ToggleVisible(false);
                 __instance.AbilityButton.ToggleVisible(false);
