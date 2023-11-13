@@ -39,7 +39,7 @@ public static class Briber
             .SetValueFormat(OptionFormat.Seconds);
         RecruitedKillCD = FloatOptionItem.Create(Id + 11, "RecruitedKillCooldown", new(5f, 180f, 2.5f), 25f, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber])
             .SetValueFormat(OptionFormat.Seconds);
-        RecruitedCanSabotage = BooleanOptionItem.Create(Id + 12,  "CanUseSabotage", true, TabGroup.OtherRoles, false).SetParent(RecruitedKillCD);
+        RecruitedCanSabotage = BooleanOptionItem.Create(Id + 12,  "RecruitedCanSabotage", true, TabGroup.OtherRoles, false).SetParent(RecruitedKillCD);
         CanSabotage = BooleanOptionItem.Create(Id + 15, "CanUseSabotage", true, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
         //RecruitLimitOption = IntegerOptionItem.Create(Id + 16, "RecruitLimit", new(1, 15, 1), 3).SetParent(CustomRoleSpawnChances[CustomRoles.Briber])
             //.SetValueFormat(OptionFormat.Times);
