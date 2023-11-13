@@ -21,7 +21,7 @@ public static class SidekickB
         if (!Main.ResetCamPlayerList.Contains(playerId))
             Main.ResetCamPlayerList.Add(playerId);
     }
-    public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = RecruitedKillCD.GetFloat();
+    public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = Briber.RecruitedKillCD.GetFloat();
     public static void ApplyGameOptions(IGameOptions opt) => opt.SetVision(true);
     public static void SetHudActive(HudManager __instance, bool isActive)
     {

@@ -320,6 +320,8 @@ public class SabotageSystemPatch
                     return true;
                 case CustomRoles.Exploiter:
                     return true;
+                case CustomRoles.Briber when Briber.CanSabotage.GetBool():
+                    return true;
 
                 case CustomRoles.Bandit when Bandit.CanUseSabotage.GetBool():
                     return true;

@@ -672,9 +672,9 @@ class SetHudActivePatch
             case CustomRoles.SidekickB:
                 SidekickB.SetHudActive(__instance, isActive);
                 break;
-            case CustomRoles.Briber:
+            /*case CustomRoles.Briber:
                 Briber.SetHudActive(__instance, isActive);
-                break;
+                break;*/
             case CustomRoles.Sidekick:
                 Sidekick.SetHudActive(__instance, isActive);
                 break;

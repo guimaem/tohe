@@ -1,8 +1,12 @@
+using AmongUs.GameOptions;
+using Hazel;
 using System.Collections.Generic;
 using TOHE.Roles.Neutral;
 using UnityEngine;
 using TOHE.Roles.Crewmate;
 using TOHE.Roles.Impostor;
+using TOHE.Roles.Double;
+using TOHE.Roles.AddOns.Crewmate;
 using static TOHE.Options;
 using static TOHE.Translator;
 
@@ -20,9 +24,10 @@ public static class Briber
     //private static OptionItem RecruitLimitOption;
     public static OptionItem RecruitedKillCD;
     public static OptionItem KillCooldown;
+    public static OptionItem RecruitedCanSabotage;
     private static OptionItem CanKill;
     private static bool CanKillBool;
-    private static OptionItem CanSabotage;
+    public static OptionItem CanSabotage;
 
     public static void SetupCustomOption()
     {
@@ -51,7 +56,7 @@ public static class Briber
         //RecruitLimit.TryAdd(playerId, RecruitLimitOpt.GetInt());
     }
     public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = RecruitCooldown.GetFloat();
-    public static void SetKillButtonText() => HudManager.Instance.OverrideText(GetString("GangsterButtonText"));
+    public static void SetKillButtonText() => HudManager.Instance.KillButton.OverrideText(GetString("GangsterButtonText"));
     public static void ApplyGameOptions(IGameOptions opt) => opt.SetVision(true);
     public static bool OnCheckRecruit(PlayerControl killer, PlayerControl target)
     {
@@ -63,8 +68,7 @@ public static class Briber
 
         if (CanBeRecruited(target))
         {
-            target.RpcSetCustomRole(CustomRoles.SidekickB);
-
+                target.RpcSetCustomRole(CustomRoles.SidekickB);
                 if (!Main.ResetCamPlayerList.Contains(target.PlayerId))
                     Main.ResetCamPlayerList.Add(target.PlayerId);
 
@@ -78,9 +82,9 @@ public static class Briber
 
                 Logger.Info("设置职业:" + target?.Data?.PlayerName + " = " + target.GetCustomRole().ToString() + " + " + CustomRoles.SidekickB.ToString(), "Assign " + CustomRoles.SidekickB.ToString());
 
-                Logger.Info($"{killer.GetNameWithRole()} : 剩余{RecruitLimit[killer.PlayerId]}次招募机会", "Jackal");
                 return true;
         }
+        return false;
     }
 
     public static bool CanBeRecruited(PlayerControl pc)

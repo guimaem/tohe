@@ -851,6 +851,7 @@ public enum CustomWinner
     Crewmate = CustomRoles.Crewmate,
     Jester = CustomRoles.Jester,
     Terrorist = CustomRoles.Terrorist,
+    Exploiter = CustomRoles.Exploiter,
     Lovers = CustomRoles.Lovers,
     Executioner = CustomRoles.Executioner,
     Arsonist = CustomRoles.Arsonist,
@@ -860,7 +861,7 @@ public enum CustomWinner
     Jackal = CustomRoles.Jackal,
     Briber = CustomRoles.Briber,
     Sidekick = CustomRoles.Sidekick,
-    SidekickB = CustomRoles.SidekickB
+    SidekickB = CustomRoles.SidekickB,
     God = CustomRoles.God,
     Mario = CustomRoles.Mario,
     Innocent = CustomRoles.Innocent,

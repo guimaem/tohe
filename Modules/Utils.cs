@@ -574,7 +574,8 @@ public static class Utils
                 hasTasks = false;
                 break;
             case CustomRoles.Medic:
-                hasTasks = Medic.MedicHasTasks.GetBool();
+                //hasTasks = Medic.MedicHasTasks.GetBool();
+                hasTasks = true;
                 break;
             case CustomRoles.Workaholic:
             case CustomRoles.Terrorist:

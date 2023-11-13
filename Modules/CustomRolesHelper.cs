@@ -954,7 +954,6 @@ static class CustomRolesHelper
         return role is
             CustomRoles.Sheriff or
             CustomRoles.Jailer or
-            if (!Medic.MedicHasTasks.GetBool()) CustomRoles.Medic or;
             CustomRoles.CopyCat or
             CustomRoles.Reverie or
             CustomRoles.Crusader or
@@ -1770,7 +1769,7 @@ static class CustomRolesHelper
             CustomRoles.Briber => CustomWinner.Briber,
             CustomRoles.Jackal => CustomWinner.Jackal,
             CustomRoles.Sidekick => CustomWinner.Sidekick,
-            CustomRoles.SidekickB => CustomWinner.SidekickB
+            CustomRoles.SidekickB => CustomWinner.SidekickB,
             CustomRoles.God => CustomWinner.God,
             CustomRoles.Exploiter => CustomWinner.Exploiter,
             CustomRoles.Mario => CustomWinner.Mario,
@@ -1888,6 +1887,8 @@ public enum CountTypes
     Jackal,
     Doppelganger,
     Bandit,
+    Exploiter,
+    Briber,
     Pelican,
     Gamer,
     BloodKnight,

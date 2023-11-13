@@ -692,7 +692,6 @@ static class ExtendedPlayerControl
             CustomRoles.CursedSoul or
             CustomRoles.PlagueBearer or
             CustomRoles.Admirer or
-            CustomRoles.Doppelganger or
             CustomRoles.Crusader or
             CustomRoles.ChiefOfPolice or
             CustomRoles.Wildling
@@ -739,7 +738,6 @@ static class ExtendedPlayerControl
             CustomRoles.Parasite => true,
             CustomRoles.Refugee => true,
             CustomRoles.Exploiter => true,
-            CustomRoles.Doppelganger => Doppelganger.CanVent.GetBool(),
             CustomRoles.Spiritcaller => Spiritcaller.CanVent.GetBool(),
 
             CustomRoles.Arsonist => pc.IsDouseDone() || (Options.ArsonistCanIgniteAnytime.GetBool() && (Utils.GetDousedPlayerCount(pc.PlayerId).Item1 >= Options.ArsonistMinPlayersToIgnite.GetInt() || pc.inVent)),
