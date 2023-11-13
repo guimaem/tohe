@@ -404,6 +404,7 @@ class HudManagerPatch
                         __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
                         __instance.KillButton.OverrideText(GetString("InvestigatorButtonText"));
                         break;
+                    case CustomRoles.SidekickB:
                     case CustomRoles.Sidekick:
                         __instance.KillButton.OverrideText(GetString("KillButtonText"));
                         __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
@@ -651,13 +652,11 @@ class SetHudActivePatch
                 __instance.ImpostorVentButton.ToggleVisible(false);
                 break;
             case CustomRoles.Doppelganger:
-                __instance.SabotageButton.ToggleVisible(Doppelganger.DoppelgangerCanSabotage.GetBool());
-                __instance.AbilityButton.ToggleVisible(false);
-                __instance.ImpostorVentButton.ToggleVisible(Doppelganger.DoppelgangerCanVent.GetBool());
+                Doppelganger.SetHudActive(__instance, isActive);
                 break;
-	    case CustomRoles.Exploiter:
-		__instance.SabotageButton.ToggleVisible(true);
-		break;
+            case CustomRoles.Exploiter:
+                __instance.SabotageButton.ToggleVisible(isActive);
+                break;
             case CustomRoles.Minimalism:
                 __instance.SabotageButton.ToggleVisible(false);
                 __instance.AbilityButton.ToggleVisible(false);
@@ -669,6 +668,12 @@ class SetHudActivePatch
                 break;
             case CustomRoles.Jackal:
                 Jackal.SetHudActive(__instance, isActive);
+                break;
+            case CustomRoles.SidekickB:
+                SidekickB.SetHudActive(__instance, isActive);
+                break;
+            case CustomRoles.Briber:
+                Briber.SetHudActive(__instance, isActive);
                 break;
             case CustomRoles.Sidekick:
                 Sidekick.SetHudActive(__instance, isActive);
@@ -728,6 +733,10 @@ class MapBehaviourShowPatch
             || player.Is(CustomRoles.Parasite)
             || player.Is(CustomRoles.Refugee)
             || player.Is(CustomRoles.Glitch)
+            || player.Is(CustomRoles.Exploiter)
+            || (player.Is(CustomRoles.Briber) && Briber.CanSabotage.GetBool())
+            || (player.Is(CustomRoles.SidekickB) && Briber.RecruitedCanSabotage.GetBool())
+            || (player.Is(CustomRoles.Doppelganger) && Doppelganger.DoppelgangerCanSabotage.GetBool())
             || (player.Is(CustomRoles.Bandit) && Bandit.CanUseSabotage.GetBool())
             || (player.Is(CustomRoles.Jackal) && Jackal.CanUseSabotage.GetBool())
             || (player.Is(CustomRoles.Sidekick) && Jackal.CanUseSabotageSK.GetBool())

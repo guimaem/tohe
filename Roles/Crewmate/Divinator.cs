@@ -294,6 +294,7 @@ public static class Divinator
 
                 CustomRoles.Jackal or
                 CustomRoles.Jailer or
+                CustomRoles.SidekickB or
                 CustomRoles.Sidekick or
                 CustomRoles.Maverick or
                 CustomRoles.Opportunist or

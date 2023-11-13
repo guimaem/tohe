@@ -241,8 +241,14 @@ public class PlayerGameOptionsSender : GameOptionsSender
             case CustomRoles.Jackal:
                 Jackal.ApplyGameOptions(opt);
                 break;
+            case CustomRoles.Briber:
+                Briber.ApplyGameOptions(opt);
+                break;
             case CustomRoles.Sidekick:
                 Sidekick.ApplyGameOptions(opt);
+                break;
+            case CustomRoles.SidekickB:
+                SidekickB.ApplyGameOptions(opt);
                 break;
             case CustomRoles.Huntsman:
                 Huntsman.ApplyGameOptions(opt);

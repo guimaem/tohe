@@ -189,6 +189,7 @@ static class CustomRolesHelper
             CustomRoles.Crusader => RoleTypes.Impostor,
             CustomRoles.Seeker => RoleTypes.Impostor,
             CustomRoles.Pixie => RoleTypes.Impostor,
+            CustomRoles.Briber => RoleTypes.Impostor,
             CustomRoles.Pirate => RoleTypes.Impostor,
             CustomRoles.CopyCat => RoleTypes.Impostor,
             CustomRoles.Imitator => RoleTypes.Impostor,
@@ -208,6 +209,7 @@ static class CustomRolesHelper
             CustomRoles.Bandit => RoleTypes.Impostor,
             CustomRoles.Medusa => RoleTypes.Impostor,
             CustomRoles.Sidekick => RoleTypes.Impostor,
+            CustomRoles.SidekickB => RoleTypes.Impostor,
             CustomRoles.SwordsMan => RoleTypes.Impostor,
             CustomRoles.Reverie => RoleTypes.Impostor,
             CustomRoles.Innocent => RoleTypes.Impostor,
@@ -414,6 +416,7 @@ static class CustomRolesHelper
     {
         return role is
             CustomRoles.Sidekick or
+            CustomRoles.SidekickB or
             CustomRoles.Infectious or
             CustomRoles.Pyromaniac or
             CustomRoles.Medusa or
@@ -444,6 +447,7 @@ static class CustomRolesHelper
             CustomRoles.Bandit or
             CustomRoles.Glitch or
             CustomRoles.Sidekick or
+            CustomRoles.SidekickB or
             CustomRoles.Huntsman or
             //CustomRoles.Occultist or
             CustomRoles.Infectious or
@@ -482,6 +486,7 @@ static class CustomRolesHelper
             CustomRoles.Amnesiac or
             CustomRoles.Totocalcio or
             CustomRoles.FFF or
+            CustomRoles.Briber or
             CustomRoles.Lawyer or
             CustomRoles.Imitator or
             CustomRoles.Maverick or
@@ -543,6 +548,7 @@ static class CustomRolesHelper
             CustomRoles.Innocent or
             CustomRoles.Jester or
             CustomRoles.Masochist or
+            CustomRoles.Briber or
             CustomRoles.Seeker;
     }
     public static bool IsNC(this CustomRoles role)
@@ -567,7 +573,9 @@ static class CustomRolesHelper
             CustomRoles.Jackal or
             CustomRoles.Doppelganger or
             CustomRoles.Bandit or
+            CustomRoles.Briber or
             CustomRoles.Sidekick or
+            CustomRoles.SidekickB
             CustomRoles.HexMaster or
             //CustomRoles.Occultist or
             CustomRoles.Necromancer or
@@ -712,6 +720,7 @@ static class CustomRolesHelper
             CustomRoles.Glitch or
             CustomRoles.Exploiter or
             CustomRoles.Imitator or
+            CustomRoles.Briber or
             CustomRoles.Shaman or
             CustomRoles.Crewpostor or
             CustomRoles.NWitch or
@@ -732,6 +741,7 @@ static class CustomRolesHelper
             CustomRoles.Lawyer or
             CustomRoles.Arsonist or
             CustomRoles.Sidekick or
+            CustomRoles.SidekickB or
             CustomRoles.Jackal or
             CustomRoles.Doppelganger or
             CustomRoles.Bandit or
@@ -869,12 +879,14 @@ static class CustomRolesHelper
             CustomRoles.Vulture or
             CustomRoles.Taskinator or
             CustomRoles.Jinx or
+            CustomRoles.Exploiter or
             CustomRoles.Lawyer or
             CustomRoles.Arsonist or
             CustomRoles.Jackal or
             CustomRoles.Bandit or
             CustomRoles.Doppelganger or
             CustomRoles.Sidekick or
+            CustomRoles.SidekickB or
             CustomRoles.God or
             CustomRoles.Innocent or
             CustomRoles.Pursuer or
@@ -942,7 +954,7 @@ static class CustomRolesHelper
         return role is
             CustomRoles.Sheriff or
             CustomRoles.Jailer or
-            CustomRoles.Medic or
+            if (!Medic.MedicHasTasks.GetBool()) CustomRoles.Medic or;
             CustomRoles.CopyCat or
             CustomRoles.Reverie or
             CustomRoles.Crusader or
@@ -982,6 +994,7 @@ static class CustomRolesHelper
             CustomRoles.Glitch or
             CustomRoles.Pickpocket or
             CustomRoles.Stubborn or
+            CustomRoles.Exploiter or
             CustomRoles.TicketsStealer;
     }
     public static bool CheckAddonConfilct(CustomRoles role, PlayerControl pc)
@@ -1296,7 +1309,8 @@ static class CustomRolesHelper
                     || pc.Is(CustomRoles.SuperStar)
                     || pc.Is(CustomRoles.Egoist)
                     || pc.Is(CustomRoles.Rascal)
-                    || pc.Is(CustomRoles.NiceMini))
+                    || pc.Is(CustomRoles.NiceMini)
+                    || pc.Is(CustomRoles.SidekickB))
                     return false;
                 if (!Utils.CanBeMadmate(pc))
                     return false;
@@ -1342,7 +1356,8 @@ static class CustomRolesHelper
                 if (pc.Is(CustomRoles.Sidekick)
                     || pc.Is(CustomRoles.Madmate)
                     || pc.Is(CustomRoles.Hurried)
-                    || pc.Is(CustomRoles.GuardianAngelTOHE))
+                    || pc.Is(CustomRoles.GuardianAngelTOHE)
+                    || pc.Is(CustomRoles.SidekickB))
                     return false;
                 if (pc.GetCustomRole().IsNeutral())
                     return false;
@@ -1699,11 +1714,13 @@ static class CustomRolesHelper
            CustomRoles.GM => CountTypes.OutOfGame,
            CustomRoles.Jackal => CountTypes.Jackal,
            CustomRoles.Sidekick => CountTypes.Jackal,
+           CustomRoles.SidekickB => CountTypes.Briber,
            CustomRoles.Doppelganger => CountTypes.Doppelganger,
            CustomRoles.Bandit => CountTypes.Bandit,
            CustomRoles.Poisoner => CountTypes.Poisoner,
            CustomRoles.Pelican => CountTypes.Pelican,
            CustomRoles.Gamer => CountTypes.Gamer,
+           CustomRoles.Exploiter => CountTypes.Exploiter,
            CustomRoles.BloodKnight => CountTypes.BloodKnight,
            CustomRoles.Succubus => CountTypes.Succubus,
            CustomRoles.HexMaster => CountTypes.HexMaster,
@@ -1750,9 +1767,12 @@ static class CustomRolesHelper
             CustomRoles.Pyromaniac => CustomWinner.Pyromaniac,
             CustomRoles.Agitater => CustomWinner.Agitater,
             CustomRoles.Revolutionist => CustomWinner.Revolutionist,
+            CustomRoles.Briber => CustomWinner.Briber,
             CustomRoles.Jackal => CustomWinner.Jackal,
             CustomRoles.Sidekick => CustomWinner.Sidekick,
+            CustomRoles.SidekickB => CustomWinner.SidekickB
             CustomRoles.God => CustomWinner.God,
+            CustomRoles.Exploiter => CustomWinner.Exploiter
             CustomRoles.Mario => CustomWinner.Mario,
             CustomRoles.Innocent => CustomWinner.Innocent,
             CustomRoles.Pelican => CustomWinner.Pelican,
@@ -1807,6 +1827,7 @@ static class CustomRolesHelper
         {
             CountTypes.OutOfGame => CustomRoles.GM,
             CountTypes.Jackal => CustomRoles.Jackal,
+            CountTypes.Briber => CustomRoles.Briber
             CountTypes.Doppelganger => CustomRoles.Doppelganger,
             CountTypes.Bandit => CustomRoles.Bandit,
             CountTypes.Poisoner => CustomRoles.Poisoner,

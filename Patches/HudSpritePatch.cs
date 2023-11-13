@@ -90,6 +90,9 @@ public static class HudSpritePatch
             case CustomRoles.Gangster:
                 if (Gangster.CanRecruit(player.PlayerId)) newKillButton = CustomButton.Get("Sidekick");
                 break;
+            case CustomRoles.Briber:
+                newKillButton = CustomButton.Get("Sidekick");
+                break;
             case CustomRoles.Succubus:
                 newKillButton = CustomButton.Get("Subbus");
                 break;

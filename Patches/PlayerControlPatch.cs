@@ -2147,6 +2147,13 @@ class ReportDeadBodyPatch
                         __instance.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Amnesiac), GetString("YouRememberedRole")));
                         tar.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Amnesiac), GetString("RememberedYourRole")));
                     }
+                    if (tar.Is(CustomRoles.Briber))
+                    {
+                        SidekickB.Add(__instance.PlayerId);
+                        __instance.RpcSetCustomRole(CustomRoles.SidekickB);
+                        __instance.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Amnesiac), GetString("YouRememberedRole")));
+                        tar.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Amnesiac), GetString("RememberedYourRole")));
+                    }
 
                     if (tar.Is(CustomRoles.Juggernaut))
                     {

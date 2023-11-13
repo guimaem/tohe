@@ -313,6 +313,13 @@ public class SabotageSystemPatch
 
                 case CustomRoles.Sidekick when Jackal.CanUseSabotageSK.GetBool():
                     return true;
+                case CustomRoles.Doppelganger when  Doppelganger.DoppelgangerCanSabotage.GetBool():
+                    return true;
+
+                case CustomRoles.SidekickB when Briber.RecruitedCanSabotage.GetBool():
+                    return true;
+                case CustomRoles.Exploiter:
+                    return true;
 
                 case CustomRoles.Bandit when Bandit.CanUseSabotage.GetBool():
                     return true;

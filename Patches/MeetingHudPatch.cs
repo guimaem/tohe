@@ -1070,6 +1070,8 @@ class MeetingHudStartPatch
                     sb.Append(Snitch.GetWarningMark(seer, target));
                     break;
                 case CustomRoles.Jackal:
+                case CustomRoles.SidekickB:
+                case CustomRoles.Briber:
                 case CustomRoles.Sidekick:
                     sb.Append(Snitch.GetWarningMark(seer, target));
                     break;

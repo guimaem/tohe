@@ -181,6 +181,10 @@ public static class NameColorManager
         if (seer.Is(CustomRoles.Sidekick) && (target.Is(CustomRoles.Jackal) || target.Is(CustomRoles.Recruit) || target.Is(CustomRoles.Sidekick))) color = Main.roleColors[CustomRoles.Jackal];
         if (seer.Is(CustomRoles.Recruit) && (target.Is(CustomRoles.Jackal) || target.Is(CustomRoles.Sidekick) || target.Is(CustomRoles.Recruit))) color = Main.roleColors[CustomRoles.Jackal];
 
+        // briber
+        if (seer.Is(CustomRoles.SidekickB) && (target.Is(CustomRoles.Jackal) || target.Is(CustomRoles.SidekickB))) color = Main.roleColors[CustomRoles.Briber];
+        if (seer.Is(CustomRoles.Briber) && target.Is(CustomRoles.SidekickB)) color = Main.roleColors[CustomRoles.Briber];
+
         // Spiritcaller can see Evil Spirits in meetings
         if (seer.Is(CustomRoles.Spiritcaller) && target.Is(CustomRoles.EvilSpirit)) color = Main.roleColors[CustomRoles.EvilSpirit];
  

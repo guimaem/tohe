@@ -500,6 +500,7 @@ public static class Utils
             case CustomRoles.Bandit:
             case CustomRoles.Doppelganger:
             case CustomRoles.Sidekick:
+            case CustomRoles.SidekickB:
             case CustomRoles.Poisoner:
             case CustomRoles.Necromancer:
             case CustomRoles.NSerialKiller:

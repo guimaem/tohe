@@ -495,9 +495,11 @@ static class ExtendedPlayerControl
             CustomRoles.Pyromaniac => pc.IsAlive(),
             CustomRoles.Huntsman => pc.IsAlive(),
             CustomRoles.SwordsMan => pc.IsAlive(),
+            CustomRoles.Exploiter => pc.IsAlive(),,
             CustomRoles.Jackal => pc.IsAlive(),
             CustomRoles.Bandit => pc.IsAlive(),
             CustomRoles.Sidekick => pc.IsAlive(),
+            CustomRoles.SidekickB => pc.IsAlive(),
             CustomRoles.Necromancer => pc.IsAlive(),
             CustomRoles.HexMaster => pc.IsAlive(),
             //CustomRoles.Occultist => pc.IsAlive(),
@@ -594,6 +596,8 @@ static class ExtendedPlayerControl
             CustomRoles.Jackal => true,
             CustomRoles.Bandit => true,
             CustomRoles.Sidekick => true,
+            CustomRoles.SidekickB => true,
+            CustomRoles.Exploiter => true,
             CustomRoles.Necromancer => true,
             CustomRoles.HexMaster => true,
             //CustomRoles.Occultist => true,
@@ -701,6 +705,8 @@ static class ExtendedPlayerControl
             CustomRoles.RuthlessRomantic => Romantic.RuthlessCanVent.GetBool(),
             CustomRoles.Huntsman => Huntsman.CanVent.GetBool(),
             CustomRoles.Sidekick => Jackal.CanVentSK.GetBool(),
+            CustomRoles.SidekickB => true,
+            CustomRoles.Doppelganger => Doppelganger.DoppelgangerCanVent.GetBool(),
             CustomRoles.Poisoner => Poisoner.CanVent.GetBool(),
             CustomRoles.Vampiress => Vampire.CanVent.GetBool(),
             CustomRoles.Vampire => Vampire.CanVent.GetBool(),
@@ -732,6 +738,8 @@ static class ExtendedPlayerControl
          //   CustomRoles.Chameleon => true,
             CustomRoles.Parasite => true,
             CustomRoles.Refugee => true,
+            CustomRoles.Exploiter => true,
+            CustomRoles.Doppelganger => Doppelganger.CanVent.GetBool(),
             CustomRoles.Spiritcaller => Spiritcaller.CanVent.GetBool(),
 
             CustomRoles.Arsonist => pc.IsDouseDone() || (Options.ArsonistCanIgniteAnytime.GetBool() && (Utils.GetDousedPlayerCount(pc.PlayerId).Item1 >= Options.ArsonistMinPlayersToIgnite.GetInt() || pc.inVent)),
@@ -801,7 +809,11 @@ static class ExtendedPlayerControl
 
             CustomRoles.Bandit => Bandit.CanUseSabotage.GetBool(),
             CustomRoles.Jackal => Jackal.CanUseSabotage.GetBool(),
+            CustomRoles.Doppelganger => Doppelganger.DoppelgangerCanSabotage.GetBool(),
             CustomRoles.Sidekick => Jackal.CanUseSabotageSK.GetBool(),
+            CustomRoles.Briber => Briber.CanSabotage.GetBool(),
+            CustomRoles.Exploiter => true,
+            CustomRoles.SidekickB => Briber.RecruitedCanSabotage.GetBool(),
             CustomRoles.Traitor => Traitor.CanUseSabotage.GetBool(),
             CustomRoles.Parasite => true,
             CustomRoles.Glitch => true,
@@ -921,6 +933,12 @@ static class ExtendedPlayerControl
                 break;
             case CustomRoles.Sidekick:
                 Sidekick.SetKillCooldown(player.PlayerId);
+                break;
+            case CustomRoles.SidekickB:
+                SidekickB.SetKillCooldown(player.PlayerId);
+                break;
+            case CustomRoles.Briber:
+                Briber.SetKillCooldown(player.PlayerId);
                 break;
             case CustomRoles.Bandit:
                 Bandit.SetKillCooldown(player.PlayerId);
@@ -1382,8 +1400,9 @@ static class ExtendedPlayerControl
         else if (Options.DoctorVisibleToEveryone.GetBool() && target.Is(CustomRoles.Doctor) && !target.IsEvilAddons()) return true;
         else if (Options.MayorRevealWhenDoneTasks.GetBool() && target.Is(CustomRoles.Mayor) && target.GetPlayerTaskState().IsTaskFinished) return true;
         else if (target.GetPlayerTaskState().IsTaskFinished && seer.Is(CustomRoleTypes.Crewmate) && target.Is(CustomRoles.Marshall)) return true;
-        else if (seer.Is(CustomRoles.Jackal) && (target.Is(CustomRoles.Sidekick) || target.Is(CustomRoles.Recruit))) return true;
+        else if (seer.Is(CustomRoles.Jackal) && (target.Is(CustomRoles.Sidekick) || target.Is(CustomRoles.SidekickB) || target.Is(CustomRoles.Recruit))) return true;
         else if (seer.Is(CustomRoles.Sidekick) && (target.Is(CustomRoles.Jackal) || target.Is(CustomRoles.Recruit) || target.Is(CustomRoles.Sidekick))) return true;
+        else if (seer.Is(CustomRoles.SidekickB) && (target.Is(CustomRoles.Briber) || target.Is(CustomRoles.SidekickB))) return true;
         else if (seer.Is(CustomRoles.Recruit) && (target.Is(CustomRoles.Jackal) || target.Is(CustomRoles.Sidekick) || target.Is(CustomRoles.Recruit))) return true;
         else if (seer.IsRevealedPlayer(target) && !target.Is(CustomRoles.Trickster)) return true;
         else if (Totocalcio.KnowRole(seer, target)) return true;

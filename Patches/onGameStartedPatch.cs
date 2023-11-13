@@ -209,6 +209,8 @@ internal class ChangeRoleSettings
             Executioner.Init();
             Lawyer.Init();
             Jackal.Init();
+            SidekickB.Init();
+            Briber.Init();
             Sidekick.Init();
             Bandit.Init();
             Doppelganger.Init();
@@ -593,6 +595,12 @@ internal class SelectRolesPatch
                         break;
                     case CustomRoles.Jackal:
                         Jackal.Add(pc.PlayerId);
+                        break;
+                    case CustomRoles.SidekickB:
+                        SidekickB.Add(pc.PlayerId);
+                        break;
+                    case CustomRoles.Briber:
+                        Briber.Add(pc.PlayerId);
                         break;
                     case CustomRoles.Sidekick:
                         Sidekick.Add(pc.PlayerId);
@@ -999,7 +1007,7 @@ internal class SelectRolesPatch
             }
 
             // ResetCamが必要なプレイヤーのリストにクラス化が済んでいない役職のプレイヤーを追加
-            Main.ResetCamPlayerList.AddRange(Main.AllPlayerControls.Where(p => p.GetCustomRole() is CustomRoles.Arsonist or CustomRoles.Revolutionist or CustomRoles.Sidekick or CustomRoles.Shaman or CustomRoles.Vigilante or CustomRoles.Witness or CustomRoles.Innocent).Select(p => p.PlayerId));
+            Main.ResetCamPlayerList.AddRange(Main.AllPlayerControls.Where(p => p.GetCustomRole() is CustomRoles.Arsonist or CustomRoles.Revolutionist or CustomRoles.SidekickB or CustomRoles.Sidekick or CustomRoles.Shaman or CustomRoles.Vigilante or CustomRoles.Witness or CustomRoles.Innocent).Select(p => p.PlayerId));
             Utils.CountAlivePlayers(true);
             Utils.SyncAllSettings();
             SetColorPatch.IsAntiGlitchDisabled = false;

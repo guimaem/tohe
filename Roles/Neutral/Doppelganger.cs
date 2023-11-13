@@ -175,6 +175,16 @@ public static class Doppelganger
         killer.SetKillCooldown();
         return;
     }
+    public static void CanUseVent(PlayerControl player)
+    {
+        bool doppel_canUse = DoppelgangerCanVent.GetBool();
+        DestroyableSingleton<HudManager>.Instance.ImpostorVentButton.ToggleVisible(doppel_canUse && !player.Data.IsDead);
+        player.Data.Role.CanVent = doppel_canUse;
+    }
+    public static void SetHudActive(HudManager __instance, bool isActive)
+    {
+        __instance.SabotageButton.ToggleVisible(isActive && DoppelgangerCanSabotage.GetBool());
+    }
 
     public static string GetStealLimit(byte playerId) => Utils.ColorString(TotalSteals[playerId] < MaxSteals.GetInt() ? Utils.GetRoleColor(CustomRoles.Doppelganger).ShadeColor(0.25f) : Color.gray, TotalSteals.TryGetValue(playerId, out var stealLimit) ? $"({MaxSteals.GetInt() - stealLimit})" : "Invalid");
 }
