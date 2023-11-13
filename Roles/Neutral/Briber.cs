@@ -42,7 +42,7 @@ public static class Briber
     public static void Init()
     {
         playerIdList = new();
-        CanKillBool = CanKill.GetBool()
+        CanKillBool = CanKill.GetBool();
         //RecruitLimit = new();
     }
     public static void Add(byte playerId)

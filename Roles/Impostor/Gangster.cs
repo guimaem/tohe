@@ -78,6 +78,10 @@ public static class Gangster
         else
             HudManager.Instance.KillButton.OverrideText(GetString("KillButtonText"));
     }
+    public static void SetHudActive(HudManager __instance, bool isActive)
+    {
+        __instance.SabotageButton.ToggleVisible(isActive);
+    }
     public static bool OnCheckMurder(PlayerControl killer, PlayerControl target)
     {
         if (RecruitLimit[killer.PlayerId] < 1)
@@ -94,10 +98,7 @@ public static class Gangster
             killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Gangster), GetString("CantRecruit")));
             return false;
         }
-        public static void SetHudActive(HudManager __instance, bool isActive)
-        {
-            __instance.SabotageButton.ToggleVisible(isActive);
-        }
+
         if (CanBeGansterRecruit(target))
         {
             if (!killer.Is(CustomRoles.Admired) && !killer.Is(CustomRoles.Recruit) && !killer.Is(CustomRoles.Charmed)

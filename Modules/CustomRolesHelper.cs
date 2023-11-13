@@ -575,7 +575,7 @@ static class CustomRolesHelper
             CustomRoles.Bandit or
             CustomRoles.Briber or
             CustomRoles.Sidekick or
-            CustomRoles.SidekickB
+            CustomRoles.SidekickB or
             CustomRoles.HexMaster or
             //CustomRoles.Occultist or
             CustomRoles.Necromancer or
@@ -1772,7 +1772,7 @@ static class CustomRolesHelper
             CustomRoles.Sidekick => CustomWinner.Sidekick,
             CustomRoles.SidekickB => CustomWinner.SidekickB
             CustomRoles.God => CustomWinner.God,
-            CustomRoles.Exploiter => CustomWinner.Exploiter
+            CustomRoles.Exploiter => CustomWinner.Exploiter,
             CustomRoles.Mario => CustomWinner.Mario,
             CustomRoles.Innocent => CustomWinner.Innocent,
             CustomRoles.Pelican => CustomWinner.Pelican,
@@ -1827,7 +1827,7 @@ static class CustomRolesHelper
         {
             CountTypes.OutOfGame => CustomRoles.GM,
             CountTypes.Jackal => CustomRoles.Jackal,
-            CountTypes.Briber => CustomRoles.Briber
+            CountTypes.Briber => CustomRoles.Briber,
             CountTypes.Doppelganger => CustomRoles.Doppelganger,
             CountTypes.Bandit => CustomRoles.Bandit,
             CountTypes.Poisoner => CustomRoles.Poisoner,
