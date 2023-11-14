@@ -698,6 +698,7 @@ static class ExtendedPlayerControl
             => false,
 
             CustomRoles.Jackal => Jackal.CanVent.GetBool(),
+            CustomRoles.Briber => true,
             CustomRoles.Bandit => Bandit.CanVent.GetBool(),
             CustomRoles.VengefulRomantic => Romantic.VengefulCanVent.GetBool(),
             CustomRoles.Glitch => Glitch.CanVent.GetBool(),
@@ -1264,6 +1265,7 @@ static class ExtendedPlayerControl
         return target.Is(CustomRoles.EngineerTOHE)
             || target.Is(CustomRoles.SabotageMaster)
             || target.Is(CustomRoles.CopyCat)
+            || target.Is(CustomRoles.Snitch) && Snitch.SnitchCanVent.GetBool()
             || target.Is(CustomRoles.Monitor) && Monitor.CanVent.GetBool()
             || target.Is(CustomRoles.SwordsMan) && SwordsMan.CanVent.GetBool()
             || target.Is(CustomRoles.Nimble);
@@ -1398,9 +1400,10 @@ static class ExtendedPlayerControl
         else if (Options.DoctorVisibleToEveryone.GetBool() && target.Is(CustomRoles.Doctor) && !target.IsEvilAddons()) return true;
         else if (Options.MayorRevealWhenDoneTasks.GetBool() && target.Is(CustomRoles.Mayor) && target.GetPlayerTaskState().IsTaskFinished) return true;
         else if (target.GetPlayerTaskState().IsTaskFinished && seer.Is(CustomRoleTypes.Crewmate) && target.Is(CustomRoles.Marshall)) return true;
-        else if (seer.Is(CustomRoles.Jackal) && (target.Is(CustomRoles.Sidekick) || target.Is(CustomRoles.SidekickB) || target.Is(CustomRoles.Recruit))) return true;
+        else if (seer.Is(CustomRoles.Jackal) && (target.Is(CustomRoles.Sidekick) || target.Is(CustomRoles.Recruit))) return true;
         else if (seer.Is(CustomRoles.Sidekick) && (target.Is(CustomRoles.Jackal) || target.Is(CustomRoles.Recruit) || target.Is(CustomRoles.Sidekick))) return true;
         else if (seer.Is(CustomRoles.SidekickB) && (target.Is(CustomRoles.Briber) || target.Is(CustomRoles.SidekickB))) return true;
+        else if (seer.Is(CustomRoles.Briber) && (target.Is(CustomRoles.SidekickB))) return true;
         else if (seer.Is(CustomRoles.Recruit) && (target.Is(CustomRoles.Jackal) || target.Is(CustomRoles.Sidekick) || target.Is(CustomRoles.Recruit))) return true;
         else if (seer.IsRevealedPlayer(target) && !target.Is(CustomRoles.Trickster)) return true;
         else if (Totocalcio.KnowRole(seer, target)) return true;

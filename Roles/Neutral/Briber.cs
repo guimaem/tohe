@@ -17,21 +17,22 @@ public static class Briber
     private static readonly int Id = 3956;
 
     //private static Dictionary<byte, byte> RecruitLimit = new();
-    private static List<byte> playerIdList = new();
+    public static List<byte> playerIdList = new();
 
     public static OptionItem RecruitCooldown;
+    public static bool IsEnable = false;
     //private static OptionItem NeutralCanBeRecruited;
     //private static OptionItem RecruitLimitOption;
     public static OptionItem RecruitedKillCD;
     public static OptionItem KillCooldown;
     public static OptionItem RecruitedCanSabotage;
-    private static OptionItem CanKill;
-    private static bool CanKillBool;
+    //private static OptionItem CanKill;
+    //private static bool CanKillBool = false;
     public static OptionItem CanSabotage;
 
     public static void SetupCustomOption()
     {
-        SetupRoleOptions(Id, TabGroup.OtherRoles, CustomRoles.Briber);
+        Options.SetupRoleOptions(Id, TabGroup.OtherRoles, CustomRoles.Briber);
         /*CanKill = BooleanOptionItem.Create(Id + 10, "CanKill", false, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
         KillCooldown = FloatOptionItem.Create(Id + 14, "KillCooldown", new(5f, 180f, 2.5f), 30f, TabGroup.OtherRoles, false).SetParent(CanKill)
             .SetValueFormat(OptionFormat.Seconds);*/
@@ -47,12 +48,14 @@ public static class Briber
     public static void Init()
     {
         playerIdList = new();
-        CanKillBool = CanKill.GetBool();
+        IsEnable = false;
+        //CanKillBool = CanKill.GetBool();
         //RecruitLimit = new();
     }
     public static void Add(byte playerId)
     {
         playerIdList.Add(playerId);
+        IsEnable = true;
         //RecruitLimit.TryAdd(playerId, RecruitLimitOpt.GetInt());
     }
     public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = RecruitCooldown.GetFloat();

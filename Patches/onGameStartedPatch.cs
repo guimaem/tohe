@@ -209,9 +209,9 @@ internal class ChangeRoleSettings
             Executioner.Init();
             Lawyer.Init();
             Jackal.Init();
-            SidekickB.Init();
-            Briber.Init();
             Sidekick.Init();
+            Briber.Init();
+            SidekickB.Init();
             Bandit.Init();
             Doppelganger.Init();
             Sheriff.Init();

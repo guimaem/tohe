@@ -409,6 +409,9 @@ class CheckMurderPatch
                 case CustomRoles.Lurker:
                     Lurker.OnCheckMurder(killer);
                     break;
+                case CustomRoles.Briber:
+                    Briber.OnCheckRecruit(killer, target);
+                    break;
                 case CustomRoles.Crusader:
                     Crusader.OnCheckMurder(killer, target);
                     return false;

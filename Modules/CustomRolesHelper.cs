@@ -1714,6 +1714,7 @@ static class CustomRolesHelper
            CustomRoles.Jackal => CountTypes.Jackal,
            CustomRoles.Sidekick => CountTypes.Jackal,
            CustomRoles.SidekickB => CountTypes.Briber,
+           CustomRoles.Briber => CountTypes.Briber,
            CustomRoles.Doppelganger => CountTypes.Doppelganger,
            CustomRoles.Bandit => CountTypes.Bandit,
            CustomRoles.Poisoner => CountTypes.Poisoner,

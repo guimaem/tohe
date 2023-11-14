@@ -18,7 +18,7 @@ public static class BallLightning
     private static OptionItem ConvertTime;
     private static OptionItem KillerConvertGhost;
 
-    private static List<byte> GhostPlayer;
+    public static List<byte> GhostPlayer;
     private static Dictionary<byte, PlayerControl> RealKiller;
     public static void SetupCustomOption()
     {

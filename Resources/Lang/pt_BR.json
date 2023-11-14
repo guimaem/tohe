@@ -762,7 +762,7 @@
   "NukerInfo": "Metamorfe-se para explodir todos",
   "InstigatorInfoLong": "(Impostors):\n★Como um Estimulador, é o seu trabalho virar os tripulantes contra os outros. Cada vez em que um Tripulante é expulso em uma reunião, se você estiver vivo, um tripulante adicional que votou no jogador inocente vai morrer após a reunião. O número de tripulantes adicionais mortos é determinado pelo Anfitrião.",
   "EnigmaInfoLong": "(Tripulantes):\n★Como o Informante, você coleta uma pista aleatória sobre o assassino cada reunião, dependendo das configurações do anfitrião, você talvez terá que reportar um corpo para pegar uma pista. A cada tarefa que você completa, mais precisa a pista fica.",
-  "ExploiterInfoLong":"(Neutros):\n★O Exploiter tem um tempo de recarga muito pequeno para matar ou se transformar.\n\n★A duração da metamorfose do Exploiter é bem maior que a padrão.",
+  "ExploiterInfoLong":"(Neutros):\n★O Exploiter tem um tempo de recarga muito pequeno para matar ou se transformar.\n★Do mesmo jeito que o Visionário, ele pode ver o time de outros jogadores.\n\n★A duração da metamorfose do Exploiter é bem maior que a padrão.",
   "EngineerTOHEInfoLong": "(Tripulantes):\n★Como um Engenheiro, você pode acessar as tubulações enquanto as comunicações não são sabotadas.",
   "ScientistTOHEInfoLong": "(Tripulantes):\n★Como um Cientista, você tem um tablet portátil com os dados vitais da Tripulação.\n★Use-o da maneira que quiser.",
   "ShapeshifterTOHEInfoLong": "(Impostores):\n★Como um Metamorfo, você tem uma habilidade de metamorfose que pode usar para incriminar outros Tripulantes.\n★Apenas esteja ciente de que há um casulo durante a mudança e o disfarce é temporário.",
