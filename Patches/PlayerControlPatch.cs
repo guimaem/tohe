@@ -919,7 +919,7 @@ class CheckMurderPatch
             killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Mini), GetString("Cantkillkid")));
             return false;
         }
-        if (killer.Is(CustomRoles.EvilMini) && Mini.Age != 18)
+        /*if (killer.Is(CustomRoles.EvilMini) && Mini.Age != 18)
         {
             Main.EvilMiniKillcooldown[killer.PlayerId] = Mini.MinorCD.GetFloat();
             Main.AllPlayerKillCooldown[killer.PlayerId] = Mini.MinorCD.GetFloat();
@@ -934,7 +934,7 @@ class CheckMurderPatch
             killer.MarkDirtySettings();
             killer.SetKillCooldown();
             return true;
-        }
+        }*/
 
     /*    if (target.Is(CustomRoles.BoobyTrap) && Options.TrapOnlyWorksOnTheBodyBoobyTrap.GetBool() && !GameStates.IsMeeting)
         {
@@ -1333,6 +1333,9 @@ class MurderPlayerPatch
         if (Main.OverDeadPlayerList.Contains(target.PlayerId)) return;
 
         PlayerControl killer = __instance; //読み替え変数
+        
+        if (Pelican.IsEnable && target.Is(CustomRoles.Pelican)) 
+            Pelican.OnPelicanDied(target.PlayerId);
         if (Main.GodfatherTarget.Contains(target.PlayerId) && !(killer.GetCustomRole().IsImpostor() || killer.GetCustomRole().IsMadmate() || killer.Is(CustomRoles.Madmate)))
         {
             if (Options.GodfatherChangeOpt.GetValue() == 0) killer.RpcSetCustomRole(CustomRoles.Refugee);
@@ -1464,10 +1467,11 @@ class MurderPlayerPatch
 
         if (target.Is(CustomRoles.Avanger))
         {
-            var pcList = Main.AllAlivePlayerControls.Where(x => x.PlayerId != target.PlayerId).ToList();
-            var rp = pcList[IRandom.Instance.Next(0, pcList.Count)];
-            if (!rp.Is(CustomRoles.Pestilence))
+            var pcList = Main.AllAlivePlayerControls.Where(x => x.PlayerId != target.PlayerId && !Pelican.IsEaten(x.PlayerId) && !Medic.ProtectList.Contains(x.PlayerId) 
+            && !x.Is(CustomRoles.Pestilence) && !x.Is(CustomRoles.Masochist) && !((x.Is(CustomRoles.NiceMini) || x.Is(CustomRoles.EvilMini)) && Mini.Age < 18)).ToList();
+            if (pcList.Any())
             {
+                PlayerControl rp = pcList[IRandom.Instance.Next(0, pcList.Count)];
                 Main.PlayerStates[rp.PlayerId].deathReason = PlayerState.DeathReason.Revenge;
                 rp.SetRealKiller(target);
                 rp.RpcMurderPlayerV3(rp);
@@ -2539,7 +2543,12 @@ class FixedUpdatePatch
                 DoubleTrigger.OnFixedUpdate(player);
 
             var playerRole = player.GetCustomRole();
-
+            if (player.Is(CustomRoles.NiceMini) || player.Is(CustomRoles.EvilMini))
+            {
+                if (!player.Data.IsDead)
+                    Mini.OnFixedUpdate(player);
+            } //Mini's count down needs to be done outside if intask if we are counting meeting time
+            
             if (GameStates.IsInTask)
             {
                 if (ReportDeadBodyPatch.CanReport[__instance.PlayerId] && ReportDeadBodyPatch.WaitReport[__instance.PlayerId].Any())
@@ -2960,7 +2969,7 @@ class FixedUpdatePatch
                             }
                             break;
 
-                        case CustomRoles.NiceMini: 
+                        /*case CustomRoles.NiceMini: 
                             if (Mini.Age < 18)
                             {
                                 if (player.IsAlive())
@@ -3029,7 +3038,7 @@ class FixedUpdatePatch
                                     Logger.Info($"重置击杀冷却{Main.EvilMiniKillcooldownf - 1f}", "Mini");
                                 }
                             }
-                            break;
+                            break;*/
                     }
 
 
@@ -3250,10 +3259,10 @@ class FixedUpdatePatch
                         break;
                 }
                 if (target.Is(CustomRoles.NiceMini) && Mini.EveryoneCanKnowMini.GetBool())
-                    Mark.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Mini), Mini.Age != 18 ? $"({Mini.Age})" : ""));
+                    Mark.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Mini), Mini.Age != 18 && Mini.UpDateAge.GetBool() ? $"({Mini.Age})" : ""));
 
                 if (target.Is(CustomRoles.EvilMini) && Mini.EveryoneCanKnowMini.GetBool())
-                    Mark.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Mini), Mini.Age != 18 ? $"({Mini.Age})" : ""));
+                    Mark.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Mini), Mini.Age != 18 && Mini.UpDateAge.GetBool() ? $"({Mini.Age})" : ""));
                     
                 if ((Medic.WhoCanSeeProtect.GetInt() is 0 or 2) && seer.PlayerId == target.PlayerId && (Medic.InProtect(seer.PlayerId) || Medic.TempMarkProtected == seer.PlayerId))
                     Mark.Append($"<color={Utils.GetRoleColorCode(CustomRoles.Medic)}>✚</color>");

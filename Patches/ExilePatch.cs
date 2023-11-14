@@ -149,7 +149,7 @@ class ExileControllerWrapUpPatch
                 }
             }
         }
-
+        /*
         foreach (var pc in Main.AllAlivePlayerControls)
         {
             if (pc.Is(CustomRoles.EvilMini) && Mini.Age != 18)
@@ -166,64 +166,38 @@ class ExileControllerWrapUpPatch
                 pc.MarkDirtySettings();
                 pc.SetKillCooldown();
             }
-        }
+        }*/
         
-        foreach (var pc in Main.AllPlayerControls)
+        foreach (var player in Main.AllPlayerControls)
         {
-            pc.ResetKillCooldown();
-            if (Options.MayorHasPortableButton.GetBool() && pc.Is(CustomRoles.Mayor))
-                pc.RpcResetAbilityCooldown();
-            if (pc.Is(CustomRoles.Warlock))
-            {
-                Main.CursedPlayers[pc.PlayerId] = null;
-                Main.isCurseAndKill[pc.PlayerId] = false;
-                //RPC.RpcSyncCurseAndKill();
-            }
-            if (pc.GetCustomRole() is
-                CustomRoles.Paranoia or
-                CustomRoles.Veteran or
-                CustomRoles.Greedier or
-                CustomRoles.DovesOfNeace or
-                CustomRoles.QuickShooter or
-                CustomRoles.Addict or
-                CustomRoles.ShapeshifterTOHE or
-                CustomRoles.Wildling or
-                CustomRoles.Twister or
-                CustomRoles.Deathpact or
-                CustomRoles.Dazzler or
-                CustomRoles.Devourer or
-                CustomRoles.Nuker or
-                CustomRoles.Assassin or
-                CustomRoles.Camouflager or
-                CustomRoles.Disperser or
-                CustomRoles.Escapee or
-                CustomRoles.Hacker or
-                CustomRoles.Hangman or
-                CustomRoles.ImperiusCurse or
-                CustomRoles.Miner or
-                CustomRoles.Morphling or
-                CustomRoles.Sniper or
-                CustomRoles.Warlock or
-                CustomRoles.Workaholic or
-                CustomRoles.Chameleon or
-                CustomRoles.Engineer or
-                CustomRoles.Grenadier or
-                CustomRoles.Scientist or
-                CustomRoles.Lighter or
-                CustomRoles.Pitfall or
-                CustomRoles.Bastion or
-                CustomRoles.ScientistTOHE or
-                CustomRoles.Tracefinder or
-                CustomRoles.Doctor or
-                CustomRoles.Alchemist or
-                CustomRoles.Bomber or
-                CustomRoles.Undertaker
-                ) pc.RpcResetAbilityCooldown();
+            //PlayerControl player = allPlayerControls[item];
+            CustomRoles playerRole = player.GetCustomRole(); // Only roles (no add-ons)
 
+            switch (playerRole)
+            {
+                case CustomRoles.Mayor when Options.MayorHasPortableButton.GetBool():
+                    player.RpcResetAbilityCooldown();
+                    break;
+
+                case CustomRoles.Warlock:
+                    Main.CursedPlayers[player.PlayerId] = null;
+                    Main.isCurseAndKill[player.PlayerId] = false;
+                    break;
+
+                case CustomRoles.Swapper:
+                    if (Swapper.Vote.Any() && Swapper.VoteTwo.Any())
+                    {
+                        Swapper.Swappermax[player.PlayerId]--;
+                        Swapper.Vote.Clear();
+                        Swapper.VoteTwo.Clear();
+                        Main.SwapSend = false;
+                    }
+                    break;
+            }
 
             if (Infectious.IsEnable)
             {
-                if (pc.Is(CustomRoles.Infectious) && !pc.IsAlive())
+                if (playerRole.Is(CustomRoles.Infectious) && !player.IsAlive())
                 {
                     Infectious.MurderInfectedPlayers();
                 }
@@ -231,43 +205,12 @@ class ExileControllerWrapUpPatch
 
             if (Shroud.IsEnable)
             {
-                Shroud.MurderShroudedPlayers(pc);
+                Shroud.MurderShroudedPlayers(player);
             }
 
-            Main.MeetingIsStarted = false;
-            Main.MeetingsPassed++;
-
-            if (Options.RandomSpawn.GetBool())
-            {
-                RandomSpawn.SpawnMap map;
-                switch (Main.NormalOptions.MapId)
-                {
-                    case 0:
-                        map = new RandomSpawn.SkeldSpawnMap();
-                        Main.AllPlayerControls.Do(map.RandomTeleport);
-                        break;
-                    case 1:
-                        map = new RandomSpawn.MiraHQSpawnMap();
-                        Main.AllPlayerControls.Do(map.RandomTeleport);
-                        break;
-                    case 2:
-                        map = new RandomSpawn.PolusSpawnMap();
-                        Main.AllPlayerControls.Do(map.RandomTeleport);
-                        break;
-                    case 5:
-                        map = new RandomSpawn.FungleSpawnMap();
-                        Main.AllPlayerControls.Do(map.RandomTeleport);
-                        break;
-                }
-            }
-
-            FallFromLadder.Reset();
-            Utils.CountAlivePlayers(true);
-            Utils.AfterMeetingTasks();
-            Utils.SyncAllSettings();
-            Utils.NotifyRoles();
+            player.ResetKillCooldown();
+            player.RpcResetAbilityCooldown();
         }
-    }
 
     static void WrapUpFinalizer(GameData.PlayerInfo exiled)
     {
@@ -300,8 +243,8 @@ class ExileControllerWrapUpPatch
                         player?.SetRealKiller(player, true);
                     if (Main.ResetCamPlayerList.Contains(x.Key))
                         player?.ResetPlayerCam(1f);
-                    if (Executioner.Target.ContainsValue(x.Key))
-                        Executioner.ChangeRoleByTarget(player);
+                    //if (Executioner.Target.ContainsValue(x.Key)) moved to utils
+                        //Executioner.ChangeRoleByTarget(player); moved to utils
                     Utils.AfterPlayerDeathTasks(player);
                 });
                 Main.AfterMeetingDeathPlayers.Clear();

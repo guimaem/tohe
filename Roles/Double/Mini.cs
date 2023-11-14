@@ -17,7 +17,7 @@ public class Mini
     public static int GrowUpTime = new();
     public static int GrowUp = new();
     //public static int EvilKillCDmin = new();
-    //private static long LastFixedUpdate = new();
+    private static long LastFixedUpdate = new();
     public static int Age = new();
     public static OptionItem GrowUpDuration;
     public static OptionItem EveryoneCanKnowMini;
@@ -70,6 +70,98 @@ public class Mini
     public static void ReceiveRPC(MessageReader reader)
     {
         Age = reader.ReadInt32();
+    }
+    public static void OnFixedUpdate(PlayerControl player)
+    {
+        if (!GameStates.IsInGame || !AmongUsClient.Instance.AmHost) return;
+        if (Age >= 18) return;
+        //Check if nice mini is dead
+        if (!player.IsAlive() && player.Is(CustomRoles.NiceMini))
+        {
+            if (!CustomWinnerHolder.CheckForConvertedWinner(player.PlayerId))
+            {
+                CustomWinnerHolder.ResetAndSetWinner(CustomWinner.NiceMini);
+                CustomWinnerHolder.WinnerIds.Add(player.PlayerId);
+            }
+            // ↑ This code will show the mini winning player on the checkout screen, Tommy you shouldn't comment it out!
+        } //Is there any need to check this 30 times a second?
+
+        if (GameStates.IsMeeting && !CountMeetingTime.GetBool()) return;
+
+        if (LastFixedUpdate == Utils.GetTimeStamp()) return;
+        LastFixedUpdate = Utils.GetTimeStamp();
+        GrowUpTime++;
+
+        if (GrowUpTime >= GrowUpDuration.GetInt() / 18)
+        {
+            Age += 1;
+            GrowUpTime = 0;
+            Logger.Info($"Mini grow up by 1", "Mini");
+            if (player.Is(CustomRoles.EvilMini))
+            {
+                player.ResetKillCooldown();
+                player.SyncSettings();
+                //Only sync settings so evil mini's age updates upon next kill attempt or after meeting
+            }
+
+            if (player.Is(CustomRoles.NiceMini))
+                player.RpcGuardAndKill();
+            /*Dont show guard animation for evil mini,
+            this would simply stop them from murdering.
+            Imagine reseting kill cool down every 20 seconds
+            and evil mini can never kill before age 18*/
+            else if (player.Is(CustomRoles.EvilMini))
+                player.SetKillCooldown(forceAnime: true);
+            //Kill cool down is synced here
+
+            if (UpDateAge.GetBool())
+            {
+                SendRPC();
+                player.Notify(GetString("MiniUp"));
+                Utils.NotifyRoles();
+
+        // EvilMini
+        if (Age < 18)
+        {
+            if (Main.EvilMiniKillcooldown[player.PlayerId] >= 1f)
+            {
+                Main.EvilMiniKillcooldown[player.PlayerId]--;
+            }
+            if (!GameStates.IsInGame || !AmongUsClient.Instance.AmHost) return;
+            if (!player.Is(CustomRoles.EvilMini) || !IsEnable ) return;
+            if (Age >= 18 || (!CountMeetingTime.GetBool() && GameStates.IsMeeting)) return;
+            if (LastFixedUpdate == Utils.GetTimeStamp()) return;
+            LastFixedUpdate = Utils.GetTimeStamp();
+            GrowUpTime ++;
+            if (GrowUpTime >= GrowUpDuration.GetInt() / 18)
+            {
+                Main.EvilMiniKillcooldownf = Main.EvilMiniKillcooldown[player.PlayerId];
+                Logger.Info($"记录击杀冷却{Main.EvilMiniKillcooldownf}", "Mini");
+                Main.AllPlayerKillCooldown[player.PlayerId] = Main.EvilMiniKillcooldownf;
+                Main.EvilMiniKillcooldown[player.PlayerId] = Main.EvilMiniKillcooldownf;
+                player.MarkDirtySettings();
+                Age += 1;
+                GrowUpTime = 0;
+                Logger.Info($"年龄增加1", "Mini");
+                if (UpDateAge.GetBool())
+                {
+                    SendRPC();
+                    Utils.NotifyRoles();
+                    if (player.Is(CustomRoles.EvilMini)) player.Notify(GetString("MiniUp"));
+                }
+                Logger.Info($"重置击杀冷却{Main.EvilMiniKillcooldownf - 1f}", "Mini");
+            }
+        }
+    }
+    public static float GetKillCoolDown()
+    {
+        if (MinorCD.GetFloat() <= MajorCD.GetFloat())
+            return MinorCD.GetFloat();
+
+        if (Age == 0) return MinorCD.GetFloat();
+        if (Age == 18) return MajorCD.GetFloat();
+
+        return MinorCD.GetFloat() + ((MajorCD.GetFloat() - MinorCD.GetFloat()) / 18) * Age;
     }
     public static string GetAge(byte playerId) => Utils.ColorString(Utils.GetRoleColor(CustomRoles.Mini), Age != 18 ? $"({Age})" : "");
 }

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -577,6 +578,9 @@ public static class Utils
                 //hasTasks = Medic.MedicHasTasks.GetBool();
                 hasTasks = true;
                 break;
+	    case CustomRoles.Briber:
+	        hasTasks = Briber.HasTasks.GetBool();
+		break;
             case CustomRoles.Workaholic:
             case CustomRoles.Terrorist:
             case CustomRoles.Sunnyboy:
@@ -1959,20 +1963,25 @@ public static class Utils
     private static StringBuilder SelfMark = new(20);
     private static StringBuilder TargetSuffix = new();
     private static StringBuilder TargetMark = new(20);
-    public static void NotifyRoles(bool isForMeeting = false, PlayerControl SpecifySeer = null, bool NoCache = false, bool ForceLoop = true, bool CamouflageIsForMeeting = false, bool MushroomMixupIsActive = false)
+    public static async void NotifyRoles(bool isForMeeting = false, PlayerControl SpecifySeer = null, PlayerControl SpecifyTarget = null, bool NoCache = false, bool ForceLoop = true, bool CamouflageIsForMeeting = false, bool MushroomMixupIsActive = false)
     {
-        if (!AmongUsClient.Instance.AmHost) return;
-        if (Main.AllPlayerControls == null) return;
+        await DoNotifyRoles(isForMeeting, SpecifySeer, SpecifyTarget, NoCache, ForceLoop, CamouflageIsForMeeting, MushroomMixupIsActive);
+    }
+    public static Task DoNotifyRoles(bool isForMeeting = false, PlayerControl SpecifySeer = null, PlayerControl SpecifyTarget = null, bool NoCache = false, bool ForceLoop = true, bool CamouflageIsForMeeting = false, bool MushroomMixupIsActive = false)
+    {
+        if (!AmongUsClient.Instance.AmHost) return Task.CompletedTask;
+        if (Main.AllPlayerControls == null) return Task.CompletedTask;
 
         //Do not update NotifyRoles during meetings
-        if (GameStates.IsMeeting) return;
+        if (GameStates.IsMeeting) return Task.CompletedTask;
 
         var caller = new System.Diagnostics.StackFrame(1, false);
         var callerMethod = caller.GetMethod();
         string callerMethodName = callerMethod.Name;
         string callerClassName = callerMethod.DeclaringType.FullName;
         var logger = Logger.Handler("NotifyRoles");
-        logger.Info("NotifyRolesが" + callerClassName + "." + callerMethodName + "から呼び出されました");
+        //logger.Info("NotifyRolesが" + callerClassName + "." + callerMethodName + "から呼び出されました");
+        Logger.Info($" Was called from: {callerClassName}.{callerMethodName}", "NotifyRoles", force: true);
         HudManagerPatch.NowCallNotifyRolesCount++;
         HudManagerPatch.LastSetNameDesyncCount = 0;
 
@@ -2653,6 +2662,13 @@ public static class Utils
                 Logger.Info(target?.Data?.PlayerName + "はTerroristだった", "MurderPlayer");
                 CheckTerroristWin(target.Data);
                 break;
+	    case CustomRoles.Executioner:
+                if (Executioner.Target.ContainsKey(target.PlayerId))
+                {
+                    Executioner.Target.Remove(target.PlayerId);
+                    Executioner.SendRPC(target.PlayerId);
+                }
+                break;
             case CustomRoles.Lawyer:
                 if (Lawyer.Target.ContainsKey(target.PlayerId))
                 {
@@ -2706,6 +2722,8 @@ public static class Utils
                 }
                 break;    
             } 
+        if (Executioner.Target.ContainsValue(target.PlayerId))
+            Executioner.ChangeRoleByTarget(target);
         if (Romantic.BetPlayer.ContainsValue(target.PlayerId))
             Romantic.ChangeRole(target.PlayerId);
         if (Lawyer.Target.ContainsValue(target.PlayerId))

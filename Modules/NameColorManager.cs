@@ -121,7 +121,9 @@ public static class NameColorManager
         //Pixie
         if (seer.Is(CustomRoles.Pixie) && Pixie.PixieTargets[seer.PlayerId].Contains(target.PlayerId)) color = Main.roleColors[CustomRoles.Pixie];
         // Pyromaniac
-        if (seer.Is(CustomRoles.Pyromaniac) && Pyromaniac.DousedList.Contains(target.PlayerId)) color = "#BA4A00";
+        if (seer.Is(CustomRoles.Pyromaniac) && Pyromaniac.DousedList.Contains(target.PlayerId)) color = "#BA4A00";       
+        // Cyber
+        if (target.Is(CustomRoles.Cyber) && Options.CyberKnown.GetBool()) color = Main.roleColors[CustomRoles.Cyber];
         // Necroview
         if (seer.Is(CustomRoles.Necroview) && seer.IsAlive())
         {
@@ -161,6 +163,7 @@ public static class NameColorManager
                 if (target.Is(CustomRoles.Rascal)) color = Main.roleColors[CustomRoles.Impostor];
                 if (target.Is(CustomRoleTypes.Crewmate)) color = Main.roleColors[CustomRoles.Bait];
                 if (target.Is(CustomRoleTypes.Neutral)) color = Main.roleColors[CustomRoles.SwordsMan];
+		        if (target.Is(CustomRoles.Exploiter) && seer.Is(CustomRoles.Exploiter)) color = Main.roleColors[CustomRoles.Exploiter];
                 if (target.Is(CustomRoles.Charmed)) color = Main.roleColors[CustomRoles.SwordsMan];
                 if (target.Is(CustomRoles.Infected)) color = Main.roleColors[CustomRoles.SwordsMan];
                 if (target.Is(CustomRoles.Contagious)) color = Main.roleColors[CustomRoles.SwordsMan];
@@ -170,8 +173,6 @@ public static class NameColorManager
             }
         }
 
-        // Cyber
-        if (target.Is(CustomRoles.Cyber) && Options.CyberKnown.GetBool()) color = Main.roleColors[CustomRoles.Cyber];
 
         // Rogue
         if (seer.Is(CustomRoles.Rogue) && target.Is(CustomRoles.Rogue) && Options.RogueKnowEachOther.GetBool()) color = Main.roleColors[CustomRoles.Rogue];
