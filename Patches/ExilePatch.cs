@@ -211,8 +211,8 @@ class ExileControllerWrapUpPatch
             player.ResetKillCooldown();
             player.RpcResetAbilityCooldown();
         }
-    }
-    public static void WrapUpFinalizer(GameData.PlayerInfo exiled)
+
+    static void WrapUpFinalizer(GameData.PlayerInfo exiled)
     {
         // Even if an exception occurs in WrapUpPostfix, this is the only part that will be executed reliably.
         if (AmongUsClient.Instance.AmHost)
