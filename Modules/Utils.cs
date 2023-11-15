@@ -573,6 +573,9 @@ public static class Utils
             case CustomRoles.RuthlessRomantic:
                 hasTasks = false;
                 break;
+            case CustomRoles.Briber:
+                hasTasks = Briber.HasTasks.GetBool();
+                break;
             case CustomRoles.Medic:
                 //hasTasks = Medic.MedicHasTasks.GetBool();
                 hasTasks = true;
