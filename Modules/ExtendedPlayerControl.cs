@@ -599,6 +599,7 @@ static class ExtendedPlayerControl
             CustomRoles.Sidekick => true,
             CustomRoles.SidekickB => true,
             CustomRoles.Exploiter => true,
+            CustomRoles.Briber => true,
             CustomRoles.Necromancer => true,
             CustomRoles.HexMaster => true,
             //CustomRoles.Occultist => true,
