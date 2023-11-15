@@ -496,6 +496,7 @@ static class ExtendedPlayerControl
             CustomRoles.Huntsman => pc.IsAlive(),
             CustomRoles.SwordsMan => pc.IsAlive(),
             CustomRoles.Exploiter => pc.IsAlive(),
+            CustomRoles.Briber => pc.IsAlive(),
             CustomRoles.Jackal => pc.IsAlive(),
             CustomRoles.Bandit => pc.IsAlive(),
             CustomRoles.Sidekick => pc.IsAlive(),
