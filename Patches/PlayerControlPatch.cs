@@ -2433,7 +2433,7 @@ class ReportDeadBodyPatch
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
 class FixedUpdatePatch
 {
-    private static long LastFixedUpdate = new();
+    //private static long LastFixedUpdate = new();
     private static StringBuilder Mark = new(20);
     private static StringBuilder Suffix = new(120);
     private static int LevelKickBufferTime = 20;
