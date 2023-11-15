@@ -1400,6 +1400,8 @@
   "KillCooldown": "Kill Cooldown",
   "RecruitedKillCooldown": "Bribed Kill Cooldown",
   "VentCooldown": "Vent Cooldown",
+  "HasVentTime": "Has limited time in Vent",
+  "VentTime": "In Vent Max Time",
   "ControlCooldown": "Control Cooldown",
   "PoisonCooldown": "Poison Cooldown",
   "PoisonerKillDelay": "Poison Kill Delay",
