@@ -110,7 +110,10 @@ public class PlayerGameOptionsSender : GameOptionsSender
                 break;
             case CustomRoles.EngineerTOHE:
                 AURoleOptions.EngineerCooldown = Options.EngineerTOHEVentCooldown.GetFloat();
-                AURoleOptions.EngineerInVentMaxTime = 0f;
+		if (Options.EngineerHasLimitedTime.GetBool())
+		    AURoleOptions.EngineerInVentMaxTime = Options.EngineerVentTime.GetFloat();
+		else
+                    AURoleOptions.EngineerInVentMaxTime = 0f;
                 break;
             case CustomRoles.Chameleon:
                 AURoleOptions.EngineerCooldown = Chameleon.ChameleonCooldown.GetFloat() + 1f;

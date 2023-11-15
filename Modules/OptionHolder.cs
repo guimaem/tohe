@@ -122,6 +122,11 @@ public static class Options
     public static OptionItem DisableSabotage;
     public static OptionItem DisableTaskWin;
 
+    // engineer
+    public static OptionItem EngineerTOHEVentCooldown;
+    public static OptionItem EngineerVentTime;
+    public static OptionItem EngineerHasLimitedTime;
+
     public static OptionItem KillFlashDuration;
     //public static OptionItem ShareLobby;
     //public static OptionItem ShareLobbyMinPlayer;
@@ -132,7 +137,6 @@ public static class Options
     public static OptionItem BardChance;
     public static OptionItem CEMode;
     public static OptionItem ConfirmEjectionsNK;
-    public static OptionItem EngineerTOHEVentCooldown;
     public static OptionItem ConfirmEjectionsNonNK;
     public static OptionItem ConfirmEjectionsNeutralAsImp;
     public static OptionItem ShowImpRemainOnEject;
@@ -1637,6 +1641,9 @@ public static class Options
         EngineerTOHEVentCooldown = FloatOptionItem.Create(6110, "VentCooldown", new(0f, 20f, 1f), 0f, TabGroup.CrewmateRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.EngineerTOHE])
             .SetValueFormat(OptionFormat.Seconds);
+        EngineerHasLimitedTime = BooleanOptionItem.Create(6111, "HasVentTime", false, TabGroup.CrewmateRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.EngineerTOHE]);
+	EngineerVentTime = FloatOptionItem.Create(6112, "VentTime", new(5f, 120f, 1f), 30f, TabGroup.CrewmateRoles, false).SetParent(EngineerHasLimitedTime)
+	    .SetValueFormat(OptionFormat.Seconds);
 
         /*
          * Scientist
