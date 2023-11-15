@@ -1333,6 +1333,8 @@ class MurderPlayerPatch
         if (Main.OverDeadPlayerList.Contains(target.PlayerId)) return;
 
         PlayerControl killer = __instance; //読み替え変数
+        if (Pelican.IsEnable && target.Is(CustomRoles.Pelican)) 
+            Pelican.OnPelicanDied(target.PlayerId);
         if (Main.GodfatherTarget.Contains(target.PlayerId) && !(killer.GetCustomRole().IsImpostor() || killer.GetCustomRole().IsMadmate() || killer.Is(CustomRoles.Madmate)))
         {
             if (Options.GodfatherChangeOpt.GetValue() == 0) killer.RpcSetCustomRole(CustomRoles.Refugee);
@@ -2539,7 +2541,12 @@ class FixedUpdatePatch
                 DoubleTrigger.OnFixedUpdate(player);
 
             var playerRole = player.GetCustomRole();
-
+            if (player.Is(CustomRoles.NiceMini) || player.Is(CustomRoles.EvilMini))
+            {
+                if (!player.Data.IsDead)
+                    Mini.OnFixedUpdate(player);
+            } //Mini's count down needs to be done outside if intask if we are counting meeting time
+            
             if (GameStates.IsInTask)
             {
                 if (ReportDeadBodyPatch.CanReport[__instance.PlayerId] && ReportDeadBodyPatch.WaitReport[__instance.PlayerId].Any())
@@ -2960,12 +2967,12 @@ class FixedUpdatePatch
                             }
                             break;
 
-                        case CustomRoles.NiceMini: 
+                        /*case CustomRoles.NiceMini: 
                             if (Mini.Age < 18)
                             {
                                 if (player.IsAlive())
                                 {
-				    if (!GameStates.IsInGame || !AmongUsClient.Instance.AmHost) return;
+				                    if (!GameStates.IsInGame || !AmongUsClient.Instance.AmHost) return;
                                     if (!player.Is(CustomRoles.NiceMini)) return;
                                     if (Mini.Age >= 18 || (!Mini.CountMeetingTime.GetBool() && GameStates.IsMeeting)) return;
                                     if (LastFixedUpdate == Utils.GetTimeStamp()) return;
@@ -3029,7 +3036,7 @@ class FixedUpdatePatch
                                     Logger.Info($"重置击杀冷却{Main.EvilMiniKillcooldownf - 1f}", "Mini");
                                 }
                             }
-                            break;
+                            break;*/
                     }
 
 
