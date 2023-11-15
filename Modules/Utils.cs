@@ -2656,6 +2656,13 @@ public static class Utils
                 Logger.Info(target?.Data?.PlayerName + "はTerroristだった", "MurderPlayer");
                 CheckTerroristWin(target.Data);
                 break;
+            case CustomRoles.Executioner:
+                if (Executioner.Target.ContainsKey(target.PlayerId))
+                {
+                    Executioner.Target.Remove(target.PlayerId);
+                    Executioner.SendRPC(target.PlayerId);
+                }
+                break;
             case CustomRoles.Lawyer:
                 if (Lawyer.Target.ContainsKey(target.PlayerId))
                 {
@@ -2709,6 +2716,8 @@ public static class Utils
                 }
                 break;    
             } 
+        if (Executioner.Target.ContainsValue(target.PlayerId))
+            Executioner.ChangeRoleByTarget(target);
         if (Romantic.BetPlayer.ContainsValue(target.PlayerId))
             Romantic.ChangeRole(target.PlayerId);
         if (Lawyer.Target.ContainsValue(target.PlayerId))
