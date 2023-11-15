@@ -480,7 +480,7 @@
   "PrefixB.Nimble": "(Ágil) ",
   "PrefixB.Circumvent": "(Claustrofóbico) ",
   "PrefixB.Repairman": "(Reparador) ",
-  "PrefixB.Influenced: "(Influenciado) ",
+  "PrefixB.Influenced": "(Influenciado) ",
   "PrefixB.Cyber": "(Cibernético)",
   "BracketAddons": "Adicionar parênteses para Atributos",
   "HurriedInfo": "Meu Deus, eu tenho muitas coisas a fazer",
@@ -3447,6 +3447,6 @@
   "FFFCanKillInfected": "Pode matar Infectados",
   "FFFCanKillContagious": "Pode matar Time do Vírus",
   "FFFCanKillAdmired": "Pode matar Admirador",
-  "AutoMuteUs": "Habilitar se você usa AutoMuteUs"
+  "AutoMuteUs": "Habilitar se você usa AutoMuteUs",
   "InfluencedChangeVote": "oops! Você é tão influenciado pelos outros!\n Você não pode conter seu peso e votar {0} no lugar!"
 }
