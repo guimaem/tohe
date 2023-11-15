@@ -272,9 +272,11 @@ static class ExtendedPlayerControl
         }
         player.ResetKillCooldown();
     }
-    public static void RpcSpecificMurderPlayer(this PlayerControl killer, PlayerControl target, PlayerControl seer)
+    public static void RpcSpecificMurderPlayer(this PlayerControl killer, PlayerControl target = null, PlayerControl seer = null)
     {
-        if (seer.AmOwner)
+        if (target == null) target = killer;
+        if (seer == null) seer = killer;
+        if (killer.AmOwner && seer.AmOwner)
         {
             killer.MurderPlayer(target, ResultFlags);
         }
@@ -285,7 +287,7 @@ static class ExtendedPlayerControl
             messageWriter.Write((int)ResultFlags);
             AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
         }
-    }//Must provide seer, target
+    }
     [Obsolete]
     public static void RpcSpecificProtectPlayer(this PlayerControl killer, PlayerControl target = null, int colorId = 0)
     {
@@ -427,7 +429,7 @@ static class ExtendedPlayerControl
 
         _ = new LateTask(() =>
         {
-            pc.RpcSpecificMurderPlayer(pc, pc);
+            pc.RpcSpecificMurderPlayer();
         }, 0.2f + delay, "Murder To Reset Cam");
 
         _ = new LateTask(() =>
@@ -495,7 +497,6 @@ static class ExtendedPlayerControl
             CustomRoles.SwordsMan => pc.IsAlive(),
             CustomRoles.Exploiter => pc.IsAlive(),
             CustomRoles.Jackal => pc.IsAlive(),
-	    CustomRoles.Briber => pc.IsAlive(),
             CustomRoles.Bandit => pc.IsAlive(),
             CustomRoles.Sidekick => pc.IsAlive(),
             CustomRoles.SidekickB => pc.IsAlive(),
@@ -1177,7 +1178,23 @@ static class ExtendedPlayerControl
                 ChiefOfPolice.SetKillCooldown(player.PlayerId);
                 break;
             case CustomRoles.EvilMini:
-                Main.AllPlayerKillCooldown[player.PlayerId] = Mini.GetKillCoolDown();
+                foreach (var pc in Main.AllPlayerControls)
+                {
+                    if (pc.Is(CustomRoles.EvilMini) && Mini.Age == 0)
+                    {
+                        Main.AllPlayerKillCooldown[player.PlayerId] = Mini.MinorCD.GetFloat();
+                        Main.EvilMiniKillcooldown[player.PlayerId] = Mini.MinorCD.GetFloat();
+                    }
+                    else if (pc.Is(CustomRoles.EvilMini) && Mini.Age != 18 && Mini.Age != 0)
+                    {
+                        Main.AllPlayerKillCooldown[player.PlayerId] = Main.EvilMiniKillcooldownf;
+                        Main.EvilMiniKillcooldown[player.PlayerId] = Main.EvilMiniKillcooldownf;
+                    }
+                    else if (pc.Is(CustomRoles.EvilMini) && Mini.Age == 18)
+                    {                      
+                        Main.AllPlayerKillCooldown[player.PlayerId] = Mini.MajorCD.GetFloat();
+                    }
+                }
                 break;
             case CustomRoles.CrewmateTOHE:
             case CustomRoles.EngineerTOHE:

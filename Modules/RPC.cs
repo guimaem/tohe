@@ -313,9 +313,10 @@ internal class RPCHandlerPatch
                 Logger.Msg($"StartAmount: {startAmount} - LastAmount: {lastAmount} ({startAmount}/{lastAmount}) :--: ListOptionsCount: {countOptions} - AllOptions: {countAllOptions} ({countOptions}/{countAllOptions})", "SyncCustomSettings");
 
                 // Sync Settings
-                foreach (var option in listOptions.ToArray())
+                for (int optionNumber = 0; optionNumber < countOptions; optionNumber++)
                 {
-                    option.SetValue(reader.ReadPackedInt32());
+                    OptionItem co = listOptions[optionNumber];
+                    co.SetValue(reader.ReadInt32());
                 }
                 OptionShower.GetText();
                 break;
@@ -807,9 +808,10 @@ internal static class RPC
         Logger.Msg($"StartAmount: {startAmount} - LastAmount: {lastAmount} ({startAmount}/{lastAmount}) :--: ListOptionsCount: {countListOptions} - AllOptions: {amountAllOptions} ({countListOptions}/{amountAllOptions})", "SyncCustomSettings");
 
         // Sync Settings
-        foreach (var option in listOptions.ToArray())
+        for (var optionNumber = 0; optionNumber < countListOptions; optionNumber++)
         {
-            writer.WritePacked(option.GetValue());
+            OptionItem opt = listOptions[optionNumber];
+            writer.Write(opt.GetValue());
         }
 
         AmongUsClient.Instance.FinishRpcImmediately(writer);

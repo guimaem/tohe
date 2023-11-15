@@ -17,7 +17,7 @@ public class Mini
     public static int GrowUpTime = new();
     public static int GrowUp = new();
     //public static int EvilKillCDmin = new();
-    private static long LastFixedUpdate = new();
+    //private static long LastFixedUpdate = new();
     public static int Age = new();
     public static OptionItem GrowUpDuration;
     public static OptionItem EveryoneCanKnowMini;
