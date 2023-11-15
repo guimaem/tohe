@@ -1645,7 +1645,6 @@
   "BecomeBaitDelayNotify": "<color=#ffff00>visar ao assassino sobre o auto-relatório</color>",
   "BaitNotification": "Revelar <color=#00f7ff>Armador</color> na Primeira Reunião",
   "BaitAdviceAlive": "<b>{0}</b> é o Armador. O jogador que abater o Armador irá reportar o corpo automaticamente!",
-  "BaitCanBeReportedUnderAllConditions": "o Armador pode ser reportado em todas as condições",
   "BaitCanBeReportedUnderAllConditions": "Armador pode ser reportado mesmo se reuniões estão desativadas durante sabotagem de comunicações",
   "CounterfeiterSkillCooldown": "Recarga de Habilidae",
   "CounterfeiterSkillLimitTimes": "Número máximo de usos",
