@@ -1401,6 +1401,8 @@
   "RecruitedKillCooldown": "Recarga de Abate do Subornado",
   "RecruitedCanSabotage": "Subornado pode sabotar",
   "VentCooldown": "Recarga de Duto",
+  "HasVentTime": "Possui tempo limitado no duto",
+  "VentTime": "Tempo no duto",
   "ControlCooldown": "Recarga de Controle",
   "PoisonCooldown": "Recarga de Veneno",
   "PoisonerKillDelay": "Atraso de Morte por Veneno",
