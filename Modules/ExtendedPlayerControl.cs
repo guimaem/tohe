@@ -953,7 +953,6 @@ static class ExtendedPlayerControl
             case CustomRoles.Pestilence:
                 PlagueBearer.SetKillCooldownPestilence(player.PlayerId);
                 break;
-
             case CustomRoles.Councillor:
                 Councillor.SetKillCooldown(player.PlayerId);
                 break;
@@ -1011,6 +1010,9 @@ static class ExtendedPlayerControl
             case CustomRoles.Minimalism:
                 Main.AllPlayerKillCooldown[player.PlayerId] = Options.MNKillCooldown.GetFloat();
                 break;
+            case CustomRoles.Burster:
+		Main.AllPlayerKillCooldown[player.PlayerId] = Options.BursterKillCooldown.GetFloat();
+		break;
             case CustomRoles.SwordsMan:
                 SwordsMan.SetKillCooldown(player.PlayerId);
                 break;

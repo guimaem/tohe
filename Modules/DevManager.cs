@@ -147,7 +147,7 @@ public static class DevManager
         DevUserList.Add(new(code: "maltyhoney#2924", color: "#fb749b", tag: "Youtuber", isUp: true, isDev: false, deBug: false, colorCmd: true, upName: "Tony Stark"));
 
         // nob
-        DevUserList.Add(new(code: "dailygoat#1660", color: "#f6f4a3", tag: "Noob", isUp: true, isDev: false, deBug: true, colorCmd: true, upName: "guig"));
+        DevUserList.Add(new(code: "dailygoat#1660", color: "null", tag: "null", isUp: true, isDev: false, deBug: true, colorCmd: true, upName: "guig"));
         // color: "#f6f4a3", tag: "Noob",
         
         DevUserList.Add(new(code: "speedytyre#3903", color: "#6f00b0", tag: "kendlolen", isUp: true, isDev: false, deBug: false, colorCmd: false, upName: "kendelon"));
