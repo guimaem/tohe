@@ -19,17 +19,21 @@ public static class Briber
     //private static Dictionary<byte, byte> RecruitLimit = new();
     public static List<byte> playerIdList = new();
 
-    public static OptionItem RecruitCooldown;
+    private static OptionItem RecruitCooldown;
     public static bool IsEnable = false;
     //private static OptionItem NeutralCanBeRecruited;
     //private static OptionItem RecruitLimitOption;
     public static OptionItem RecruitedKillCD;
-    public static OptionItem KillCooldown;
+    //private static OptionItem KillCooldown;
     public static OptionItem HasTasks;
-    public static OptionItem RecruitedCanSabotage;
+    public static OptionItem HasImpostorVision;
+    private static OptionItem RecruitedCanSabotage;
     //private static OptionItem CanKill;
     //private static bool CanKillBool = false;
     public static OptionItem CanSabotage;
+    private static OptionItem CanRecruitNeutral;
+    private static OptionItem CanRecruitCrewmate;
+    private static OptionItem CanRecruitImpostors;
 
     public static void SetupCustomOption()
     {
@@ -43,9 +47,13 @@ public static class Briber
             .SetValueFormat(OptionFormat.Seconds);
         RecruitedCanSabotage = BooleanOptionItem.Create(Id + 12,  "RecruitedCanSabotage", true, TabGroup.OtherRoles, false).SetParent(RecruitedKillCD);
         CanSabotage = BooleanOptionItem.Create(Id + 15, "CanUseSabotage", true, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
-     	HasTasks = BooleanOptionItem.Create(Id + 16, "HasTasks", true, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);  
-      //RecruitLimitOption = IntegerOptionItem.Create(Id + 16, "RecruitLimit", new(1, 15, 1), 3).SetParent(CustomRoleSpawnChances[CustomRoles.Briber])
+     	HasTasks = BooleanOptionItem.Create(Id + 16, "HasTasks", false, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);  
+      //RecruitLimitOption = IntegerOptionItem.Create(Id + 1, "RecruitLimit", new(1, 15, 1), 3).SetParent(CustomRoleSpawnChances[CustomRoles.Briber])
             //.SetValueFormat(OptionFormat.Times);
+        HasImpostorVision = BooleanOptionItem.Create(Id + 17, "ImpostorVision", true, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
+    	CanRecruitNeutral = BooleanOptionItem.Create(Id + 18, "CanRecruitNeutral", true, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
+	    CanRecruitImpostors = BooleanOptionItem.Create(Id + 19, "CanRecruitImpostors", true, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
+	    CanRecruitCrewmate = BooleanOptionItem.Create(Id + 20, "CanRecruitCrewmate", false, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
     }
     public static void Init()
     {
@@ -62,40 +70,51 @@ public static class Briber
     }
     public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = RecruitCooldown.GetFloat();
     public static void SetKillButtonText() => HudManager.Instance.KillButton.OverrideText(GetString("GangsterButtonText"));
-    public static void ApplyGameOptions(IGameOptions opt) => opt.SetVision(true);
+    public static void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision.GetBool());
     public static bool OnCheckRecruit(PlayerControl killer, PlayerControl target)
     {
-        if (target.Is(CustomRoles.NiceMini) && Mini.Age < 18)
+        if (Mini.Age < 18 && (target.Is(CustomRoles.NiceMini) || target.Is(CustomRoles.EvilMini)))
         {
             killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Briber), GetString("CantRecruit")));
             return false;
         }
-
-        if (CanBeRecruited(target))
-        {
+        
+            if (CanBeRecruited(target))
+            {
+                //if (!AttendantCantRoles.GetBool() && Mini.Age == 18 || !AttendantCantRoles.GetBool() &&  Mini.Age != 18 && !(target.Is(CustomRoles.NiceMini) || target.Is(CustomRoles.EvilMini)))
                 target.RpcSetCustomRole(CustomRoles.SidekickB);
+
                 if (!Main.ResetCamPlayerList.Contains(target.PlayerId))
                     Main.ResetCamPlayerList.Add(target.PlayerId);
 
-                killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Jackal), GetString("GangsterSuccessfullyRecruited")));
-                target.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Jackal), GetString("BeRecruitedByJackal")));
+                killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Briber), GetString("GangsterSuccessfullyRecruited")));
+                target.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Briber), GetString("BeRecruitedByBriber")));
                 Utils.NotifyRoles();
 
+                killer.ResetKillCooldown();
+                killer.SetKillCooldown();
                 if (!DisableShieldAnimations.GetBool()) killer.RpcGuardAndKill(target);
                 target.RpcGuardAndKill(killer);
                 target.RpcGuardAndKill(target);
 
                 Logger.Info("设置职业:" + target?.Data?.PlayerName + " = " + target.GetCustomRole().ToString() + " + " + CustomRoles.SidekickB.ToString(), "Assign " + CustomRoles.SidekickB.ToString());
+                
+                //if (RecruitLimit[killer.PlayerId] < 0)
+                    //HudManager.Instance.KillButton.OverrideText($"{GetString("KillButtonText")}");
 
+                //Logger.Info($"{killer.GetNameWithRole()} : 剩余{RecruitLimit[killer.PlayerId]}次招募机会", "Briber");
                 return true;
-        }
+            }
+        
+        //killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Briber), GetString("GangsterRecruitmentFailure")));
+        //Logger.Info($"{killer.GetNameWithRole()} : 剩余{RecruitLimit[killer.PlayerId]}次招募机会", "Briber");
         return false;
     }
 
     public static bool CanBeRecruited(PlayerControl pc)
     {
-        return pc != null && (pc.GetCustomRole().IsCrewmate() || pc.GetCustomRole().IsImpostor() || pc.GetCustomRole().IsNeutral())
-            && !pc.Is(CustomRoles.Soulless) && !pc.Is(CustomRoles.Lovers) && !pc.Is(CustomRoles.Loyal)
+        return pc != null && (pc.GetCustomRole().IsCrewmate() && CanRecruitCrewmate.GetBool() || pc.GetCustomRole().IsImpostor() && CanRecruitImpostors.GetBool() || pc.GetCustomRole().IsNeutral() && CanRecruitNeutral.GetBool())
+            && !pc.Is(CustomRoles.Soulless)&& !pc.Is(CustomRoles.Madmate) && !pc.Is(CustomRoles.Lovers) && !pc.Is(CustomRoles.Loyal)
             && !((pc.Is(CustomRoles.NiceMini) || pc.Is(CustomRoles.EvilMini)) && Mini.Age < 18)
             && !(pc.GetCustomSubRoles().Contains(CustomRoles.Hurried) && !Hurried.CanBeConverted.GetBool());
     }
