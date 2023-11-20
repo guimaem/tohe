@@ -372,6 +372,17 @@ class CheckMurderPatch
                     if (!Options.DisableShieldAnimations.GetBool()) killer.RpcGuardAndKill(killer); 
                     killer.SetKillCooldown();
                     return false;
+                case CustomRoles.Exploiter:
+                    if (target.Is(CustomRoles.NiceMini) || target.Is(CustomRoles.EvilMini))
+                    {
+                        killer.RpcGuardAndKill();
+                        return false;
+                    } 
+                    killer.ResetKillCooldown();
+                    killer.SetKillCooldown();
+                    killer.RpcMurderPlayerV3(target);
+                    target.SetRealKiller(killer);
+                    return false;
            /*     case CustomRoles.Bomber:
                     return false; */
                 case CustomRoles.Gangster:
@@ -410,7 +421,8 @@ class CheckMurderPatch
                     Lurker.OnCheckMurder(killer);
                     break;
                 case CustomRoles.Briber:
-                    Briber.OnCheckRecruit(killer, target);
+                    if (Briber.OnCheckRecruit(killer, target))
+                        return false;
                     break;
                 case CustomRoles.Crusader:
                     Crusader.OnCheckMurder(killer, target);

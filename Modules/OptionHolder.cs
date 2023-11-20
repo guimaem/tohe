@@ -2871,12 +2871,12 @@ public static class Options
          * Exploiter
          */
         SetupRoleOptions(3123, TabGroup.OtherRoles, CustomRoles.Exploiter);
-        ExploiterShapeshiftCooldown = FloatOptionItem.Create(3133, "ShapeshiftCooldown", new(0f, 5f, 1f), 0f, TabGroup.OtherRoles, false)
+        /*ExploiterShapeshiftCooldown = FloatOptionItem.Create(3133, "ShapeshiftCooldown", new(0f, 5f, 1f), 0f, TabGroup.OtherRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
             .SetValueFormat(OptionFormat.Seconds);
         ExploiterShapeshiftDuration = FloatOptionItem.Create(3134, "ShapeshiftDuration", new(40f, 220f, 1f), 120f, TabGroup.OtherRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
-            .SetValueFormat(OptionFormat.Seconds);
+            .SetValueFormat(OptionFormat.Seconds);*/
         ExploiterKillCooldown = FloatOptionItem.Create(3135, "KillCooldown", new(0f, 5f, 1f), 0f, TabGroup.OtherRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
             .SetValueFormat(OptionFormat.Seconds);
