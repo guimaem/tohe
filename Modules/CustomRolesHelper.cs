@@ -30,7 +30,8 @@ static class CustomRolesHelper
                 CustomRoles.Masochist => CustomRoles.Crewmate,
                 CustomRoles.Cleanser => CustomRoles.Crewmate,
                 CustomRoles.ParityCop => CustomRoles.Crewmate,
-                CustomRoles.President => CustomRoles.Crewmate,
+                CustomRoles.Burster => CustomRoles.Impostor,
+		        CustomRoles.President => CustomRoles.Crewmate,
                 CustomRoles.Marshall => CustomRoles.Crewmate,
                 CustomRoles.SabotageMaster => CustomRoles.Engineer,
                 CustomRoles.Mafia => Options.LegacyMafia.GetBool() ? CustomRoles.Shapeshifter : CustomRoles.Impostor,
@@ -40,7 +41,7 @@ static class CustomRolesHelper
                 CustomRoles.Bastion => CustomRoles.Engineer,
                 CustomRoles.Vampire => CustomRoles.Impostor,
                 CustomRoles.Vampiress => CustomRoles.Impostor,
-                CustomRoles.Exploiter => CustomRoles.Shapeshifter,
+                //CustomRoles.Exploiter => CustomRoles.Shapeshifter,
                 CustomRoles.BountyHunter => CustomRoles.Shapeshifter,
                 CustomRoles.Trickster => CustomRoles.Impostor,
                 CustomRoles.Witch => CustomRoles.Impostor,
@@ -187,6 +188,7 @@ static class CustomRolesHelper
             CustomRoles.Vigilante => RoleTypes.Impostor,
             CustomRoles.Jailer => RoleTypes.Impostor,
             CustomRoles.Crusader => RoleTypes.Impostor,
+            CustomRoles.Exploiter => RoleTypes.Impostor,
             CustomRoles.Seeker => RoleTypes.Impostor,
             CustomRoles.Pixie => RoleTypes.Impostor,
             CustomRoles.Briber => RoleTypes.Impostor,
@@ -645,6 +647,7 @@ static class CustomRolesHelper
             CustomRoles.Vampire or
             CustomRoles.Vampiress or
             CustomRoles.Witch or
+            CustomRoles.Burster or
             CustomRoles.Vindicator or
             CustomRoles.ShapeMaster or
             CustomRoles.Zombie or
@@ -1484,7 +1487,8 @@ static class CustomRolesHelper
             case CustomRoles.Burst:
                 if (pc.Is(CustomRoles.Avanger)
                     || pc.Is(CustomRoles.Trapper)
-                    || pc.Is(CustomRoles.Bait))
+                    || pc.Is(CustomRoles.Bait)
+                    || pc.Is(CustomRoles.Burster))
                     return false;
                 if ((pc.GetCustomRole().IsCrewmate() && !Options.CrewCanBeBurst.GetBool()) || (pc.GetCustomRole().IsNeutral() && !Options.NeutralCanBeBurst.GetBool()) || (pc.GetCustomRole().IsImpostor() && !Options.ImpCanBeBurst.GetBool()))
                     return false;
@@ -1571,7 +1575,8 @@ static class CustomRolesHelper
                 if (pc.Is(CustomRoles.Dictator)
                     || pc.Is(CustomRoles.Loyal)
                     || pc.Is(CustomRoles.VoidBallot)
-                    || pc.Is(CustomRoles.Brakar))
+                    || pc.Is(CustomRoles.Brakar)
+                    || pc.Is(CustomRoles.Collector))
                     return false;
                 if ((pc.GetCustomRole().IsCrewmate() && !Influenced.CanBeOnCrew.GetBool()) || (pc.GetCustomRole().IsNeutral() && !Influenced.CanBeOnNeutral.GetBool()) || (pc.GetCustomRole().IsImpostor() && !Influenced.CanBeOnImp.GetBool()))
                     return false;
