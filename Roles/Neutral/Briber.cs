@@ -26,8 +26,8 @@ public static class Briber
     public static OptionItem RecruitedKillCD;
     //private static OptionItem KillCooldown;
     public static OptionItem HasTasks;
-    public static OptionItem HasImpostorVision;
-    private static OptionItem RecruitedCanSabotage;
+    private static OptionItem HasImpostorVision;
+    public static OptionItem RecruitedCanSabotage;
     //private static OptionItem CanKill;
     //private static bool CanKillBool = false;
     public static OptionItem CanSabotage;
