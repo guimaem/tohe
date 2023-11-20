@@ -110,10 +110,11 @@ public class PlayerGameOptionsSender : GameOptionsSender
                 break;
             case CustomRoles.EngineerTOHE:
                 AURoleOptions.EngineerCooldown = Options.EngineerTOHEVentCooldown.GetFloat();
-		if (Options.EngineerHasLimitedTime.GetBool())
+		/*if (Options.EngineerHasLimitedTime.GetBool())
 		    AURoleOptions.EngineerInVentMaxTime = Options.EngineerVentTime.GetFloat();
 		else
-                    AURoleOptions.EngineerInVentMaxTime = 0f;
+                    AURoleOptions.EngineerInVentMaxTime = 0f;*/
+                AURoleOptions.EngineerInVentMaxTime = Options.EngineerHasLimitedTime.GetBool() ? Options.EngineerVentTime.GetFloat() : 0f;
                 break;
             case CustomRoles.Chameleon:
                 AURoleOptions.EngineerCooldown = Chameleon.ChameleonCooldown.GetFloat() + 1f;
@@ -132,6 +133,7 @@ public class PlayerGameOptionsSender : GameOptionsSender
                 AURoleOptions.ShapeshifterCooldown = Options.ExploiterShapeshiftCooldown.GetFloat();
                 AURoleOptions.ShapeshifterLeaveSkin = false;
                 AURoleOptions.ShapeshifterDuration = Options.ExploiterShapeshiftDuration.GetFloat();
+		opt.SetVision(true);
                 opt.SetFloat(FloatOptionNames.ImpostorLightMod, Options.ExploiterVision.GetFloat());
                 break;
             case CustomRoles.Warlock:
