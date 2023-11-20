@@ -193,6 +193,10 @@ class HudManagerPatch
                         __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
                         __instance.KillButton.OverrideText(GetString("PursuerButtonText"));
                         break;
+                    case CustomRoles.Briber:
+                        __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
+                        Briber.SetKillButtonText();
+                        break;
                     case CustomRoles.Gangster:
                         __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
                         Gangster.SetKillButtonText(player.PlayerId);
