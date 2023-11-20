@@ -1227,15 +1227,15 @@ public static class Options
         /*
 	 * Burster
 	 */
-	SetupRoleOptions(5680, TabGroup.ImpostorRoles, CustomRoles.Burster);
-	BursterImmuneBurst = BooleanOptionItem.Create(5690, "BursterImmune", true, TabGroup.ImpostorRoles, false)
-	     .SetParent(CustomRoleSpawnChances[CustomRoles.Burster]);
+        /*SetupRoleOptions(5680, TabGroup.ImpostorRoles, CustomRoles.Burster);
+        BursterImmuneBurst = BooleanOptionItem.Create(5690, "BursterImmune", true, TabGroup.ImpostorRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Burster]);
         BursterKillCooldown = FloatOptionItem.Create(5691, "BurstCooldown", new(5f, 180f, 2.5f), 25f, TabGroup.ImpostorRoles, false)
-             .SetParent(CustomRoleSpawnChances[CustomRoles.Burster])
-	     .SetValueFormat(OptionFormat.Seconds);
-	BursterDelay = FloatOptionItem.Create(5692, "BurstKillDelay", new(2f, 30f, 1f), 5f, TabGroup.ImpostorRoles, false)
-             .SetParent(CustomRoleSpawnChances[CustomRoles.Burster])
-             .SetValueFormat(OptionFormat.Seconds);
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Burster])
+            .SetValueFormat(OptionFormat.Seconds);
+        BursterDelay = FloatOptionItem.Create(5692, "BurstKillDelay", new(2f, 30f, 1f), 5f, TabGroup.ImpostorRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Burster])
+            .SetValueFormat(OptionFormat.Seconds);*/
 
         /*
          * Bounty Hunter
