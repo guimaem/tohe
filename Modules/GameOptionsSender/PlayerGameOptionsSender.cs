@@ -130,10 +130,10 @@ public class PlayerGameOptionsSender : GameOptionsSender
                 AURoleOptions.ShapeshifterDuration = Options.ShapeMasterShapeshiftDuration.GetFloat();
                 break;
             case CustomRoles.Exploiter:
-                AURoleOptions.ShapeshifterCooldown = Options.ExploiterShapeshiftCooldown.GetFloat();
-                AURoleOptions.ShapeshifterLeaveSkin = false;
-                AURoleOptions.ShapeshifterDuration = Options.ExploiterShapeshiftDuration.GetFloat();
-		opt.SetVision(true);
+                //AURoleOptions.ShapeshifterCooldown = Options.ExploiterShapeshiftCooldown.GetFloat();
+                //AURoleOptions.ShapeshifterLeaveSkin = false;
+                //AURoleOptions.ShapeshifterDuration = Options.ExploiterShapeshiftDuration.GetFloat();
+		        opt.SetVision(true);
                 opt.SetFloat(FloatOptionNames.ImpostorLightMod, Options.ExploiterVision.GetFloat());
                 break;
             case CustomRoles.Warlock:
