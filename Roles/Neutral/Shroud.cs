@@ -131,8 +131,8 @@ public static class Shroud
         if (shroudPC == null) return;
         if (shroudPC.IsAlive())
         { 
-            shrouded.RpcMurderPlayerV3(shrouded);
             Main.PlayerStates[shrouded.PlayerId].deathReason = PlayerState.DeathReason.Shrouded;
+            shrouded.RpcMurderPlayerV3(shrouded);
         }
         ShroudList.Remove(shrouded.PlayerId);
         SendRPC(byte.MaxValue, shrouded.PlayerId, 2);

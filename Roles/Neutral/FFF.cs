@@ -75,7 +75,7 @@ namespace TOHE.Roles.Neutral
                     || ((target.Is(CustomRoles.Charmed) || target.Is(CustomRoles.Succubus)) && CanKillCharmed.GetBool())
                     || ((target.Is(CustomRoles.Lovers) || target.Is(CustomRoles.Ntr)) && CanKillLovers.GetBool())
                     || ((target.Is(CustomRoles.Romantic) || target.Is(CustomRoles.RuthlessRomantic) || target.Is(CustomRoles.VengefulRomantic)
-                        || Romantic.BetPlayer.ContainsValue(target.PlayerId)) && CanKillLovers.GetBool())
+                    || Romantic.BetPlayer.ContainsValue(target.PlayerId)) && CanKillLovers.GetBool())
                     || ((target.Is(CustomRoles.Sidekick) || target.Is(CustomRoles.Jackal) || target.Is(CustomRoles.Recruit)) && CanKillSidekicks.GetBool())
                     || (target.Is(CustomRoles.Egoist) && CanKillEgoists.GetBool())
                     || ((target.Is(CustomRoles.Infected) || target.Is(CustomRoles.Infectious)) && CanKillInfected.GetBool())
@@ -91,15 +91,15 @@ namespace TOHE.Roles.Neutral
             //Not return trigger following fail check ---- I'm sorry, what?
             if (MisFireKillTarget.GetBool() && killer.RpcCheckAndMurder(target, true)) // RpcCheckAndMurder checks if the target can be murdered or not (checks for shields and other stuff); the 'true' parameter indicates that we just want a check, and not murder yet.
             {
-                killer.RpcMurderPlayerV3(target); // Murder the target only if the setting is on and the target can be killed
                 target.SetRealKiller(killer);
                 target.Data.IsDead = true;
                 Main.PlayerStates[target.PlayerId].deathReason = PlayerState.DeathReason.Misfire;
+                killer.RpcMurderPlayerV3(target); // Murder the target only if the setting is on and the target can be killed
             }
             killer.Data.IsDead = true;
             Main.PlayerStates[killer.PlayerId].deathReason = PlayerState.DeathReason.Sacrifice;
-            killer.RpcMurderPlayerV3(killer);
             Main.PlayerStates[killer.PlayerId].SetDead();
+            killer.RpcMurderPlayerV3(killer);
             Logger.Info($"{killer.GetRealName()} killed incorrect target => misfire", "FFF");
             return false;
         }
