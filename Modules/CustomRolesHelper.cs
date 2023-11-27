@@ -652,6 +652,7 @@ static class CustomRolesHelper
             CustomRoles.ShapeMaster or
             CustomRoles.Zombie or
             CustomRoles.Warlock or
+            CustomRoles.Crewpostor or
             CustomRoles.Undertaker or
             CustomRoles.Assassin or
             CustomRoles.Berserker or
@@ -725,7 +726,7 @@ static class CustomRolesHelper
             CustomRoles.Imitator or
             CustomRoles.Briber or
             CustomRoles.Shaman or
-            CustomRoles.Crewpostor or
+            //CustomRoles.Crewpostor or
             CustomRoles.NWitch or
             CustomRoles.Shroud or
             CustomRoles.Wraith or
