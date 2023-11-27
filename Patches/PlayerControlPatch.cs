@@ -373,11 +373,11 @@ class CheckMurderPatch
                     killer.SetKillCooldown();
                     return false;
                 case CustomRoles.Exploiter:
-                    if (target.Is(CustomRoles.NiceMini) || target.Is(CustomRoles.EvilMini))
+                    if (target.Is(CustomRoles.NiceMini) || target.Is(CustomRoles.EvilMini) || Medic.ProtectList.Contains(target.PlayerId))
                     {
                         killer.RpcGuardAndKill();
                         return false;
-                    } 
+                    }
                     killer.ResetKillCooldown();
                     killer.SetKillCooldown();
                     killer.RpcMurderPlayerV3(target);
@@ -421,9 +421,8 @@ class CheckMurderPatch
                     Lurker.OnCheckMurder(killer);
                     break;
                 case CustomRoles.Briber:
-                    if (Briber.OnCheckRecruit(killer, target))
-                        return false;
-                    break;
+                    Briber.OnCheckRecruit(killer, target)
+                    return false;
                 case CustomRoles.Crusader:
                     Crusader.OnCheckMurder(killer, target);
                     return false;
@@ -828,6 +827,10 @@ class CheckMurderPatch
         if (killer.Is(CustomRoles.Traitor) && target.Is(CustomRoleTypes.Impostor))
             return false;
 
+        //Bribed can't kill Briber
+	if (killer.Is(CustomRoles.SidekickB) && (target.Is(CustomRoles.Briber) || target.Is(CustomRoles.SidekickB)))
+	    return false;
+
         // Friendly Fire: OFF
         if (killer.Is(CustomRoles.NSerialKiller) && target.Is(CustomRoles.NSerialKiller))
             return false;
@@ -850,6 +853,8 @@ class CheckMurderPatch
         if (killer.Is(CustomRoles.BloodKnight) && target.Is(CustomRoles.BloodKnight))
             return false;
         if (killer.Is(CustomRoles.Jackal) && target.Is(CustomRoles.Jackal))
+            return false;
+        if (killer.Is(CustomRoles.Briber) && target.Is(CustomRoles.Briber))
             return false;
         if (killer.Is(CustomRoles.Pelican) && target.Is(CustomRoles.Pelican))
             return false;
@@ -2338,6 +2343,7 @@ class ReportDeadBodyPatch
         Main.Lighter.Clear();
         Main.AllKillers.Clear();
         Main.GodfatherTarget.Clear();
+        OverKiller.MurderTargetLateTask.Clear();
 
         if (Options.BombsClearAfterMeeting.GetBool())
         {
