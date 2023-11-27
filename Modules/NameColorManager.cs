@@ -164,6 +164,7 @@ public static class NameColorManager
                 if (target.Is(CustomRoleTypes.Crewmate)) color = Main.roleColors[CustomRoles.Bait];
                 if (target.Is(CustomRoleTypes.Neutral)) color = Main.roleColors[CustomRoles.SwordsMan];
                 if (target.Is(CustomRoles.Exploiter) && seer.Is(CustomRoles.Exploiter)) color = Main.roleColors[CustomRoles.Exploiter];
+                if (target.Is(CustomRoles.Workaholic) && Options.WorkaholicVisibleToEveryone.GetBool()) color = Main.roleColors[CustomRoles.Workaholic];
                 if (target.Is(CustomRoles.Charmed)) color = Main.roleColors[CustomRoles.SwordsMan];
                 if (target.Is(CustomRoles.Infected)) color = Main.roleColors[CustomRoles.SwordsMan];
                 if (target.Is(CustomRoles.Contagious)) color = Main.roleColors[CustomRoles.SwordsMan];
@@ -182,8 +183,8 @@ public static class NameColorManager
         if (seer.Is(CustomRoles.Sidekick) && (target.Is(CustomRoles.Jackal) || target.Is(CustomRoles.Recruit) || target.Is(CustomRoles.Sidekick))) color = Main.roleColors[CustomRoles.Jackal];
         if (seer.Is(CustomRoles.Recruit) && (target.Is(CustomRoles.Jackal) || target.Is(CustomRoles.Sidekick) || target.Is(CustomRoles.Recruit))) color = Main.roleColors[CustomRoles.Jackal];
 
-        // briber
-        if (seer.Is(CustomRoles.SidekickB) && (target.Is(CustomRoles.Jackal) || target.Is(CustomRoles.SidekickB))) color = Main.roleColors[CustomRoles.Briber];
+        // Briber
+        if (seer.Is(CustomRoles.SidekickB) && (target.Is(CustomRoles.Briber) || target.Is(CustomRoles.SidekickB))) color = Main.roleColors[CustomRoles.Briber];
         if (seer.Is(CustomRoles.Briber) && target.Is(CustomRoles.SidekickB)) color = Main.roleColors[CustomRoles.Briber];
 
         // Spiritcaller can see Evil Spirits in meetings
