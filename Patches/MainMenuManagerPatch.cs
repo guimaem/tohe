@@ -292,10 +292,10 @@ public static class MainMenuManagerPatch
 [HarmonyPatch(typeof(Constants), nameof(Constants.ShouldHorseAround))]
 public static class HorseModePatch
 {
-    public static bool isHorseMode = false;
+    //public static bool isHorseMode = false;
     public static bool Prefix(ref bool __result)
     {
-        __result = isHorseMode;
+        __result = Main.HorseMode.Value;
         return false;
     }
 }
