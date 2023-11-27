@@ -272,11 +272,12 @@ static class ExtendedPlayerControl
         }
         player.ResetKillCooldown();
     }
-    public static void RpcSpecificMurderPlayer(this PlayerControl killer, PlayerControl target = null, PlayerControl seer = null)
+    public static void RpcSpecificMurderPlayer(this PlayerControl killer, PlayerControl target, PlayerControl seer)
     {
-        if (target == null) target = killer;
-        if (seer == null) seer = killer;
-        if (killer.AmOwner && seer.AmOwner)
+        //if (target == null) target = killer;
+        //if (seer == null) seer = killer;
+        //if (killer.AmOwner && seer.AmOwner) 
+        if (seer.AmOwner)
         {
             killer.MurderPlayer(target, ResultFlags);
         }
@@ -287,7 +288,7 @@ static class ExtendedPlayerControl
             messageWriter.Write((int)ResultFlags);
             AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
         }
-    }
+    } // Must provide seer, target
     [Obsolete]
     public static void RpcSpecificProtectPlayer(this PlayerControl killer, PlayerControl target = null, int colorId = 0)
     {
@@ -429,7 +430,7 @@ static class ExtendedPlayerControl
 
         _ = new LateTask(() =>
         {
-            pc.RpcSpecificMurderPlayer();
+            pc.RpcSpecificMurderPlayer(pc, pc);
         }, 0.2f + delay, "Murder To Reset Cam");
 
         _ = new LateTask(() =>
@@ -673,13 +674,12 @@ static class ExtendedPlayerControl
         if (Necromancer.Killer && !pc.Is(CustomRoles.Necromancer)) return false;
         if (pc.Is(CustomRoles.Nimble)) return true;
         if (pc.Is(CustomRoles.Circumvent)) return false;
-
         return pc.GetCustomRole() switch
         {
             CustomRoles.Minimalism or
-            CustomRoles.Sheriff or
             CustomRoles.Vigilante or
             CustomRoles.Deputy or
+	        CustomRoles.Sheriff or
             CustomRoles.Investigator or
             CustomRoles.Innocent or
         //    CustomRoles.SwordsMan or
@@ -1049,7 +1049,7 @@ static class ExtendedPlayerControl
                 Pursuer.SetKillCooldown(player.PlayerId);
                 break;
             case CustomRoles.FFF:
-                Main.AllPlayerKillCooldown[player.PlayerId] = 0f;
+                Main.AllPlayerKillCooldown[player.PlayerId] = 1f;
                 break;
             case CustomRoles.Medusa:
                 Medusa.SetKillCooldown(player.PlayerId);
@@ -1226,6 +1226,11 @@ static class ExtendedPlayerControl
             if (kcd < 0) kcd = 0;
             Main.AllPlayerKillCooldown[player.PlayerId] = kcd;
             Logger.Info($"kill cd of player set to {Main.AllPlayerKillCooldown[player.PlayerId]}", "Antidote");
+        }
+        if (Main.AllPlayerKillCooldown[player.PlayerId] == 0)
+        {
+            if (player.Is(CustomRoles.Chronomancer)) return;
+            Main.AllPlayerKillCooldown[player.PlayerId] = 0.3f;
         }
     }
     public static bool IsNonCrewSheriff(this PlayerControl sheriff)
