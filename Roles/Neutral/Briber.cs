@@ -110,7 +110,7 @@ public static class Briber
         }
         
         killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Briber), GetString("GangsterRecruitmentFailure")));
-        Logger.Info($"{killer.GetNameWithRole()} : 剩余{RecruitLimit[killer.PlayerId]}次招募机会", "Briber");
+        //Logger.Info($"{killer.GetNameWithRole()} : 剩余{RecruitLimit[killer.PlayerId]}次招募机会", "Briber");
         if (!DisableShieldAnimations.GetBool()) killer.RpcGuardAndKill();
         return false;
     }
