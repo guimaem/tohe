@@ -2877,10 +2877,10 @@ public static class Options
         ExploiterShapeshiftDuration = FloatOptionItem.Create(3134, "ShapeshiftDuration", new(40f, 220f, 1f), 120f, TabGroup.OtherRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
             .SetValueFormat(OptionFormat.Seconds);*/
-        ExploiterKillCooldown = FloatOptionItem.Create(3135, "KillCooldown", new(0f, 5f, 1f), 0f, TabGroup.OtherRoles, false)
+        ExploiterKillCooldown = FloatOptionItem.Create(3135, "KillCooldown", new(0f, 5f, 1f), 1f, TabGroup.OtherRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
             .SetValueFormat(OptionFormat.Seconds);
-        ExploiterVision = FloatOptionItem.Create(3136, "ExploiterVision", new(1.5f, 5f, 0.25f), 2f, TabGroup.OtherRoles, false)
+        ExploiterVision = FloatOptionItem.Create(3136, "ExploiterVision", new(0.5f, 5f, 0.25f), 2.25f, TabGroup.OtherRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
             .SetValueFormat(OptionFormat.Multiplier);
         
