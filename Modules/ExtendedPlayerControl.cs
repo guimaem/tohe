@@ -203,7 +203,8 @@ static class ExtendedPlayerControl
     public static void SetKillCooldownV2(this PlayerControl player, float time = -1f)
     {
         if (player == null) return;
-        if (!player.CanUseKillButton()) return;
+        if (!player.HasImpKillButton(considerVanillaShift: true)) return;
+        if (player.HasImpKillButton(false) && !player.CanUseKillButton()) return;
         if (time >= 0f) Main.AllPlayerKillCooldown[player.PlayerId] = time * 2;
         else Main.AllPlayerKillCooldown[player.PlayerId] *= 2;
         player.SyncSettings();
@@ -1227,6 +1228,8 @@ static class ExtendedPlayerControl
             Main.AllPlayerKillCooldown[player.PlayerId] = kcd;
             Logger.Info($"kill cd of player set to {Main.AllPlayerKillCooldown[player.PlayerId]}", "Antidote");
         }
+        if (!player.HasImpKillButton(considerVanillaShift: false))
+            Main.AllPlayerKillCooldown[player.PlayerId] = 300f;
         if (Main.AllPlayerKillCooldown[player.PlayerId] == 0)
         {
             if (player.Is(CustomRoles.Chronomancer)) return;
