@@ -123,7 +123,7 @@ namespace TOHE.Modules.ChatManager
             }
             else if (operate == 3)
             {
-                if (GameStates.IsExilling)
+                if (GameStates.IsExiling)
                 {
                     if (Options.HideExileChat.GetBool()) 
                     { 
@@ -151,7 +151,7 @@ namespace TOHE.Modules.ChatManager
 
         public static void SendPreviousMessagesToAll()
         {
-            if (GameStates.IsExilling && chatHistory.Count < 20)
+            if (GameStates.IsExiling && chatHistory.Count < 20)
             {
                 var firstAlivePlayer = Main.AllAlivePlayerControls.OrderBy(x => x.PlayerId).FirstOrDefault();
                 if (firstAlivePlayer == null) return;
