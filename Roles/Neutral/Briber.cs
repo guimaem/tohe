@@ -71,7 +71,7 @@ public static class Briber
         //RecruitLimit.TryAdd(playerId, RecruitLimitOpt.GetInt());
     }
     public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = RecruitCooldown.GetFloat();
-    public static void SetKillButtonText() => HudManager.Instance.KillButton.OverrideText($"{GetString("BriberButtonText")}")
+    public static void SetKillButtonText() => HudManager.Instance.KillButton.OverrideText($"{GetString("BriberButtonText")}");
     public static void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision.GetBool());
     public static bool OnCheckRecruit(PlayerControl killer, PlayerControl target)
     {
