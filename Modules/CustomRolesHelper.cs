@@ -189,7 +189,7 @@ static class CustomRolesHelper
             CustomRoles.Vigilante => RoleTypes.Impostor,
             CustomRoles.Jailer => RoleTypes.Impostor,
             CustomRoles.Crusader => RoleTypes.Impostor,
-            CustomRoles.Exploiter => RoleTypes.Shapeshifter,
+            CustomRoles.Exploiter => RoleTypes.Impostor,
             CustomRoles.Seeker => RoleTypes.Impostor,
             CustomRoles.Pixie => RoleTypes.Impostor,
             CustomRoles.Briber => RoleTypes.Impostor,
