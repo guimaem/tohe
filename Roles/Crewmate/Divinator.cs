@@ -216,6 +216,7 @@ public static class Divinator
                 CustomRoles.Escapee or
                 CustomRoles.Miner or
                 CustomRoles.Bastion or
+                CustomRoles.Mole or
                 CustomRoles.Chronomancer or
                 CustomRoles.Alchemist or
                 CustomRoles.Morphling
@@ -293,6 +294,7 @@ public static class Divinator
                 => "Result19",
 
                 CustomRoles.Jackal or
+                CustomRoles.Briber or
                 CustomRoles.Jailer or
                 CustomRoles.SidekickB or
                 CustomRoles.Sidekick or
@@ -371,6 +373,7 @@ public static class Divinator
 
                 CustomRoles.Crewpostor or
                 CustomRoles.Taskinator or
+                CustomRoles.Exploiter or
                 CustomRoles.Marshall or
                 CustomRoles.Workaholic or
                 CustomRoles.Phantom or
