@@ -867,6 +867,7 @@ public static class Options
     public static OptionItem AutoDisplayLastRoles;
     public static OptionItem AutoDisplayKillLog;
     public static OptionItem AutoDisplayLastResult;
+    public static OptionItem HideExileChat;
     public static OptionItem SuffixMode;
     public static OptionItem HideGameSettings;
     public static OptionItem FormatNameMode;
@@ -1046,7 +1047,7 @@ public static class Options
     public static void Load()
     {
         //#######################################
-        // 25900 lasted id for roles/add-ons (Next use 26000)
+        // 26000 lasted id for roles/add-ons (Next use 26100)
         // Limit id for  roles/add-ons --- "59999"
         //#######################################
         // Start Load Settings
@@ -1732,6 +1733,12 @@ public static class Options
          * Mini
          */
         Mini.SetupCustomOption();
+
+        /*
+         * Mole
+         */
+        Mole.SetupCustomOption();
+
 
         /*
          * Superstar
@@ -2871,12 +2878,12 @@ public static class Options
          * Exploiter
          */
         SetupRoleOptions(3123, TabGroup.OtherRoles, CustomRoles.Exploiter);
-        /*ExploiterShapeshiftCooldown = FloatOptionItem.Create(3133, "ShapeshiftCooldown", new(0f, 5f, 1f), 0f, TabGroup.OtherRoles, false)
+        ExploiterShapeshiftCooldown = FloatOptionItem.Create(3133, "ShapeshiftCooldown", new(0f, 5f, 1f), 0f, TabGroup.OtherRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
             .SetValueFormat(OptionFormat.Seconds);
         ExploiterShapeshiftDuration = FloatOptionItem.Create(3134, "ShapeshiftDuration", new(40f, 220f, 1f), 120f, TabGroup.OtherRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
-            .SetValueFormat(OptionFormat.Seconds);*/
+            .SetValueFormat(OptionFormat.Seconds);
         ExploiterKillCooldown = FloatOptionItem.Create(3135, "KillCooldown", new(0f, 5f, 1f), 1f, TabGroup.OtherRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Exploiter])
             .SetValueFormat(OptionFormat.Seconds);
@@ -3000,7 +3007,10 @@ public static class Options
             .SetHeader(true);
         AutoDisplayLastRoles = BooleanOptionItem.Create(60280, "AutoDisplayLastRoles", true, TabGroup.SystemSettings, false);
         AutoDisplayLastResult = BooleanOptionItem.Create(60290, "AutoDisplayLastResult", true, TabGroup.SystemSettings, false);
-
+	
+	HideExileChat = BooleanOptionItem.Create(60295, "HideExileChat", true, TabGroup.SystemSettings, false)
+            .SetHeader(true);
+        
         SuffixMode = StringOptionItem.Create(60300, "SuffixMode", suffixModes, 0, TabGroup.SystemSettings, true)
             .SetHeader(true);
         HideGameSettings = BooleanOptionItem.Create(60310, "HideGameSettings", false, TabGroup.SystemSettings, false);
