@@ -145,6 +145,7 @@ static class CustomRolesHelper
                 CustomRoles.Retributionist => CustomRoles.Crewmate,
                 CustomRoles.Guardian => CustomRoles.Crewmate,
                 CustomRoles.Addict => CustomRoles.Engineer,
+                CustomRoles.Mole => CustomRoles.Engineer,
                 CustomRoles.Chameleon => CustomRoles.Engineer,
                 CustomRoles.EvilSpirit => CustomRoles.GuardianAngel,
                 CustomRoles.Lurker => CustomRoles.Impostor,
@@ -188,7 +189,7 @@ static class CustomRolesHelper
             CustomRoles.Vigilante => RoleTypes.Impostor,
             CustomRoles.Jailer => RoleTypes.Impostor,
             CustomRoles.Crusader => RoleTypes.Impostor,
-            CustomRoles.Exploiter => RoleTypes.Impostor,
+            CustomRoles.Exploiter => RoleTypes.Shapeshifter,
             CustomRoles.Seeker => RoleTypes.Impostor,
             CustomRoles.Pixie => RoleTypes.Impostor,
             CustomRoles.Briber => RoleTypes.Impostor,
@@ -259,6 +260,21 @@ static class CustomRolesHelper
             _ => RoleTypes.GuardianAngel
         };
     }
+    public static bool HasImpKillButton(this PlayerControl player, bool considerVanillaShift = false)
+    {
+        if (player == null) return false;
+        var customRole = player.GetCustomRole();
+        bool hostSideHasKillButton = customRole.GetDYRole() == RoleTypes.Impostor || customRole.GetVNRole() == CustomRoles.Impostor || customRole.GetVNRole() == CustomRoles.Shapeshifter;
+
+        if (player.IsModClient() || (!considerVanillaShift && !player.IsModClient()))
+            return hostSideHasKillButton;
+
+        bool vanillaSideHasKillButton = Main.ErasedRoleStorage.TryGetValue(player.PlayerId, out var erasedRole) ?
+                                         (erasedRole.GetDYRole() == RoleTypes.Impostor || erasedRole.GetVNRole() == CustomRoles.Impostor || erasedRole.GetVNRole() == CustomRoles.Shapeshifter) : hostSideHasKillButton;
+
+        return vanillaSideHasKillButton;
+    }
+    //This is a overall check for vanilla clients to see if they are imp basis
     public static bool IsAdditionRole(this CustomRoles role)
     {
         return role is
@@ -445,7 +461,7 @@ static class CustomRolesHelper
         return role is
             CustomRoles.Jackal or
             CustomRoles.Doppelganger or
-            CustomRoles.Exploiter or
+            //CustomRoles.Exploiter or
             CustomRoles.Bandit or
             CustomRoles.Glitch or
             CustomRoles.Sidekick or
@@ -489,6 +505,7 @@ static class CustomRolesHelper
             CustomRoles.Totocalcio or
             CustomRoles.FFF or
             CustomRoles.Briber or
+            CustomRoles.Exploiter or
             CustomRoles.Lawyer or
             CustomRoles.Imitator or
             CustomRoles.Maverick or
@@ -560,6 +577,7 @@ static class CustomRolesHelper
             CustomRoles.Succubus or
             CustomRoles.Phantom or
             CustomRoles.Mario or
+            CustomRoles.Exploiter or
             CustomRoles.SoulCollector or
             CustomRoles.Pirate or
             CustomRoles.Terrorist or
