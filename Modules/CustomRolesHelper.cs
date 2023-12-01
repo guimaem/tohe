@@ -5,6 +5,7 @@ using TOHE.Roles.AddOns.Crewmate;
 using TOHE.Roles.Crewmate;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
+using TOHE.Roles.Madmate;
 
 namespace TOHE;
 
@@ -31,7 +32,7 @@ static class CustomRolesHelper
                 CustomRoles.Cleanser => CustomRoles.Crewmate,
                 CustomRoles.ParityCop => CustomRoles.Crewmate,
                 CustomRoles.Burster => CustomRoles.Impostor,
-		        CustomRoles.President => CustomRoles.Crewmate,
+                CustomRoles.President => CustomRoles.Crewmate,
                 CustomRoles.Marshall => CustomRoles.Crewmate,
                 CustomRoles.SabotageMaster => CustomRoles.Engineer,
                 CustomRoles.Mafia => Options.LegacyMafia.GetBool() ? CustomRoles.Shapeshifter : CustomRoles.Impostor,
@@ -132,6 +133,7 @@ static class CustomRolesHelper
                 CustomRoles.Swooper => CustomRoles.Impostor,
                 CustomRoles.SoulCollector => CustomRoles.Crewmate,
                 CustomRoles.Crewpostor => CustomRoles.Engineer,
+                CustomRoles.Venter => CustomRoles.Engineer,
                 CustomRoles.Observer => CustomRoles.Crewmate,
                 CustomRoles.DovesOfNeace => CustomRoles.Engineer,
                 CustomRoles.Disperser => CustomRoles.Shapeshifter,
@@ -270,7 +272,7 @@ static class CustomRolesHelper
             return hostSideHasKillButton;
 
         bool vanillaSideHasKillButton = Main.ErasedRoleStorage.TryGetValue(player.PlayerId, out var erasedRole) ?
-                                         (erasedRole.GetDYRole() == RoleTypes.Impostor || erasedRole.GetVNRole() == CustomRoles.Impostor || erasedRole.GetVNRole() == CustomRoles.Shapeshifter) : hostSideHasKillButton;
+        (erasedRole.GetDYRole() == RoleTypes.Impostor || erasedRole.GetVNRole() == CustomRoles.Impostor || erasedRole.GetVNRole() == CustomRoles.Shapeshifter) : hostSideHasKillButton;
 
         return vanillaSideHasKillButton;
     }
@@ -387,6 +389,7 @@ static class CustomRolesHelper
             CustomRoles.Mario or
             CustomRoles.Shaman or
             CustomRoles.Crewpostor or
+            CustomRoles.Venter or
             CustomRoles.Lawyer or
             CustomRoles.God or
             CustomRoles.Amnesiac or
@@ -461,7 +464,6 @@ static class CustomRolesHelper
         return role is
             CustomRoles.Jackal or
             CustomRoles.Doppelganger or
-            //CustomRoles.Exploiter or
             CustomRoles.Bandit or
             CustomRoles.Glitch or
             CustomRoles.Sidekick or
@@ -604,6 +606,7 @@ static class CustomRolesHelper
             CustomRoles.Infectious or
             CustomRoles.Wraith or
             CustomRoles.Crewpostor or
+            CustomRoles.Venter or
             CustomRoles.Juggernaut or
             CustomRoles.Jinx or
             CustomRoles.DarkHide or
@@ -659,7 +662,6 @@ static class CustomRolesHelper
             CustomRoles.ImpostorTOHE or
             CustomRoles.EvilDiviner or
             CustomRoles.Wildling or
-            //CustomRoles.Exploiter or
             CustomRoles.Morphling or
             CustomRoles.BountyHunter or
             CustomRoles.Vampire or
@@ -670,7 +672,6 @@ static class CustomRolesHelper
             CustomRoles.ShapeMaster or
             CustomRoles.Zombie or
             CustomRoles.Warlock or
-            CustomRoles.Crewpostor or
             CustomRoles.Undertaker or
             CustomRoles.Assassin or
             CustomRoles.Berserker or
@@ -744,7 +745,8 @@ static class CustomRolesHelper
             CustomRoles.Imitator or
             CustomRoles.Briber or
             CustomRoles.Shaman or
-            //CustomRoles.Crewpostor or
+            CustomRoles.Crewpostor or
+            CustomRoles.Venter or
             CustomRoles.NWitch or
             CustomRoles.Shroud or
             CustomRoles.Wraith or
@@ -891,6 +893,7 @@ static class CustomRolesHelper
             CustomRoles.Mario or
             CustomRoles.HexMaster or
             CustomRoles.Crewpostor or
+            CustomRoles.Venter or
             CustomRoles.NWitch or
             CustomRoles.Wraith or
             CustomRoles.Parasite or
@@ -906,6 +909,7 @@ static class CustomRolesHelper
             CustomRoles.Arsonist or
             CustomRoles.Jackal or
             CustomRoles.Bandit or
+            CustomRoles.Briber or
             CustomRoles.Doppelganger or
             CustomRoles.Sidekick or
             CustomRoles.SidekickB or
@@ -950,6 +954,7 @@ static class CustomRolesHelper
             CustomRoles.Crewpostor or
             CustomRoles.Convict or
             CustomRoles.Refugee or
+            CustomRoles.Venter or
             CustomRoles.Parasite;
     }
     public static bool IsNimbleNeutral(this CustomRoles role)
@@ -1683,8 +1688,9 @@ static class CustomRolesHelper
     {
         CustomRoleTypes type = CustomRoleTypes.Crewmate;
         if (role.IsImpostor()) type = CustomRoleTypes.Impostor;
-        if (role.IsNeutral()) type = CustomRoleTypes.Neutral;
+        if (role.IsNeutral() && !role.IsMadmate()) type = CustomRoleTypes.Neutral;
         if (role.IsAdditionRole()) type = CustomRoleTypes.Addon;
+	if (role.IsMadmate()) type = CustomRoleTypes.Madmate;
         return type;
     }
     public static bool RoleExist(this CustomRoles role, bool countDead = false) => Main.AllPlayerControls.Any(x => x.Is(role) && (x.IsAlive() || countDead));
@@ -1744,7 +1750,6 @@ static class CustomRolesHelper
            CustomRoles.Poisoner => CountTypes.Poisoner,
            CustomRoles.Pelican => CountTypes.Pelican,
            CustomRoles.Gamer => CountTypes.Gamer,
-           CustomRoles.Exploiter => CountTypes.Exploiter,
            CustomRoles.BloodKnight => CountTypes.BloodKnight,
            CustomRoles.Succubus => CountTypes.Succubus,
            CustomRoles.HexMaster => CountTypes.HexMaster,
@@ -1763,6 +1768,7 @@ static class CustomRolesHelper
            CustomRoles.Jinx => CountTypes.Jinx,
            CustomRoles.Infectious => CountTypes.Infectious,
            CustomRoles.Crewpostor => CountTypes.Impostor,
+           CustomRoles.Venter => CountTypes.Impostor,
            CustomRoles.Pyromaniac => CountTypes.Pyromaniac,
            CustomRoles.Virus => CountTypes.Virus,
            CustomRoles.PotionMaster => CountTypes.PotionMaster,
@@ -1796,7 +1802,6 @@ static class CustomRolesHelper
             CustomRoles.Sidekick => CustomWinner.Sidekick,
             CustomRoles.SidekickB => CustomWinner.SidekickB,
             CustomRoles.God => CustomWinner.God,
-            CustomRoles.Exploiter => CustomWinner.Exploiter,
             CustomRoles.Mario => CustomWinner.Mario,
             CustomRoles.Innocent => CustomWinner.Innocent,
             CustomRoles.Pelican => CustomWinner.Pelican,
@@ -1902,6 +1907,7 @@ public enum CustomRoleTypes
     Impostor,
     Neutral,
     Addon,
+    Madmate,
 }
 public enum CountTypes
 {
@@ -1912,7 +1918,6 @@ public enum CountTypes
     Jackal,
     Doppelganger,
     Bandit,
-    Exploiter,
     Briber,
     Pelican,
     Gamer,
