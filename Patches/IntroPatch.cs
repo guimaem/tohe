@@ -227,7 +227,7 @@ class BeginCrewmatePatch
             case CustomRoles.Revolutionist:
                 PlayerControl.LocalPlayer.Data.Role.IntroSound = GetIntroSound(RoleTypes.Crewmate);
                 break;
-
+            case CustomRoles.Venter:
             case CustomRoles.EngineerTOHE:
                 PlayerControl.LocalPlayer.Data.Role.IntroSound = GetIntroSound(RoleTypes.Engineer);
                 break;
