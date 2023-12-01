@@ -78,7 +78,7 @@ public static class Credentials
         static TextMeshPro SpecialEventText;
         private static void Postfix(VersionShower __instance)
         {
-            Main.credentialsText = $"\r\n<size=1.5><color={Main.ModColor}>{Main.ModName}</color> v{Main.PluginDisplayVersion}";
+            Main.credentialsText = $"\r\n<color={Main.ModColor}>{Main.ModName}</color> v{Main.PluginDisplayVersion}";
             var buildtype = "";
 #if RELEASE
             if (TranslationController.Instance.currentLanguage.languageID == SupportedLangs.Brazilian) Main.credentialsText += $"\r\n<color=#a54aff>Por <color=#ffc0cb>KARPED1EM</color> e </color><color=#f34c50>Moe</color>";
