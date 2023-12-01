@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using TOHE.Roles.Neutral;
+using TOHE.Roles.Madmate;
 using UnityEngine;
 
 [assembly: AssemblyFileVersion(TOHE.Main.PluginVersion)]
@@ -40,8 +41,8 @@ public class Main : BasePlugin
     public static readonly string MainMenuText = " ";
 
     public const string PluginGuid = "com.0xdrmoe.townofhostenhanced";
-    public const string PluginVersion = "1.2.1.6";
-    public const string PluginDisplayVersion = "1.2.1 dev 6";
+    public const string PluginVersion = "1.2.1";
+    public const string PluginDisplayVersion = "1.2.1";
     public static readonly string SupportedVersionAU = "2023.10.24";
     public const bool Canary = false; // Unused variable?
 
@@ -344,6 +345,7 @@ public class Main : BasePlugin
             {
                 switch (role.GetCustomRoleTypes())
                 {
+                    case CustomRoleTypes.Madmate:
                     case CustomRoleTypes.Impostor:
                         roleColors.TryAdd(role, "#ff1919");
                         break;
@@ -588,6 +590,7 @@ public enum CustomRoles
     Trickster,
     Swooper,
     Crewpostor,
+    Venter,
     Parasite,
     Disperser,
     Camouflager,
