@@ -8,6 +8,7 @@ using System.Linq;
 using TOHE.Roles.Crewmate;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
+using TOHE.Roles.Madmate;
 using Mathf = UnityEngine.Mathf;
 
 namespace TOHE.Modules;
@@ -115,6 +116,9 @@ public class PlayerGameOptionsSender : GameOptionsSender
 		else
                     AURoleOptions.EngineerInVentMaxTime = 0f;*/
                 AURoleOptions.EngineerInVentMaxTime = Options.EngineerHasLimitedTime.GetBool() ? Options.EngineerVentTime.GetFloat() : 0f;
+                break;
+            case CustomRoles.Venter:
+                Venter.SetGameOptions(opt);
                 break;
             case CustomRoles.Chameleon:
                 AURoleOptions.EngineerCooldown = Chameleon.ChameleonCooldown.GetFloat() + 1f;

@@ -10,6 +10,7 @@ using TOHE.Roles.Crewmate;
 using TOHE.Roles.Double;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
+using TOHE.Roles.Madmate;
 using UnityEngine;
 
 namespace TOHE;
@@ -1638,6 +1639,11 @@ public static class Options
         ParasiteCD = FloatOptionItem.Create(5902, "KillCooldown", new(0f, 180f, 2.5f), 30f, TabGroup.ImpostorRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Parasite])
             .SetValueFormat(OptionFormat.Seconds);
+        
+        /*
+         * Venter
+         */
+        Venter.SetupCustomOption();
 
         //==================================================================================================================================//
 

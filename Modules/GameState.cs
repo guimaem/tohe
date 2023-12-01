@@ -3,6 +3,7 @@ using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static TOHE.Translator;
 using TOHE.Modules;
 using TOHE.Roles.Crewmate;
 using TOHE.Roles.Neutral;
@@ -614,6 +615,7 @@ public class TaskState
                                 target.SetRealKiller(player);
                                 target.RpcCheckAndMurder(target);
                                 player.RpcGuardAndKill();
+                                player.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Impostor), GetString("VampireTargetDead")));
                                 Logger.Info("No lunge mode kill", "Crewpostor");
                             }
                             else

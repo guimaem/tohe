@@ -12,6 +12,7 @@ using TOHE.Roles.Crewmate;
 using TOHE.Roles.Double;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
+using TOHE.Roles.Madmate;
 using static TOHE.Translator;
 
 namespace TOHE;
@@ -1086,6 +1087,9 @@ internal static class RPC
                 break;
             case CustomRoles.Crewpostor:
                 Main.CrewpostorTasksDone[targetId] = 0;
+                break;
+            case CustomRoles.Venter:
+                Venter.Add(targetId);
                 break;
             case CustomRoles.TimeManager:
                 TimeManager.Add(targetId);

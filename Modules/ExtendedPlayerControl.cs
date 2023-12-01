@@ -12,6 +12,7 @@ using TOHE.Roles.Crewmate;
 using TOHE.Roles.Double;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
+using TOHE.Roles.Madmate;
 using UnityEngine;
 using static TOHE.Translator;
 
@@ -539,6 +540,7 @@ static class ExtendedPlayerControl
             CustomRoles.Assassin => Assassin.CanUseKillButton(pc),
             CustomRoles.BloodKnight => pc.IsAlive(),
             CustomRoles.Crewpostor => false,
+            CustomRoles.Venter => false,
             CustomRoles.Totocalcio => Totocalcio.CanUseKillButton(pc),
             CustomRoles.Romantic => pc.IsAlive(),
             CustomRoles.RuthlessRomantic => pc.IsAlive(),
@@ -1408,6 +1410,10 @@ static class ExtendedPlayerControl
         else if (Options.ImpKnowWhosMadmate.GetBool() && target.Is(CustomRoles.Madmate) && seer.Is(CustomRoleTypes.Impostor)) return true;
         else if (Options.AlliesKnowCrewpostor.GetBool() && seer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoles.Crewpostor)) return true;
         else if (Options.CrewpostorKnowsAllies.GetBool() && seer.Is(CustomRoles.Crewpostor) && target.Is(CustomRoleTypes.Impostor)) return true;
+        else if (seer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoles.Venter)) return true;
+        else if (seer.Is(CustomRoles.Venter) && target.Is(CustomRoleTypes.Impostor)) return true;
+        else if (seer.Is(CustomRoles.Madmate) && target.Is(CustomRoles.Venter)) return true;
+        else if (seer.Is(CustomRoles.Venter) && target.Is(CustomRoles.Madmate)) return true;
         else if (Options.WorkaholicVisibleToEveryone.GetBool() && target.Is(CustomRoles.Workaholic)) return true;
         else if (Options.DoctorVisibleToEveryone.GetBool() && target.Is(CustomRoles.Doctor) && !target.IsEvilAddons()) return true;
         else if (Options.MayorRevealWhenDoneTasks.GetBool() && target.Is(CustomRoles.Mayor) && target.GetPlayerTaskState().IsTaskFinished) return true;

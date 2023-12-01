@@ -14,6 +14,7 @@ using TOHE.Roles.Crewmate;
 using TOHE.Roles.Double;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
+using TOHE.Roles.Madmate;
 using UnityEngine;
 using static TOHE.Translator;
 
@@ -376,11 +377,19 @@ class CheckMurderPatch
                         killer.RpcGuardAndKill();
                         return false;
                     }
+                    if (target.Is(CustomRoles.Pestilence))
+                    {
+                        killer.SetRealKiller(target);
+                        target.RpcMurderPlayerV3(killer);
+                        killer.RpcGuardAndKill();
+                        Logger.Info($"Exploiter tried to kill pestilence (reflected back)：{target.GetNameWithRole()} => {killer.GetNameWithRole()}", "Pestilence Reflect");
+                        return false;
+                    }
                     killer.ResetKillCooldown();
                     killer.SetKillCooldown();
                     killer.RpcMurderPlayerV3(target);
                     target.SetRealKiller(killer);
-                    return false;
+                    return true;
            /*     case CustomRoles.Bomber:
                     return false; */
                 case CustomRoles.Gangster:
@@ -3528,6 +3537,7 @@ class EnterVentPatch
                 }
             }
         }
+        Venter.OnEnterVent(pc);
 
         if (!AmongUsClient.Instance.AmHost) return;
 

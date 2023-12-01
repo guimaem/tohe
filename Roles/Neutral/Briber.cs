@@ -6,6 +6,7 @@ using UnityEngine;
 using TOHE.Roles.Crewmate;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Double;
+using TOHE.Roles.Madmate;
 using TOHE.Roles.AddOns.Crewmate;
 using static TOHE.Options;
 using static TOHE.Translator;

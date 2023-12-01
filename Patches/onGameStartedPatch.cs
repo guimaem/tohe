@@ -13,6 +13,7 @@ using TOHE.Roles.Crewmate;
 using TOHE.Roles.Double;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
+using TOHE.Roles.Madmate;
 using static TOHE.Modules.CustomRoleSelector;
 using static TOHE.Translator;
 
@@ -295,6 +296,7 @@ internal class ChangeRoleSettings
             Dazzler.Init();
             Addict.Init();
             Mole.Init();
+            Venter.Init();
             Deathpact.Init();
             Tracefinder.Init();
             Devourer.Init();
@@ -883,6 +885,9 @@ internal class SelectRolesPatch
                         break;
                     case CustomRoles.Mole:
                         Mole.Add(pc.PlayerId);
+                        break;
+                    case CustomRoles.Venter:
+                        Venter.Add(pc.PlayerId);
                         break;
                     case CustomRoles.Deathpact:
                         Deathpact.Add(pc.PlayerId);

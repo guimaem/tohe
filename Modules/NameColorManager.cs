@@ -3,6 +3,7 @@ using TOHE.Roles.Crewmate;
 using TOHE.Roles.Double;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
+using TOHE.Roles.Madmate;
 
 namespace TOHE;
 
@@ -35,6 +36,10 @@ public static class NameColorManager
         if (seer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoleTypes.Impostor)) color = (target.Is(CustomRoles.Egoist) && Options.ImpEgoistVisibalToAllies.GetBool() && seer != target) ? Main.roleColors[CustomRoles.Egoist] : Main.roleColors[CustomRoles.Impostor];
         if (seer.Is(CustomRoles.Madmate) && target.Is(CustomRoleTypes.Impostor) && Options.MadmateKnowWhosImp.GetBool()) color = Main.roleColors[CustomRoles.Impostor];
         if (seer.Is(CustomRoles.Crewpostor) && target.Is(CustomRoleTypes.Impostor) && Options.CrewpostorKnowsAllies.GetBool()) color = Main.roleColors[CustomRoles.Impostor];
+        if (seer.Is(CustomRoles.Venter) && target.Is(CustomRoleTypes.Impostor)) color = Main.roleColors[CustomRoles.Impostor];
+        if (seer.Is(CustomRoles.Venter) && (target.Is(CustomRoleTypes.Madmate) || target.Is(CustomRoles.Madmate))) color = Main.roleColors[CustomRoles.Impostor];
+        if ((seer.Is(CustomRoleTypes.Madmate) || seer.Is(CustomRoles.Madmate)) && !seer.Is(CustomRoles.Venter) && target.Is(CustomRoles.Venter) && Options.MadmateKnowWhosMadmate.GetBool()) color = Main.roleColors[CustomRoles.Impostor];
+        if (seer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoles.Venter)) color = Main.roleColors[CustomRoles.Impostor];
         if (seer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoles.Madmate) && Options.ImpKnowWhosMadmate.GetBool()) color = Main.roleColors[CustomRoles.Madmate];
         if (seer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoles.Crewpostor) && Options.AlliesKnowCrewpostor.GetBool()) color = Main.roleColors[CustomRoles.Madmate];
         if (seer.Is(CustomRoles.Madmate) && target.Is(CustomRoles.Madmate) && Options.MadmateKnowWhosMadmate.GetBool()) color = Main.roleColors[CustomRoles.Madmate];
@@ -148,7 +153,7 @@ public static class NameColorManager
             }
         }
 
-        // Visionary
+        // Visionary & Exploiter
         if ((seer.Is(CustomRoles.Visionary) || seer.Is(CustomRoles.Exploiter)) && seer.IsAlive())
         {
             if (target.IsAlive() && !target.Data.IsDead)

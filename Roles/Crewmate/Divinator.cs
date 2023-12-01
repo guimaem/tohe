@@ -372,6 +372,7 @@ public static class Divinator
                 => "Result28",
 
                 CustomRoles.Crewpostor or
+                CustomRoles.Venter or
                 CustomRoles.Taskinator or
                 CustomRoles.Exploiter or
                 CustomRoles.Marshall or

@@ -18,6 +18,7 @@ using TOHE.Roles.Crewmate;
 using TOHE.Roles.Double;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
+using TOHE.Roles.Madmate;
 using UnityEngine;
 using static TOHE.Translator;
 
@@ -490,6 +491,7 @@ public static class Utils
         {
             case CustomRoles.GM:
             case CustomRoles.Sheriff:
+            case CustomRoles.Venter:
             case CustomRoles.Vigilante:
             case CustomRoles.Jailer:
             case CustomRoles.Exploiter:
