@@ -248,9 +248,7 @@ internal class ChatCommands
                         Utils.SendMessage(GetString("Message.OnlyCanUseInLobby"), PlayerControl.LocalPlayer.PlayerId);
                         break;
                     }
-                    var devplayer = PlayerControl.LocalPlayer.FriendCode.GetDevUser().IsDev;
-                    var upplayer = PlayerControl.LocalPlayer.FriendCode.GetDevUser().IsUp;
-                    SendRolesInfo(subArgs, PlayerControl.LocalPlayer.PlayerId, devplayer, upplayer);
+                    SendRolesInfo(subArgs, PlayerControl.LocalPlayer.PlayerId, isUp: true);
                     break;
                 case "/setplayers":
                 case "/maxjogadores":
@@ -279,7 +277,7 @@ internal class ChatCommands
                                 Utils.SendMessage(GetString("Command.icons"));
                                 break;
                             }*/
-
+                case "/killercount":
                 case "/kcount":
                     //canceled = true;
                     int impnum = 0;
