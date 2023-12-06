@@ -12,7 +12,7 @@ namespace TOHE.Roles.Madmate;
 public static class Venter
 {
     private static readonly int Id = 17130;
-    private static List<byte> playerIdList = new();
+    //private static List<byte> playerIdList = new();
     private static bool IsEnable = false;
 
     private static OptionItem VentCooldown;
@@ -33,12 +33,12 @@ public static class Venter
 
     public static void Init()
     {
-        playerIdList = new();
+        //playerIdList = new();
         IsEnable = false;
     }
     public static void Add(byte playerId)
     {
-        playerIdList.Add(playerId);
+        //playerIdList.Add(playerId);
         IsEnable = true;
     }
 
