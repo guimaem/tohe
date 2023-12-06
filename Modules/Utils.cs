@@ -2230,15 +2230,7 @@ public static class Utils
                     SelfName = GetString("DevouredName");
 
                 // Camouflage
-                if (!CamouflageIsForMeeting && ((IsActive(SystemTypes.Comms) && Options.CommsCamouflage.GetBool() &&
-                    !(Options.DisableOnSomeMaps.GetBool() &&
-                        ((Options.DisableOnSkeld.GetBool() && Options.IsActiveSkeld) ||
-                         (Options.DisableOnMira.GetBool() && Options.IsActiveMiraHQ) ||
-                         (Options.DisableOnPolus.GetBool() && Options.IsActivePolus) ||
-                         (Options.DisableOnFungle.GetBool() && Options.IsActiveFungle) ||
-                         (Options.DisableOnAirship.GetBool() && Options.IsActiveAirship)
-                        )))
-                        || Camouflager.IsActive))
+                 if (!CamouflageIsForMeeting && ((IsActive(SystemTypes.Comms) && Camouflage.IsActive) || Camouflager.AbilityActivated))
                     SelfName = $"<size=0%>{SelfName}</size>";
 
                 // When MushroomMixup Sabotage Is Active

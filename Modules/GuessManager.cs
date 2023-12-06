@@ -1152,7 +1152,7 @@ public static class GuessManager
                     or CustomRoles.Scientist
                     or CustomRoles.Impostor
                     or CustomRoles.Shapeshifter
-                    or CustomRoles.Flashman
+                    or CustomRoles.Flash
                     or CustomRoles.NotAssigned
                     //     or CustomRoles.Marshall 
                     //or CustomRoles.Paranoia 
