@@ -119,7 +119,7 @@ public class PlayerGameOptionsSender : GameOptionsSender
                 AURoleOptions.EngineerInVentMaxTime = Options.EngineerHasLimitedTime.GetBool() ? Options.EngineerVentTime.GetFloat() : 0f;
                 break;
             case CustomRoles.Venter:
-                Venter.SetGameOptions(opt);
+                Venter.ApplyGameOptions(opt);
                 break;
             case CustomRoles.Chameleon:
                 AURoleOptions.EngineerCooldown = Chameleon.ChameleonCooldown.GetFloat() + 1f;
@@ -390,8 +390,7 @@ public class PlayerGameOptionsSender : GameOptionsSender
                 DarkHide.ApplyGameOptions(opt);
                 break;
             case CustomRoles.Workaholic:
-                AURoleOptions.EngineerCooldown = Options.WorkaholicVentCooldown.GetFloat();
-                AURoleOptions.EngineerInVentMaxTime = 0f;
+                Workaholic.ApplyGameOptions();
                 break;
             case CustomRoles.ImperiusCurse:
                 AURoleOptions.ShapeshifterCooldown = Options.ImperiusCurseShapeshiftCooldown.GetFloat();

@@ -661,7 +661,7 @@ public static class Utils
             if (taskState.hasTasks)
             {
                 if (IsActive(SystemTypes.Comms)) Comms = true;
-                if (Camouflager.IsActive) Comms = true;
+                if (Camouflager.AbilityActivated) Comms = true;
                 //if (PlayerControl.LocalPlayer.myTasks.ToArray().Any(x => x.TaskType == TaskTypes.FixComms)) Comms = true;
             }
             return GetProgressText(pc.PlayerId, Comms);
@@ -2556,7 +2556,7 @@ public static class Utils
                                  (Options.DisableOnFungle.GetBool() && Options.IsActiveFungle) ||
                                  (Options.DisableOnAirship.GetBool() && Options.IsActiveAirship)
                                 )))
-                                || Camouflager.IsActive))
+                                || Camouflager.AbilityActivated))
                             TargetPlayerName = $"<size=0%>{TargetPlayerName}</size>";
 
                         // When MushroomMixup Sabotage Is Active
