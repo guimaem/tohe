@@ -30,7 +30,7 @@ public static class Venter
         HasSkillLimit = BooleanOptionItem.Create(Id + 12, "HasSkillLimit", false, TabGroup.ImpostorRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Venter]);
         SkillLimit = IntegerOptionItem.Create(Id + 13, "SkillLimit", new(1, 20, 1), 10, TabGroup.ImpostorRoles, false).SetParent(HasSkillLimit);
     }
-    public static void SetGameOptions(IGameOptions opt)
+    public static void ApplyGameOptions(IGameOptions opt)
     {
         AURoleOptions.EngineerCooldown = VentCooldown.GetFloat();
         AURoleOptions.EngineerInVentMaxTime = 1;
