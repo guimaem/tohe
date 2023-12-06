@@ -228,10 +228,10 @@ public static class Options
     public static OptionItem TransporterTeleportMax;
     public static OptionItem CanTerroristSuicideWin;
     public static OptionItem InnocentCanWinByImp;
-    public static OptionItem WorkaholicVentCooldown;
+    /*public static OptionItem WorkaholicVentCooldown;
     public static OptionItem WorkaholicCannotWinAtDeath;
     public static OptionItem WorkaholicVisibleToEveryone;
-    public static OptionItem WorkaholicGiveAdviceAlive;
+    public static OptionItem WorkaholicGiveAdviceAlive;*/
     public static OptionItem BaitNotification;
     public static OptionItem BaitCanBeReportedUnderAllConditions;
     public static OptionItem DoctorVisibleToEveryone;
@@ -2249,7 +2249,7 @@ public static class Options
         
         Vulture.SetupCustomOption();
         
-        SetupRoleOptions(15700, TabGroup.NeutralRoles, CustomRoles.Workaholic); //TOH_Y
+        /*SetupRoleOptions(15700, TabGroup.NeutralRoles, CustomRoles.Workaholic); //TOH_Y
         WorkaholicCannotWinAtDeath = BooleanOptionItem.Create(15702, "WorkaholicCannotWinAtDeath", false, TabGroup.NeutralRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Workaholic]);
         WorkaholicVentCooldown = FloatOptionItem.Create(15703, "VentCooldown", new(0f, 180f, 2.5f), 0f, TabGroup.NeutralRoles, false)
@@ -2261,7 +2261,8 @@ public static class Options
             .SetParent(WorkaholicVisibleToEveryone);
         WorkaholicCanGuess = BooleanOptionItem.Create(15706, "CanGuess", true, TabGroup.NeutralRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Workaholic]);
-        WorkaholicTasks = OverrideTasksData.Create(15707, TabGroup.NeutralRoles, CustomRoles.Workaholic);
+        WorkaholicTasks = OverrideTasksData.Create(15707, TabGroup.NeutralRoles, CustomRoles.Workaholic);*/
+        Workaholic.SetupCustomOption();
 
         TextOptionItem.Create(10000014, "RoleType.NeutralKilling", TabGroup.NeutralRoles)
             .SetGameMode(CustomGameMode.Standard)

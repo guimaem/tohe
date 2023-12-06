@@ -563,26 +563,9 @@ public class TaskState
 
             //工作狂做完了
             if (player.Is(CustomRoles.Workaholic) && (CompletedTasksCount + 1) >= AllTasksCount
-                    && !(Options.WorkaholicCannotWinAtDeath.GetBool() && !player.IsAlive()))
+                    && !(Workaholic.WorkaholicCannotWinAtDeath.GetBool() && !player.IsAlive()))
             {
-                Logger.Info("工作狂任务做完了", "Workaholic");
-                RPC.PlaySoundRPC(player.PlayerId, Sounds.KillSound);
-                foreach (var pc in Main.AllAlivePlayerControls)
-                {
-                    if (pc.PlayerId != player.PlayerId)
-                    {
-                        Main.PlayerStates[pc.PlayerId].deathReason = pc.PlayerId == player.PlayerId ?
-                            PlayerState.DeathReason.Overtired : PlayerState.DeathReason.Ashamed;
-                        pc.RpcMurderPlayerV3(pc);
-                        Main.PlayerStates[pc.PlayerId].SetDead();
-                        pc.SetRealKiller(player);
-                    }
-                }
-                if (!CustomWinnerHolder.CheckForConvertedWinner(player.PlayerId))
-                {
-                    CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Workaholic); //Workaholic
-                    CustomWinnerHolder.WinnerIds.Add(player.PlayerId);
-                }
+                Workaholic.OnCompleteTasks(player);
             }
 
             Merchant.OnTaskFinished(player);

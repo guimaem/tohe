@@ -210,7 +210,7 @@ public static class GuessManager
                     else pc.ShowPopUp(GetString("GuessDisabled"));
                     return true;
                 }
-                if (target.Is(CustomRoles.Workaholic) && Options.WorkaholicVisibleToEveryone.GetBool())
+                if (target.Is(CustomRoles.Workaholic) && Workaholic.WorkaholicVisibleToEveryone.GetBool())
                 {
                     if (!isUI) Utils.SendMessage(GetString("GuessWorkaholic"), pc.PlayerId);
                     else pc.ShowPopUp(GetString("GuessWorkaholic"));
@@ -267,7 +267,7 @@ public static class GuessManager
                     else pc.ShowPopUp(GetString("GuessDisabled"));
                     return true;
                 }
-                if (pc.Is(CustomRoles.Workaholic) && !Options.WorkaholicCanGuess.GetBool())
+                if (pc.Is(CustomRoles.Workaholic) && !Workaholic.WorkaholicCanGuess.GetBool())
                 {
                     if (!isUI) Utils.SendMessage(GetString("GuessDisabled"), pc.PlayerId);
                     else pc.ShowPopUp(GetString("GuessDisabled"));

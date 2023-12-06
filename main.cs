@@ -142,7 +142,7 @@ public class Main : BasePlugin
     public static List<byte> CyberStarDead = new();
     public static List<byte> CyberDead = new();
     public static List<int> BombedVents = new();
-    public static List<byte> WorkaholicAlive = new();
+    //public static List<byte> WorkaholicAlive = new();
     public static List<byte> BurstBodies = new();
     public static List<byte> BaitAlive = new();
     public static List<byte> TasklessCrewmate = new();

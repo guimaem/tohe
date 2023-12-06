@@ -1532,7 +1532,10 @@ class MurderPlayerPatch
         target.SetRealKiller(killer, true); //既に追加されてたらスキップ
         Utils.CountAlivePlayers(true);
 
-        Camouflager.isDead(target);
+        if (Camouflager.AbilityActivated && target.Is(CustomRoles.Camouflager))
+        {
+            Camouflager.IsDead();
+        }
         Utils.TargetDies(__instance, target);
 
         if (Options.LowLoadMode.GetBool())
@@ -1851,7 +1854,7 @@ class ReportDeadBodyPatch
             if (!(target != null && target.Object.Is(CustomRoles.Bait) && Options.BaitCanBeReportedUnderAllConditions.GetBool()))
             {
                 // Camouflager
-                if (Camouflager.DisableReportWhenCamouflageIsActive.GetBool() && Camouflager.IsActive && !(Utils.IsActive(SystemTypes.Comms) && Options.CommsCamouflage.GetBool())) return false;
+                if (Camouflager.DisableReportWhenCamouflageIsActive.GetBool() && Camouflager.AbilityActivated && !(Utils.IsActive(SystemTypes.Comms) && Options.CommsCamouflage.GetBool())) return false;
 
                 // Comms Camouflage
                 if (Options.DisableReportWhenCC.GetBool() && Utils.IsActive(SystemTypes.Comms) && Camouflage.IsActive) return false;

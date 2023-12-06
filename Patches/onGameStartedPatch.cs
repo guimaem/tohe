@@ -66,7 +66,7 @@ internal class ChangeRoleSettings
             Main.CyberDead = new();
             Main.KilledDiseased = new();
             Main.KilledAntidote = new();
-            Main.WorkaholicAlive = new();
+            //Main.WorkaholicAlive = new();
             Main.BaitAlive = new();
             Main.BoobyTrapBody = new();
             Main.TasklessCrewmate = new();
@@ -204,6 +204,7 @@ internal class ChangeRoleSettings
             Mastermind.Init();
             Witch.Init();
             HexMaster.Init();
+            Workaholic.Init();
             //Occultist.Init();
             SabotageMaster.Init();
             Repairman.Init();
@@ -537,9 +538,6 @@ internal class SelectRolesPatch
                         break;
                     case CustomRoles.TimeThief:
                         TimeThief.Add(pc.PlayerId);
-                        break;
-                    case CustomRoles.Camouflager:
-                        Camouflager.Add(pc.PlayerId);
                         break;
                     case CustomRoles.Puppeteer:
                         Puppeteer.Add(pc.PlayerId);
