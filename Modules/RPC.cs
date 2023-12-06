@@ -33,6 +33,7 @@ enum CustomRPC
     SetKillOrHex,
     SetKillOrCurse,
     SetSheriffShotLimit,
+    SetVenterKillLimit,
     //SetCopyCatMiscopyLimit,
     SetDousedPlayer,
     setPlaguedPlayer,
@@ -360,6 +361,9 @@ internal class RPCHandlerPatch
 
             case CustomRPC.SetSheriffShotLimit:
                 Sheriff.ReceiveRPC(reader);
+                break;
+            case CustomRPC.SetVenterKillLimit:
+                Venter.ReceiveRPC(reader);
                 break;
         /*    case CustomRPC.SetCopyCatMiscopyLimit:
                 CopyCat.ReceiveRPC(reader);
