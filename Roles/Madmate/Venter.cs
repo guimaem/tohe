@@ -14,7 +14,7 @@ public static class Venter
     private static readonly int Id = 17130;
     //private static List<byte> playerIdList = new();
     private static bool IsEnable = false;
-    private static List<byte, int> KillLimit = new();
+    private static Dictionary<byte, int> KillLimit = new();
 
     private static OptionItem VentCooldown;
     private static OptionItem CanKillImpostors;
@@ -49,8 +49,23 @@ public static class Venter
         if (HasSkillLimit.GetBool())
             KillLimit.TryAdd(playerId, SkillLimit.GetInt());
     }
-
-    private static bool CanUseSkill(byte id) => !(KillLimit[id] < 1);
+    private static void SendRPC(byte playerId)
+    {
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SetVenterKillLimit, SendOption.Reliable, -1);
+        writer.Write(playerId);
+        writer.Write(KillLimit[playerId]);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+    }
+    public static void ReceiveRPC(MessageReader reader)
+    {
+        byte VenterId = reader.ReadByte();
+        int Limit = reader.ReadInt32();
+        if (KillLimit.ContainsKey(VenterId))
+            KillLimit[VenterId] = Limit;
+        else
+            KillLimit.Add(VenterId, SkillLimit.GetInt());
+    }
+    private static bool CanUseSkill(byte id) => KillLimit[id] > 0;
 
     public static void OnEnterVent(PlayerControl pc)
     {
@@ -60,6 +75,8 @@ public static class Venter
         {
             if (!CanUseSkill(pc.PlayerId)) return;
             KillLimit[pc.PlayerId]--;
+            Logger.Info($"{pc.GetNameWithRole()} : Number of kills left: {KillLimit[pc.PlayerId]}", "Venter");
+            SendRPC(pc.PlayerId);
         }
         
         List<PlayerControl> list = Main.AllAlivePlayerControls.Where(x => x.PlayerId != pc.PlayerId && (CanKillImpostors.GetBool() || !x.GetCustomSubRoles().Contains(CustomRoles.Madmate) && !x.GetCustomRole().IsMadmate() || !x.GetCustomRole().IsImpostorTeam())).ToList();
