@@ -14,13 +14,14 @@ public static class Venter
     private static readonly int Id = 17130;
     //private static List<byte> playerIdList = new();
     private static bool IsEnable = false;
-    private static Dictionary<byte, int> KillLimit = new();
+    public static Dictionary<byte, int> KillLimit = new();
 
     private static OptionItem VentCooldown;
     private static OptionItem CanKillImpostors;
-    private static OptionItem HasSkillLimit;
-    private static OptionItem SkillLimit;
-
+    private static OptionItem HasSkillLimit;    
+    public static OptionItem SkillLimit;
+    private static OptionItem HasImpostorVision;
+   
     public static void SetupCustomOption()
     {
         SetupRoleOptions(Id, TabGroup.ImpostorRoles, CustomRoles.Venter);
@@ -29,11 +30,21 @@ public static class Venter
         CanKillImpostors = BooleanOptionItem.Create(Id + 11, "CanKillAllies", false, TabGroup.ImpostorRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Venter]);
         HasSkillLimit = BooleanOptionItem.Create(Id + 12, "HasSkillLimit", false, TabGroup.ImpostorRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Venter]);
         SkillLimit = IntegerOptionItem.Create(Id + 13, "SkillLimit", new(1, 20, 1), 10, TabGroup.ImpostorRoles, false).SetParent(HasSkillLimit);
+        HasImpostorVision = BooleanOptionItem.Create(Id + 14, "ImpostorVision", false, TabGroup.ImpostorRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Venter]);
     }
     public static void ApplyGameOptions(IGameOptions opt)
     {
-        AURoleOptions.EngineerCooldown = VentCooldown.GetFloat();
-        AURoleOptions.EngineerInVentMaxTime = 1;
+        if (HasSkillLimit.GetBool())
+        {
+            AURoleOptions.EngineerCooldown = CanUseSkill() ? VentCooldown.GetFloat() : 0f
+            AURoleOptions.EngineerInVentMaxTime = CanUseSkill() ? 1 : 0f
+        }
+        else
+        {
+            AURoleOptions.EngineerCooldown = VentCooldown.GetFloat();
+            AURoleOptions.EngineerInVentMaxTime = 1;
+        }
+        opt.SetVision(HasImpostorVision.GetBool())
     }
 
     public static void Init()
@@ -79,7 +90,7 @@ public static class Venter
             SendRPC(pc.PlayerId);
         }
         
-        List<PlayerControl> list = Main.AllAlivePlayerControls.Where(x => x.PlayerId != pc.PlayerId && (CanKillImpostors.GetBool() || !x.GetCustomSubRoles().Contains(CustomRoles.Madmate) && !x.GetCustomRole().IsMadmate() || !x.GetCustomRole().IsImpostorTeam())).ToList();
+        List<PlayerControl> list = Main.AllAlivePlayerControls.Where(x => x.PlayerId != pc.PlayerId && (CanKillImpostors.GetBool() ? x.GetCustomRole().IsImpostorTeam() : !x.GetCustomRole().IsImpostorTeam())).ToList();
         if (list.Count < 1)
         {
             Logger.Info($"No target to kill", "Venter");

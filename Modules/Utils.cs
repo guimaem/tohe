@@ -962,6 +962,9 @@ public static class Utils
                 case CustomRoles.Vulture:
                     ProgressText.Append(ColorString(GetRoleColor(CustomRoles.Vulture).ShadeColor(0.25f), $"({(Vulture.BodyReportCount.TryGetValue(playerId, out var count1) ? count1 : 0)}/{Vulture.NumberOfReportsToWin.GetInt()})"));
                     break;
+                case CustomRoles.Venter:
+                    ProgressText.Append(ColorString(GetRoleColor(CustomRoles.Venter).ShadeColor(0.25f), $"({(Venter.KillLimit.TryGetValue(playerId, out var count2) ? count2 : 0)}/{Venter.SkillLimit.GetInt()})"));
+                    break;
                 case CustomRoles.Masochist:
                     ProgressText.Append(ColorString(GetRoleColor(CustomRoles.Masochist).ShadeColor(0.25f), $"({(Main.MasochistKillMax.TryGetValue(playerId, out var count3) ? count3 : 0)}/{Options.MasochistKillMax.GetInt()})"));
                     break;

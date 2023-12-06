@@ -15,7 +15,7 @@ namespace TOHE.Roles.Neutral;
 
 public static class Briber
 {
-    private static readonly int Id = 3956;
+    private static readonly int Id = 3950;
 
     //private static Dictionary<byte, byte> RecruitLimit = new();
     public static List<byte> playerIdList = new();
@@ -116,7 +116,7 @@ public static class Briber
         return false;
     }
 
-    public static bool CanBeRecruited(PlayerControl pc)
+    private static bool CanBeRecruited(PlayerControl pc)
     {
         return pc != null && (pc.GetCustomRole().IsCrewmate() && CanRecruitCrewmate.GetBool() || pc.GetCustomRole().IsImpostor() && CanRecruitImpostors.GetBool() || (pc.GetCustomRole().IsMadmate() || pc.GetCustomSubRoles().Contains(CustomRoles.Madmate)) && CanRecruitMadmate.GetBool() || pc.GetCustomRole().IsNeutral() && CanRecruitNeutral.GetBool())
             && !pc.Is(CustomRoles.Soulless)&& !pc.Is(CustomRoles.Madmate) && !pc.Is(CustomRoles.Lovers) && !pc.Is(CustomRoles.Loyal)

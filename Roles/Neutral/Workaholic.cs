@@ -45,9 +45,9 @@ public static class Workaholic
     {
         WorkaholicAlive = new();
     }
-    public static void Add(byte id)
+    public static void Add(byte playerId)
     {
-        WorkaholicAlive.Add(id);
+        WorkaholicAlive.Add(playerId);
     }
 
     public static void OnCompleteTasks(PlayerControl player)
