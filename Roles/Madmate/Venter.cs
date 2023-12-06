@@ -14,16 +14,21 @@ public static class Venter
     private static readonly int Id = 17130;
     //private static List<byte> playerIdList = new();
     private static bool IsEnable = false;
+    private static List<byte, int> KillLimit = new();
 
     private static OptionItem VentCooldown;
     private static OptionItem CanKillImpostors;
+    private static OptionItem HasSkillLimit;
+    private static OptionItem SkillLimit;
 
     public static void SetupCustomOption()
     {
-        Options.SetupRoleOptions(Id, TabGroup.ImpostorRoles, CustomRoles.Venter);
+        SetupRoleOptions(Id, TabGroup.ImpostorRoles, CustomRoles.Venter);
         VentCooldown = FloatOptionItem.Create(Id + 10, "VentCooldown", new(0f, 180f, 2.5f), 25f, TabGroup.ImpostorRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Venter])
             .SetValueFormat(OptionFormat.Seconds);
         CanKillImpostors = BooleanOptionItem.Create(Id + 11, "CanKillAllies", false, TabGroup.ImpostorRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Venter]);
+        HasSkillLimit = BooleanOptionItem.Create(Id + 12, "HasSkillLimit", false, TabGroup.ImpostorRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Venter]);
+        SkillLimit = IntegerOptionItem.Create(Id + 13, "SkillLimit", new(1, 20, 1), 10, TabGroup.ImpostorRoles, false).SetParent(HasSkillLimit);
     }
     public static void SetGameOptions(IGameOptions opt)
     {
@@ -34,18 +39,29 @@ public static class Venter
     public static void Init()
     {
         //playerIdList = new();
+        KillLimit = new();
         IsEnable = false;
     }
     public static void Add(byte playerId)
     {
         //playerIdList.Add(playerId);
         IsEnable = true;
+        if (HasSkillLimit.GetBool())
+            KillLimit.TryAdd(playerId, SkillLimit.GetInt());
     }
+
+    private static bool CanUseSkill(byte id) => !(KillLimit[id] < 1);
 
     public static void OnEnterVent(PlayerControl pc)
     {
         if (!IsEnable) return;
         if (!pc.Is(CustomRoles.Venter)) return;
+        if (HasSkillLimit.GetBool())
+        {
+            if (!CanUseSkill(pc.PlayerId)) return;
+            KillLimit[pc.PlayerId]--;
+        }
+        
         List<PlayerControl> list = Main.AllAlivePlayerControls.Where(x => x.PlayerId != pc.PlayerId && (CanKillImpostors.GetBool() || !x.GetCustomSubRoles().Contains(CustomRoles.Madmate) && !x.GetCustomRole().IsMadmate() || !x.GetCustomRole().IsImpostorTeam())).ToList();
         if (list.Count < 1)
         {
@@ -57,6 +73,7 @@ public static class Venter
             var target = list[0];
             if (!target.Is(CustomRoles.Pestilence))
             {
+                
                 target.SetRealKiller(pc);
                 target.RpcCheckAndMurder(target);
                 pc.RpcGuardAndKill();
