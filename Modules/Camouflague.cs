@@ -52,6 +52,7 @@ public static class Camouflage
             (Options.DisableOnSkeld.GetBool() && Options.IsActiveSkeld) ||
             (Options.DisableOnMira.GetBool() && Options.IsActiveMiraHQ) ||
             (Options.DisableOnPolus.GetBool() && Options.IsActivePolus) ||
+            (Options.DisableOnDleks.GetBool() && Options.IsActiveDleks) ||
             (Options.DisableOnFungle.GetBool() && Options.IsActiveFungle) ||
             (Options.DisableOnAirship.GetBool() && Options.IsActiveAirship)
             ));

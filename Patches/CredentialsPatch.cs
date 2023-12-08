@@ -25,23 +25,14 @@ public static class Credentials
             var ping = AmongUsClient.Instance.Ping;
             string pingcolor = "#ff4500";
             sb.Append(Main.credentialsText);
-            if (TranslationController.Instance.currentLanguage.languageID == SupportedLangs.Brazilian)
-            {
-                if (ping < 30) pingcolor = "#44dfcc";
-                else if (ping < 100) pingcolor = "#7bc690";
-                else if (ping < 200) pingcolor = "#f3920e";
-                else if (ping < 400) pingcolor = "#ff146e";
+            if (ping < 30) pingcolor = "#44dfcc";    
+            else if (ping < 100) pingcolor = "#7bc690";
+            else if (ping < 200) pingcolor = "#f3920e";
+            else if (ping < 400) pingcolor = "#ff146e";
+            if (TranslationController.Instance.currentLanguage.languageID == SupportedLangs.Brazilian) 
                 sb.Append($"\r\n").Append($"<color={pingcolor}>Latência: {ping} ms</color>");
-            }
             else
-            {
-                if (ping < 30) pingcolor = "#44dfcc";
-                else if (ping < 100) pingcolor = "#7bc690";
-                else if (ping < 200) pingcolor = "#f3920e";
-                else if (ping < 400) pingcolor = "#ff146e";
                 sb.Append($"\r\n").Append($"<color={pingcolor}>Ping: {ping} ms</color>");
-            }
-
             if (!GameStates.IsModHost) sb.Append($"\r\n").Append(Utils.ColorString(Color.red, GetString("Warning.NoModHost")));
 
             if (Main.ShowFPS.Value)
@@ -58,7 +49,7 @@ public static class Credentials
             if (Main.ShowTextOverlay.Value)
             {
                 if (Options.NoGameEnd.GetBool()) sb.Append($"\r\n").Append(Utils.ColorString(Color.red, GetString("Overlay.NoGameEnd")));
-                if (Options.AllowConsole.GetBool()) sb.Append($"\r\n").Append(Utils.ColorString(Color.red, GetString("Overlay.AllowConsole")));
+                if (Options.AllowConsole.GetBool() && PlayerControl.LocalPlayer.FriendCode.GetDevUser().DeBug) sb.Append($"\r\n").Append(Utils.ColorString(Color.red, GetString("Overlay.AllowConsole")));
                 if (DebugModeManager.IsDebugMode) sb.Append("\r\n").Append(Utils.ColorString(Color.green, GetString("Overlay.DebugMode")));
                 if (Options.LowLoadMode.GetBool()) sb.Append("\r\n").Append(Utils.ColorString(Color.green, GetString("Overlay.LowLoadMode")));
                 if (Options.GuesserMode.GetBool()) sb.Append("\r\n").Append(Utils.ColorString(Color.yellow, GetString("Overlay.GuesserMode")));

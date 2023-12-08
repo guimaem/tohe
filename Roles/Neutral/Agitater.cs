@@ -133,7 +133,7 @@ public static class Agitater
         }
         else
         {
-            var playerPos = player.GetTruePosition();
+            var playerPos = player.GetCustomPosition();
             Dictionary<byte, float> targetDistance = new();
             float dis;
 

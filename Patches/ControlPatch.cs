@@ -134,7 +134,7 @@ internal class ControllerManagerUpdatePatch
             //获取现在的坐标
             if (Input.GetKeyDown(KeyCode.P))
             {
-                Logger.Info(PlayerControl.LocalPlayer.GetTruePosition().ToString(), "GetLocalPlayerPos GetTruePosition()");
+                Logger.Info(PlayerControl.LocalPlayer.GetCustomPosition().ToString(), "GetLocalPlayerPos GetCustomPosition()");
                 Logger.Info(PlayerControl.LocalPlayer.transform.position.ToString(), "GetLocalPlayerPos transform.position");
             }
 
