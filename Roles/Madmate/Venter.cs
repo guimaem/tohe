@@ -76,7 +76,7 @@ public static class Venter
         else
             KillLimit.Add(VenterId, SkillLimit.GetInt());
     }
-    private static bool CanUseSkill(byte id) => KillLimit[id] > 0;
+    private static bool CanUseSkill(byte id) => KillLimit[id] >= 1;
 
     public static void OnEnterVent(PlayerControl pc)
     {
