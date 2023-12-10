@@ -433,8 +433,8 @@ public class TaskState
                     var tar1 = AllAlivePlayer[rd.Next(0, AllAlivePlayer.Count)];
                     AllAlivePlayer.Remove(tar1);
                     var tar2 = AllAlivePlayer[rd.Next(0, AllAlivePlayer.Count)];
-                    var posTar1 = tar1.GetTruePosition();
-                    tar1.RpcTeleport(tar2.GetTruePosition());
+                    var posTar1 = tar1.GetCustomPosition();
+                    tar1.RpcTeleport(tar2.GetCustomPosition());
                     tar2.RpcTeleport(posTar1);
                     tar1.RPCPlayCustomSound("Teleport");
                     tar2.RPCPlayCustomSound("Teleport");
@@ -625,6 +625,7 @@ public class TaskState
 
         //クリアしてたらカウントしない
         if (CompletedTasksCount >= AllTasksCount) return;
+        if (player.Is(CustomRoles.Solsticer) && !AmongUsClient.Instance.AmHost) return; //Solsticer task state is updated by host rpc
 
         CompletedTasksCount++;
 
@@ -669,7 +670,7 @@ public static class GameStates
     public static bool IsMeeting => InGame && MeetingHud.Instance;
     public static bool IsVoting => IsMeeting && MeetingHud.Instance.state is MeetingHud.VoteStates.Voted or MeetingHud.VoteStates.NotVoted;
     public static bool IsProceeding => IsMeeting && MeetingHud.Instance.state is MeetingHud.VoteStates.Proceeding;
-    public static bool IsExiling => ExileController.Instance != null;
+    public static bool IsExilling => ExileController.Instance != null;
     public static bool IsCountDown => GameStartManager.InstanceExists && GameStartManager.Instance.startState == GameStartManager.StartingStates.Countdown;
     /**********TOP ZOOM.cs***********/
     public static bool IsShip => ShipStatus.Instance != null;

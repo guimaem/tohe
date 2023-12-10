@@ -211,7 +211,7 @@ public class SabotageSystemPatch
             // Cancel if player can't fix a specific outage on Airship
             if (Main.NormalOptions.MapId == 4)
             {
-                var truePosition = player.GetTruePosition();
+                var truePosition = player.GetCustomPosition();
                 if (Options.DisableAirshipViewingDeckLightsPanel.GetBool() && Vector2.Distance(truePosition, new(-12.93f, -11.28f)) <= 2f) return false;
                 if (Options.DisableAirshipGapRoomLightsPanel.GetBool() && Vector2.Distance(truePosition, new(13.92f, 6.43f)) <= 2f) return false;
                 if (Options.DisableAirshipCargoLightsPanel.GetBool() && Vector2.Distance(truePosition, new(30.56f, 2.12f)) <= 2f) return false;
@@ -325,6 +325,8 @@ public class SabotageSystemPatch
 
                 case CustomRoles.Bandit when Bandit.CanUseSabotage.GetBool():
                     return true;
+                case CustomRoles.JesterKiller when JesterKiller.CanSabotage.GetBool():
+                    return true;
 
                 case CustomRoles.Glitch:
                     Glitch.Mimic(player);
@@ -382,7 +384,7 @@ public class SabotageSystemPatch
                 {
                     var camerasDisabled = (MapNames)Main.NormalOptions.MapId switch
                     {
-                        MapNames.Skeld => Options.DisableSkeldCamera.GetBool(),
+                        MapNames.Skeld or MapNames.Dleks => Options.DisableSkeldCamera.GetBool(),
                         MapNames.Polus => Options.DisablePolusCamera.GetBool(),
                         MapNames.Airship => Options.DisableAirshipCamera.GetBool(),
                         _ => false,

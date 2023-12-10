@@ -135,6 +135,11 @@ public class GameStartManagerPatch
                             {
                                 Main.NormalOptions.MapId = GameStartRandomMap.SelectRandomMap();
                             }
+                            if ((MapNames)Main.NormalOptions.MapId == MapNames.Dleks)
+                            {
+                                Logger.SendInGame(GetString("Warning.BrokenVentsInDleksSendInGame"));
+                                Utils.SendMessage(GetString("Warning.BrokenVentsInDleksMessage"), title: Utils.ColorString(Utils.GetRoleColor(CustomRoles.NiceMini), GetString("WarningTitle")));
+                            }
                             GameStartManager.Instance.startState = GameStartManager.StartingStates.Countdown;
                             GameStartManager.Instance.countDownTimer = Options.AutoStartTimer.GetInt();
                             __instance.StartButton.gameObject.SetActive(false);
@@ -243,6 +248,12 @@ public class GameStartRandomMap
             Utils.SendMessage(msg);
             return false;
         }
+
+        if ((MapNames)Main.NormalOptions.MapId == MapNames.Dleks)
+        {
+            Logger.SendInGame(GetString("Warning.BrokenVentsInDleksSendInGame"));
+            Utils.SendMessage(GetString("Warning.BrokenVentsInDleksMessage"), title: Utils.ColorString(Utils.GetRoleColor(CustomRoles.NiceMini), GetString("WarningTitle")));
+        }
         
 
         Options.DefaultKillCooldown = Main.NormalOptions.KillCooldown;
@@ -276,7 +287,7 @@ public class GameStartRandomMap
             The Skeld    = 0
             MIRA HQ      = 1
             Polus        = 2
-            Dleks        = 3 (Not used)
+            Dleks        = 3
             The Airship  = 4
             The Fungle   = 5
         */

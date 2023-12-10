@@ -743,6 +743,7 @@ class MapBehaviourShowPatch
             || player.Is(CustomRoles.Glitch)
             || player.Is(CustomRoles.Exploiter)
             || (player.Is(CustomRoles.Briber) && Briber.CanSabotage.GetBool())
+            || (player.Is(CustomRoles.JesterKiller) && JesterKiller.CanSabotage.GetBool())
             || (player.Is(CustomRoles.SidekickB) && Briber.RecruitedCanSabotage.GetBool())
             || (player.Is(CustomRoles.Doppelganger) && Doppelganger.DoppelgangerCanSabotage.GetBool())
             || (player.Is(CustomRoles.Bandit) && Bandit.CanUseSabotage.GetBool())

@@ -64,11 +64,9 @@ public static class Options
     public static bool IsActiveSkeld => Main.NormalOptions.MapId == 0; // 0 - The Skeld
     public static bool IsActiveMiraHQ => Main.NormalOptions.MapId == 1; // 1 - MiraHQ
     public static bool IsActivePolus => Main.NormalOptions.MapId == 2; // 2 - Polus
+    public static bool IsActiveDleks => Main.NormalOptions.MapId == 3; // 3 - Dleks
     public static bool IsActiveAirship => Main.NormalOptions.MapId == 4; // 4 - Airship
     public static bool IsActiveFungle => Main.NormalOptions.MapId == 5; // 5 - The Fungle
-
-    // Map not used
-    //public static bool IsActiveDleks => Main.NormalOptions.MapId == 3; // 3 - Dleks
 
     // 役職数・確率
     public static Dictionary<CustomRoles, int> roleCounts;
@@ -92,7 +90,7 @@ public static class Options
     };
     public static readonly string[] CheatResponsesName =
     {
-        "Ban", "Kick", "NoticeMe","NoticeEveryone"
+        "Ban", "Kick", "NoticeMe", "NoticeEveryone", "TempBan"
     };
     public static readonly string[] ConfirmEjectionsMode =
     {
@@ -139,7 +137,7 @@ public static class Options
     public static OptionItem DisableShieldAnimations;
     public static OptionItem DisableKillAnimationOnGuess;
     public static OptionItem DisableVanillaRoles;
-    public static OptionItem SunnyboyChance;
+    //public static OptionItem SunnyboyChance;
     public static OptionItem BardChance;
     public static OptionItem CEMode;
     public static OptionItem ConfirmEjectionsNK;
@@ -242,10 +240,10 @@ public static class Options
     public static OptionItem ArsonistCanIgniteAnytime;
     public static OptionItem ArsonistMinPlayersToIgnite;
     public static OptionItem ArsonistMaxPlayersToIgnite;
-    public static OptionItem JesterCanUseButton;
+    /*public static OptionItem JesterCanUseButton;
     public static OptionItem JesterCanVent;
     public static OptionItem MeetingsNeededForJesterWin;
-    public static OptionItem HideJesterVote;
+    public static OptionItem HideJesterVote;*/
     public static OptionItem LegacyMafia;
     public static OptionItem NotifyGodAlive;
     public static OptionItem MarioVentNumWin;
@@ -443,9 +441,6 @@ public static class Options
     public static OptionItem ImpCanBeGravestone;
     public static OptionItem CrewCanBeGravestone;
     public static OptionItem NeutralCanBeGravestone;
-
-    // Mare Add-on
-    public static OptionItem MareKillCD;
 
     // Clumsy
     public static OptionItem ChanceToMiss;
@@ -694,6 +689,7 @@ public static class Options
     public static OptionItem SkeldChance;
     public static OptionItem MiraChance;
     public static OptionItem PolusChance;
+    public static OptionItem DleksChance;
     public static OptionItem AirshipChance;
     public static OptionItem FungleChance;
 
@@ -719,6 +715,7 @@ public static class Options
     public static OptionItem DisableOnSkeld;
     public static OptionItem DisableOnMira;
     public static OptionItem DisableOnPolus;
+    public static OptionItem DisableOnDleks;
     public static OptionItem DisableOnAirship;
     public static OptionItem DisableOnFungle;
     public static OptionItem DisableReportWhenCC;
@@ -850,6 +847,16 @@ public static class Options
     public static OptionItem FixFirstKillCooldown;
     public static OptionItem FixKillCooldownValue;
     public static OptionItem ShieldPersonDiedFirst;
+    public static OptionItem HostGetKilledFirstAction;
+
+    public static readonly string[] HostGetKilledFirst =
+    {
+        "HGK.DisableAttempt",
+        "HGK.Youtuber",
+        "HGK.CursedWolf",
+        "HGK.Terriost"
+    };
+
     public static OptionItem GhostCanSeeOtherRoles;
     public static OptionItem GhostCanSeeOtherVotes;
     public static OptionItem GhostCanSeeDeathReason;
@@ -927,7 +934,7 @@ public static class Options
     public static OptionItem AddBracketsToAddons;
     public static OptionItem NoLimitAddonsNumMax;
     public static OptionItem BewilderVision;
-    public static OptionItem JesterHasImpostorVision;
+    //public static OptionItem JesterHasImpostorVision;
     public static OptionItem SunglassesVision;
     public static OptionItem ImpCanBeAvanger;
     public static OptionItem CrewCanBeAvanger;
@@ -1047,7 +1054,7 @@ public static class Options
     public static void Load()
     {
         //#######################################
-        // 26100 lasted id for roles/add-ons (Next use 26200)
+        // 26200 lasted id for roles/add-ons (Next use 26300)
         // Limit id for  roles/add-ons --- "59999"
         //#######################################
         // Start Load Settings
@@ -1321,7 +1328,7 @@ public static class Options
          */
         Lurker.SetupCustomOption();
 
-        // Mare.SetupCustomOption();
+        //Mare.SetupCustomOption();
 
         /*
          * Mercenary
@@ -1423,6 +1430,11 @@ public static class Options
          * Gangster
          */
         Gangster.SetupCustomOption();
+
+        /*
+         * Limited Killer
+         */
+        LimitedKiller.SetupCustomOption();
 
         /*
          * Godfather
@@ -2165,7 +2177,7 @@ public static class Options
         InnocentCanWinByImp = BooleanOptionItem.Create(14302, "InnocentCanWinByImp", false, TabGroup.NeutralRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Innocent]);
 
-        SetupRoleOptions(14400, TabGroup.NeutralRoles, CustomRoles.Jester);
+        /*SetupRoleOptions(14400, TabGroup.NeutralRoles, CustomRoles.Jester);
         JesterCanUseButton = BooleanOptionItem.Create(14402, "JesterCanUseButton", false, TabGroup.NeutralRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Jester]);
         JesterCanVent = BooleanOptionItem.Create(14403, "CanVent", true, TabGroup.NeutralRoles, false)
@@ -2179,7 +2191,10 @@ public static class Options
             .SetValueFormat(OptionFormat.Times);
         SunnyboyChance = IntegerOptionItem.Create(14407, "SunnyboyChance", new(0, 100, 5), 0, TabGroup.NeutralRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Jester])
-            .SetValueFormat(OptionFormat.Percent);
+            .SetValueFormat(OptionFormat.Percent);*/
+        Jester.SetupCustomOption();
+        
+        JesterKiller.SetupCustomOption();
 
         SetupRoleOptions(14500, TabGroup.NeutralRoles, CustomRoles.Masochist);
         MasochistKillMax = IntegerOptionItem.Create(14502, "MasochistKillMax", new(1, 30, 1), 5, TabGroup.NeutralRoles, false)
@@ -2769,10 +2784,11 @@ public static class Options
         /*
          * Mare
          */
-        SetupAdtRoleOptions(23000, CustomRoles.Mare, canSetNum: true, tab: TabGroup.Addons);
-        MareKillCD = FloatOptionItem.Create(23003, "KillCooldown", new(0f, 60f, 1f), 10f, TabGroup.Addons, false)
-            .SetParent(CustomRoleSpawnChances[CustomRoles.Mare])
-            .SetValueFormat(OptionFormat.Seconds);
+        //SetupAdtRoleOptions(23000, CustomRoles.Mare, canSetNum: true, tab: TabGroup.Addons);
+        //MareKillCD = FloatOptionItem.Create(23003, "KillCooldown", new(0f, 60f, 1f), 10f, TabGroup.Addons, false)
+            //.SetParent(CustomRoleSpawnChances[CustomRoles.Mare])
+            //.SetValueFormat(OptionFormat.Seconds);
+        Mare.SetupCustomOption();
 
         /*
          * Mimic
@@ -2899,6 +2915,9 @@ public static class Options
         
         Spiritcaller.SetupCustomOption();
 
+        Solsticer.SetupCustomOption();
+
+
         // 副职
         TextOptionItem.Create(10000023, "OtherRoles.Addons", TabGroup.OtherRoles)
             .SetGameMode(CustomGameMode.Standard)
@@ -3001,7 +3020,7 @@ public static class Options
             .SetHeader(true)
             .SetColor(Color.blue);
 
-        CheatResponses = StringOptionItem.Create(60250, "CheatResponses", CheatResponsesName, 0, TabGroup.SystemSettings, false)
+        CheatResponses = StringOptionItem.Create(60250, "CheatResponses", CheatResponsesName, 1, TabGroup.SystemSettings, false)
             .SetHeader(true);
 
         //HighLevelAntiCheat = StringOptionItem.Create(60260, "HighLevelAntiCheat", CheatResponsesName, 0, TabGroup.SystemSettings, false)
@@ -3091,6 +3110,9 @@ public static class Options
         PolusChance = IntegerOptionItem.Create(60453, "PolusChance", new(0, 100, 5), 10, TabGroup.GameSettings, false)
             .SetParent(RandomMapsMode)
             .SetValueFormat(OptionFormat.Percent);
+        DleksChance = IntegerOptionItem.Create(60457, "DleksChance", new(0, 100, 5), 10, TabGroup.GameSettings, false)
+            .SetParent(RandomMapsMode)
+            .SetValueFormat(OptionFormat.Percent);
         AirshipChance = IntegerOptionItem.Create(60454, "AirshipChance", new(0, 100, 5), 10, TabGroup.GameSettings, false)
             .SetParent(RandomMapsMode)
             .SetValueFormat(OptionFormat.Percent);
@@ -3105,11 +3127,6 @@ public static class Options
             .SetHidden(true)
             .SetGameMode(CustomGameMode.Standard)
             .SetColor(new Color32(193, 255, 209, byte.MaxValue));
-
-        //MapDleksChance = IntegerOptionItem.Create(60457, "MapDleks", new(0, 100, 5), 10, TabGroup.GameSettings, false)
-        //    .SetParent(RandomMapsMode)
-        //    .SetValueFormat(OptionFormat.Percent);
-
 
 
         // Random Spawn
@@ -3188,6 +3205,9 @@ public static class Options
             .SetGameMode(CustomGameMode.Standard)
             .SetParent(DisableOnSomeMaps);
         DisableOnPolus = BooleanOptionItem.Create(60514, "DisableOnPolus", false, TabGroup.GameSettings, false)
+            .SetGameMode(CustomGameMode.Standard)
+            .SetParent(DisableOnSomeMaps);
+        DisableOnDleks = BooleanOptionItem.Create(60517, "DisableOnDleks", false, TabGroup.GameSettings, false)
             .SetGameMode(CustomGameMode.Standard)
             .SetParent(DisableOnSomeMaps);
         DisableOnAirship = BooleanOptionItem.Create(60515, "DisableOnAirship", false, TabGroup.GameSettings, false)
@@ -3751,6 +3771,9 @@ public static class Options
         ShieldPersonDiedFirst = BooleanOptionItem.Create(60780, "ShieldPersonDiedFirst", false, TabGroup.GameSettings, false)
             .SetGameMode(CustomGameMode.Standard)
            .SetColor(new Color32(193, 255, 209, byte.MaxValue));
+        HostGetKilledFirstAction = StringOptionItem.Create(60781, "HostGetKilledFirstAction", HostGetKilledFirst, 0, TabGroup.GameSettings, false)
+            .SetGameMode(CustomGameMode.Standard)
+            .SetParent(ShieldPersonDiedFirst);
 
         // 杀戮闪烁持续
         KillFlashDuration = FloatOptionItem.Create(60790, "KillFlashDuration", new(0.1f, 0.45f, 0.05f), 0.3f, TabGroup.GameSettings, false)
