@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using TOHE.Modules;
+using TOHE.Modules.ChatManager;
 using TOHE.Roles.AddOns.Crewmate;
 using TOHE.Roles.AddOns.Impostor;
 using TOHE.Roles.Crewmate;
@@ -138,7 +139,7 @@ public static class Utils
             The Skeld    = 0
             MIRA HQ      = 1
             Polus        = 2
-            Dleks        = 3 (Not used)
+            Dleks        = 3
             The Airship  = 4
             The Fungle   = 5
         */
@@ -174,7 +175,7 @@ public static class Utils
                 }
             case SystemTypes.LifeSupp:
                 {
-                    if (mapId is 2 or 4 or 5) return false; // Only Skeld & Mira HQ
+                    if (mapId is 2 or 4 or 5) return false; // Only Skeld & Dleks & Mira HQ
                     var LifeSuppSystemType = ShipStatus.Instance.Systems[type].Cast<LifeSuppSystemType>();
                     return LifeSuppSystemType != null && LifeSuppSystemType.IsActive;
                 }
@@ -497,6 +498,7 @@ public static class Utils
             case CustomRoles.Exploiter:
             case CustomRoles.CopyCat:
             case CustomRoles.Shaman:
+            case CustomRoles.JesterKiller:
             case CustomRoles.Arsonist:
             case CustomRoles.Jackal:
             case CustomRoles.Bandit:
@@ -1303,7 +1305,7 @@ public static class Utils
             }
 
             if (opt.Value.Name == "Maximum") continue; //Maximumの項目は飛ばす
-            if (opt.Value.Name == "DisableSkeldDevices" && !Options.IsActiveSkeld) continue;
+            if (opt.Value.Name == "DisableSkeldDevices" && !Options.IsActiveSkeld && !Options.IsActiveDleks) continue;
             if (opt.Value.Name == "DisableMiraHQDevices" && !Options.IsActiveMiraHQ) continue;
             if (opt.Value.Name == "DisablePolusDevices" && !Options.IsActivePolus) continue;
             if (opt.Value.Name == "DisableAirshipDevices" && !Options.IsActiveAirship) continue;
@@ -1725,10 +1727,32 @@ public static class Utils
             }
         }
     }
-    public static void SendMessage(string text, byte sendTo = byte.MaxValue, string title = "")
+    public static void SendMessage(string text, byte sendTo = byte.MaxValue, string title = "", bool logforChatManager = false)
     {
         if (!AmongUsClient.Instance.AmHost) return;
         if (title == "") title = "<color=#aaaaff>" + GetString("DefaultSystemMessageTitle") + "</color>";
+
+        if (sendTo != byte.MaxValue)
+        {
+            var sendToData = GetPlayerInfoById(sendTo);
+            if (sendToData != null)
+            {
+                if (sendToData.Disconnected) return;
+                //p => p.Data.DefaultOutfit.ColorId < 0 || Palette.PlayerColors.Length <= p.Data.DefaultOutfit.ColorId
+                else if (sendToData.DefaultOutfit.ColorId < 0 || Palette.PlayerColors.Length <= sendToData.DefaultOutfit.ColorId)
+                {
+                    Logger.Info($"Delay Utils.sendmessage bcz {sendToData.GetPlayerName} is with bad color", "SendMessage");
+                    _ = new LateTask(() =>
+                    {
+                        SendMessage(text, sendTo, title, logforChatManager);
+                    }, 1.2f, "SendMessage_Delay");
+                    return;
+                }
+            }
+            else return;
+        }
+        if (!logforChatManager)
+            ChatManager.AddToHostMessage(text.RemoveHtmlTagsTemplate());
         Main.MessagesToSend.Add((text.RemoveHtmlTagsTemplate(), sendTo, title));
     }
     public static bool IsPlayerModerator(string friendCode)
@@ -2315,6 +2339,10 @@ public static class Utils
                         if (Snitch.IsEnable)
                             TargetMark.Append(Snitch.GetWarningMark(seer, target));
 
+                        if (CustomRoles.Solsticer.RoleExist())
+                            TargetMark.Append(Solsticer.GetWarningArrow(seer, target));
+
+
                         if (Executioner.IsEnable)
                             TargetMark.Append(Executioner.TargetMark(seer, target));
 
@@ -2636,6 +2664,7 @@ public static class Utils
         Pirate.AfterMeetingTask();
         Chronomancer.AfterMeetingTask();
         Seeker.AfterMeetingTasks();
+        Solsticer.AfterMeetingTasks();
         Main.ShamanTarget = byte.MaxValue;
         Main.ShamanTargetChoosen = false;
         Main.BurstBodies.Clear();

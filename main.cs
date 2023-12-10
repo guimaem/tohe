@@ -222,7 +222,6 @@ public class Main : BasePlugin
     public static bool IsAprilFools = DateTime.Now.Month == 4 && DateTime.Now.Day is 1;
     public static bool ResetOptions = true;
     public static byte FirstDied = byte.MaxValue;
-    public static byte ShieldPlayer = byte.MaxValue;
     public static int MadmateNum = 0;
     public static int BardCreations = 0;
     public static int MeetingsPassed = 0;
@@ -542,6 +541,7 @@ public enum CustomRoles
     ShapeshifterTOHE,
     //Impostor
     BountyHunter,
+    LimitedKiller,
     Undertaker,
     FireWorks,
     Burster,
@@ -706,6 +706,7 @@ public enum CustomRoles
     SoulCollector,
     HexMaster,
     Jester,
+    JesterKiller,
     God,
     Opportunist,
     Shaman,
@@ -727,6 +728,7 @@ public enum CustomRoles
     Gamer,
     DarkHide,
     Workaholic,
+    Solsticer,
     Collector,
     Provocateur,
     Sunnyboy,
@@ -858,6 +860,7 @@ public enum CustomWinner
     Impostor = CustomRoles.Impostor,
     Crewmate = CustomRoles.Crewmate,
     Jester = CustomRoles.Jester,
+    JesterKiller = CustomRoles.JesterKiller,
     Terrorist = CustomRoles.Terrorist,
     Exploiter = CustomRoles.Exploiter,
     Lovers = CustomRoles.Lovers,
@@ -879,6 +882,7 @@ public enum CustomWinner
     Gamer = CustomRoles.Gamer,
     DarkHide = CustomRoles.DarkHide,
     Workaholic = CustomRoles.Workaholic,
+    Solsticer = CustomRoles.Solsticer,
     Collector = CustomRoles.Collector,
     BloodKnight = CustomRoles.BloodKnight,
     Poisoner = CustomRoles.Poisoner,

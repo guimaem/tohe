@@ -90,6 +90,7 @@ public class PlayerGameOptionsSender : GameOptionsSender
             case CustomRoleTypes.Neutral:
                 AURoleOptions.GuardianAngelCooldown = Spiritcaller.SpiritAbilityCooldown.GetFloat();
                 break;
+            case CustomRoleTypes.Madmate:
             case CustomRoleTypes.Crewmate:
                 AURoleOptions.GuardianAngelCooldown = Spiritcaller.SpiritAbilityCooldown.GetFloat();
                 break;
@@ -119,7 +120,7 @@ public class PlayerGameOptionsSender : GameOptionsSender
                 AURoleOptions.EngineerInVentMaxTime = Options.EngineerHasLimitedTime.GetBool() ? Options.EngineerVentTime.GetFloat() : 0f;
                 break;
             case CustomRoles.Venter:
-                Venter.ApplyGameOptions(opt);
+                Venter.ApplyGameOptions(opt, player.PlayerId);
                 break;
             case CustomRoles.Chameleon:
                 AURoleOptions.EngineerCooldown = Chameleon.ChameleonCooldown.GetFloat() + 1f;
@@ -351,9 +352,10 @@ public class PlayerGameOptionsSender : GameOptionsSender
                 opt.SetVision(false);
                 break;
             case CustomRoles.Jester:
-                AURoleOptions.EngineerCooldown = 0f;
-                AURoleOptions.EngineerInVentMaxTime = 0f;
-                opt.SetVision(Options.JesterHasImpostorVision.GetBool());
+                Jester.ApplyGameOptions(opt);
+                break;
+            case CustomRoles.JesterKiller:
+                JesterKiller.ApplyGameOptions(opt);
                 break;
             case CustomRoles.Doomsayer:
                 opt.SetVision(Doomsayer.ImpostorVision.GetBool());
@@ -391,6 +393,9 @@ public class PlayerGameOptionsSender : GameOptionsSender
                 break;
             case CustomRoles.Workaholic:
                 Workaholic.ApplyGameOptions();
+                break;
+            case CustomRoles.Solsticer:
+                Solsticer.ApplyGameOptions();
                 break;
             case CustomRoles.ImperiusCurse:
                 AURoleOptions.ShapeshifterCooldown = Options.ImperiusCurseShapeshiftCooldown.GetFloat();
@@ -519,6 +524,12 @@ public class PlayerGameOptionsSender : GameOptionsSender
             if (Utils.IsActive(SystemTypes.Electrical)) opt.SetFloat(FloatOptionNames.CrewLightMod, Options.LighterVisionOnLightsOut.GetFloat() * 5);
             else opt.SetFloat(FloatOptionNames.CrewLightMod, Options.LighterVisionNormal.GetFloat());
         }
+        
+         if (player.Is(CustomRoles.Mare))
+        {
+            Mare.ApplyGameOptions(player.PlayerId);
+        }
+
    /*     if ((Main.FlashbangInProtect.Count >= 1 && Main.ForFlashbang.Contains(player.PlayerId) && (!player.GetCustomRole().IsCrewmate())))  
         {
                 opt.SetVision(false);

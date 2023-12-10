@@ -58,8 +58,41 @@ internal class CustomRoleSelector
         {
             var role = (CustomRoles)Enum.Parse(typeof(CustomRoles), cr.ToString());
             if (role.IsVanilla() || role.IsAdditionRole()) continue;
-            if (role is CustomRoles.DarkHide && Options.IsActiveFungle) continue;
             if (role is CustomRoles.GM or CustomRoles.NotAssigned) continue;
+
+            if (Options.IsActiveFungle) // The Fungle
+            {
+                if (role is CustomRoles.DarkHide) continue;
+            }
+            else if (Options.IsActiveDleks) // Dleks
+            {
+                // This roles need additional conditions - Witch & Spellсaster & Hex Master
+
+                if (role is CustomRoles.Swooper
+                    or CustomRoles.Miner
+                    or CustomRoles.Lurker
+                    or CustomRoles.EngineerTOHE
+                    or CustomRoles.Paranoia
+                    or CustomRoles.Veteran
+                    or CustomRoles.Alchemist
+                    or CustomRoles.Engineer
+                    or CustomRoles.Bastion
+                    or CustomRoles.Grenadier
+                    or CustomRoles.DovesOfNeace // Pacifist
+                    or CustomRoles.Mole
+                    or CustomRoles.Addict
+                    or CustomRoles.TimeMaster
+                    or CustomRoles.Lighter
+                    or CustomRoles.Chameleon
+                    or CustomRoles.Venter
+                    or CustomRoles.Mario // Vector
+                    or CustomRoles.Wraith
+                    or CustomRoles.Arsonist) continue;
+                if (role == CustomRoles.Witch && (Witch.SwitchTrigger)Witch.ModeSwitchAction.GetValue() == Witch.SwitchTrigger.Vent || // Spellcaster
+                    role == CustomRoles.HexMaster && (HexMaster.SwitchTrigger)HexMaster.ModeSwitchAction.GetValue() == HexMaster.SwitchTrigger.Vent) continue;
+            }
+
+
             for (int i = 0; i < role.GetCount(); i++)
                 roleList.Add(role);
         }
@@ -225,7 +258,7 @@ internal class CustomRoleSelector
 
         // 隐藏职业
         {
-            if (rd.Next(0, 100) < Options.SunnyboyChance.GetInt() && rolesToAssign.Remove(CustomRoles.Jester)) rolesToAssign.Add(CustomRoles.Sunnyboy);
+            if (rd.Next(0, 100) < Jester.SunnyboyChance.GetInt() && rolesToAssign.Remove(CustomRoles.Jester)) rolesToAssign.Add(CustomRoles.Sunnyboy);
         }
         {
             if (rd.Next(0, 100) < Sans.BardChance.GetInt() && rolesToAssign.Remove(CustomRoles.Sans)) rolesToAssign.Add(CustomRoles.Bard);
@@ -379,9 +412,22 @@ internal class CustomRoleSelector
         {
             CustomRoles role = (CustomRoles)Enum.Parse(typeof(CustomRoles), cr.ToString());
             if (!role.IsAdditionRole()) continue;
-            if (role.Is(CustomRoles.Mare) && Options.IsActiveFungle) continue;
             if (role is CustomRoles.Madmate && Options.MadmateSpawnMode.GetInt() != 0) continue;
             if (role is CustomRoles.Lovers or CustomRoles.LastImpostor or CustomRoles.Workhorse) continue;
+            
+            
+            if (Options.IsActiveFungle) // The Fungle
+            {
+                if (role is CustomRoles.Mare) continue;
+            }
+            else if (Options.IsActiveDleks) // Dleks
+            {
+                if (role is CustomRoles.Nimble
+                    or CustomRoles.Burst
+                    or CustomRoles.Circumvent) continue;
+            }
+
+            
             AddonRolesList.Add(role);
         }
     }

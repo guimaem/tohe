@@ -93,13 +93,36 @@ class ExileControllerWrapUpPatch
                 }
             }
             //Jester win
-            if (Options.MeetingsNeededForJesterWin.GetInt() <= Main.MeetingsPassed)
+            if (Jester.MeetingsNeededForWin.GetInt() <= Main.MeetingsPassed)
             {           
                 if (role == CustomRoles.Jester && AmongUsClient.Instance.AmHost)
                 {
                     if (!CustomWinnerHolder.CheckForConvertedWinner(exiled.PlayerId))
                     {
                         CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Jester);
+                        CustomWinnerHolder.WinnerIds.Add(exiled.PlayerId);
+                    }
+
+                    foreach (var executioner in Executioner.playerIdList)
+                    {
+                        var GetValue = Executioner.Target.TryGetValue(executioner, out var targetId);
+                        if (GetValue && exiled.PlayerId == targetId)
+                        {
+                            CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.Executioner);
+                            CustomWinnerHolder.WinnerIds.Add(executioner);
+                        }
+                    }
+                    DecidedWinner = true;
+                }
+            }
+            // Jester Killer win
+            if (JesterKiller.MeetingsNeededForWin.GetInt() <= Main.MeetingsPassed)
+            {           
+                if (role == CustomRoles.JesterKiller && AmongUsClient.Instance.AmHost)
+                {
+                    if (!CustomWinnerHolder.CheckForConvertedWinner(exiled.PlayerId))
+                    {
+                        CustomWinnerHolder.ResetAndSetWinner(CustomWinner.JesterKiller);
                         CustomWinnerHolder.WinnerIds.Add(exiled.PlayerId);
                     }
 
@@ -254,6 +277,10 @@ class ExileControllerWrapUpPatch
                         map = new RandomSpawn.PolusSpawnMap();
                         Main.AllPlayerControls.Do(map.RandomTeleport);
                         break;
+                    case 3:
+                        map = new RandomSpawn.DleksSpawnMap();
+                        Main.AllPlayerControls.Do(map.RandomTeleport);
+                    break;
                     case 5:
                         map = new RandomSpawn.FungleSpawnMap();
                         Main.AllPlayerControls.Do(map.RandomTeleport);

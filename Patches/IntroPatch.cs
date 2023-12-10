@@ -118,15 +118,7 @@ class BeginCrewmatePatch
             __instance.overlayHandle.color = Palette.ImpostorRed;
             return false;
         }
-         else if (PlayerControl.LocalPlayer.Is(CustomRoles.Crewpostor))
-        {
-            teamToDisplay = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
-            teamToDisplay.Add(PlayerControl.LocalPlayer);
-    //        __instance.BeginImpostor(teamToDisplay);
-      //      __instance.overlayHandle.color = Palette.ImpostorRed;
-            return false;
-        }
-         else if (PlayerControl.LocalPlayer.Is(CustomRoles.Parasite))
+         else if (PlayerControl.LocalPlayer.Is(CustomRoleTypes.Madmate))
         {
             teamToDisplay = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             teamToDisplay.Add(PlayerControl.LocalPlayer);
@@ -206,6 +198,13 @@ class BeginCrewmatePatch
                 PlayerControl.LocalPlayer.Data.Role.IntroSound = GetIntroSound(RoleTypes.Shapeshifter);
                 __instance.ImpostorText.gameObject.SetActive(true);
                 __instance.ImpostorText.text = GetString("SubText.Neutral");
+                break;
+            case CustomRoleTypes.Madmate:
+                __instance.TeamTitle.text = GetString("TeamMadmate");
+                __instance.TeamTitle.color = __instance.BackgroundBar.material.color = new Color32(255, 25, 25, byte.MaxValue);
+                PlayerControl.LocalPlayer.Data.Role.IntroSound = GetIntroSound(RoleTypes.Impostor);
+                __instance.ImpostorText.gameObject.SetActive(true);
+                __instance.ImpostorText.text = GetString("SubText.Madmate");
                 break;
         }
         switch (role)
@@ -299,6 +298,15 @@ class BeginCrewmatePatch
                 __instance.ImpostorText.text = GetString("SubText.Madmate");
         }
 
+        if (PlayerControl.LocalPlayer.Is(CustomRoles.Venter))
+        {
+            __instance.TeamTitle.text = GetString("TeamMadmate");
+            __instance.TeamTitle.color = __instance.BackgroundBar.material.color = new Color32(255, 25, 25, byte.MaxValue);
+            PlayerControl.LocalPlayer.Data.Role.IntroSound = GetIntroSound(RoleTypes.Impostor);
+                __instance.ImpostorText.gameObject.SetActive(true);
+                __instance.ImpostorText.text = GetString("SubText.Madmate");
+        }
+
         if (Input.GetKey(KeyCode.RightShift))
         {
             __instance.TeamTitle.text = "明天就跑路啦";
@@ -373,6 +381,13 @@ class BeginImpostorPatch
             __instance.overlayHandle.color = Palette.ImpostorRed;
             return true;
         }
+        else if (PlayerControl.LocalPlayer.Is(CustomRoles.Venter))
+        {
+            yourTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
+            yourTeam.Add(PlayerControl.LocalPlayer);
+            __instance.overlayHandle.color = Palette.ImpostorRed;
+            return true;
+        }
         else if (role is CustomRoles.Vigilante or CustomRoles.Sheriff or CustomRoles.Jailer or CustomRoles.Investigator or CustomRoles.SwordsMan or CustomRoles.Medic or CustomRoles.Counterfeiter or CustomRoles.Witness or CustomRoles.Monarch or CustomRoles.Farseer or CustomRoles.Reverie or CustomRoles.Admirer or CustomRoles.Deputy or CustomRoles.Crusader or CustomRoles.CopyCat)
         {
             yourTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
@@ -382,7 +397,7 @@ class BeginImpostorPatch
             __instance.overlayHandle.color = Palette.CrewmateBlue;
             return false;
         }
-        else if (role is CustomRoles.Romantic or CustomRoles.Doppelganger or CustomRoles.Pyromaniac or CustomRoles.Huntsman or CustomRoles.RuthlessRomantic or CustomRoles.VengefulRomantic or CustomRoles.NSerialKiller or CustomRoles.SidekickB or CustomRoles.Briber or CustomRoles.Jackal or CustomRoles.Seeker or CustomRoles.Pixie or CustomRoles.Agitater or CustomRoles.CursedSoul or CustomRoles.Pirate or CustomRoles.Amnesiac or CustomRoles.Arsonist or CustomRoles.Sidekick or CustomRoles.Innocent or CustomRoles.Pelican or CustomRoles.Pursuer or CustomRoles.Revolutionist or CustomRoles.FFF or CustomRoles.Gamer or CustomRoles.Glitch or CustomRoles.Juggernaut or CustomRoles.DarkHide or CustomRoles.Provocateur or CustomRoles.BloodKnight or CustomRoles.NSerialKiller or CustomRoles.Werewolf or CustomRoles.Maverick or CustomRoles.NWitch or CustomRoles.Shroud or CustomRoles.Totocalcio or CustomRoles.Succubus or CustomRoles.Pelican or CustomRoles.Infectious or CustomRoles.Virus or CustomRoles.Pickpocket or CustomRoles.Traitor or CustomRoles.PlagueBearer or CustomRoles.Pestilence or CustomRoles.Spiritcaller or CustomRoles.Necromancer or CustomRoles.Medusa or CustomRoles.HexMaster or CustomRoles.Wraith or CustomRoles.Jinx or CustomRoles.Poisoner or CustomRoles.PotionMaster) //or CustomRoles.Occultist 
+        else if (role is CustomRoles.Romantic or CustomRoles.Briber or CustomRoles.SidekickB or CustomRoles.Exploiter or CustomRoles.Doppelganger or CustomRoles.Pyromaniac or CustomRoles.Huntsman or CustomRoles.RuthlessRomantic or CustomRoles.VengefulRomantic or CustomRoles.NSerialKiller or CustomRoles.SidekickB or CustomRoles.Briber or CustomRoles.Jackal or CustomRoles.Seeker or CustomRoles.Pixie or CustomRoles.Agitater or CustomRoles.CursedSoul or CustomRoles.Pirate or CustomRoles.Amnesiac or CustomRoles.Arsonist or CustomRoles.Sidekick or CustomRoles.Innocent or CustomRoles.Pelican or CustomRoles.Pursuer or CustomRoles.Revolutionist or CustomRoles.FFF or CustomRoles.Gamer or CustomRoles.Glitch or CustomRoles.Juggernaut or CustomRoles.DarkHide or CustomRoles.Provocateur or CustomRoles.BloodKnight or CustomRoles.NSerialKiller or CustomRoles.Werewolf or CustomRoles.Maverick or CustomRoles.NWitch or CustomRoles.Shroud or CustomRoles.Totocalcio or CustomRoles.Succubus or CustomRoles.Pelican or CustomRoles.Infectious or CustomRoles.Virus or CustomRoles.Pickpocket or CustomRoles.Traitor or CustomRoles.PlagueBearer or CustomRoles.Pestilence or CustomRoles.Spiritcaller or CustomRoles.Necromancer or CustomRoles.Medusa or CustomRoles.HexMaster or CustomRoles.Wraith or CustomRoles.Jinx or CustomRoles.Poisoner or CustomRoles.PotionMaster) //or CustomRoles.Occultist 
         {
             yourTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             yourTeam.Add(PlayerControl.LocalPlayer);
@@ -442,6 +457,10 @@ class IntroCutsceneDestroyPatch
                         break;
                     case 2:
                         map = new RandomSpawn.PolusSpawnMap();
+                        Main.AllPlayerControls.Do(map.RandomTeleport);
+                        break;
+                    case 3:
+                        map = new RandomSpawn.DleksSpawnMap();
                         Main.AllPlayerControls.Do(map.RandomTeleport);
                         break;
                     case 5:

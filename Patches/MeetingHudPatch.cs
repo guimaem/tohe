@@ -204,7 +204,9 @@ class CheckForEndVotingPatch
                 if (CheckRole(ps.TargetPlayerId, CustomRoles.Cleanser) && Cleanser.HideVote.GetBool() && Cleanser.CleanserUses[ps.TargetPlayerId] > 0) continue;
                 
                 // Hide Jester Vote
-                if (CheckRole(ps.TargetPlayerId, CustomRoles.Jester) && Options.HideJesterVote.GetBool()) continue;
+                if (CheckRole(ps.TargetPlayerId, CustomRoles.Jester) && Jester.HideVote.GetBool()) continue;
+                // Hide Jester Killer Vote
+                if (CheckRole(ps.TargetPlayerId, CustomRoles.JesterKiller) && JesterKiller.HideVote.GetBool()) continue;
 
 
                 //主动叛变模式下自票无效
@@ -442,6 +444,7 @@ class CheckForEndVotingPatch
         Main.LastVotedPlayer = realName;
 
         var player = Utils.GetPlayerById(exiledPlayer.PlayerId);
+        var coloredplayerName = Utils.ColorString(Main.PlayerColors[exileId], realName);
         var role = GetString(exiledPlayer.GetCustomRole().ToString());
         var crole = exiledPlayer.GetCustomRole();
         var coloredRole = Utils.GetDisplayRoleName(exileId, true);
@@ -479,21 +482,21 @@ class CheckForEndVotingPatch
         switch (Options.CEMode.GetInt())
         {
             case 0:
-                name = string.Format(GetString("PlayerExiled"), realName);
+                name = string.Format(GetString("PlayerExiled"), coloredplayerName);
                 break;
             case 1:
                 if (player.GetCustomRole().IsImpostor() || player.Is(CustomRoles.Parasite) || player.Is(CustomRoles.Crewpostor) || player.Is(CustomRoles.Refugee) || player.Is(CustomRoles.Convict))
-                    name = string.Format(GetString("BelongTo"), realName, Utils.ColorString(Utils.GetRoleColor(CustomRoles.Impostor), GetString("TeamImpostor")));
+                    name = string.Format(GetString("BelongTo"), coloredplayerName, Utils.ColorString(Utils.GetRoleColor(CustomRoles.Impostor), GetString("TeamImpostor")));
 
                 else if (player.GetCustomRole().IsCrewmate())
-                    name = string.Format(GetString("IsGood"), realName);
+                    name = string.Format(GetString("IsGood"), coloredplayerName);
 
                 else if (player.GetCustomRole().IsNeutral() && !player.Is(CustomRoles.Parasite) && !player.Is(CustomRoles.Refugee) && !player.Is(CustomRoles.Crewpostor) && !player.Is(CustomRoles.Convict))
-                    name = string.Format(GetString("BelongTo"), realName, Utils.ColorString(new Color32(127, 140, 141, byte.MaxValue), GetString("TeamNeutral")));
+                    name = string.Format(GetString("BelongTo"), coloredplayerName, Utils.ColorString(new Color32(127, 140, 141, byte.MaxValue), GetString("TeamNeutral")));
 
                 break;
             case 2:
-                name = string.Format(GetString("PlayerIsRole"), realName, coloredRole);
+                name = string.Format(GetString("PlayerIsRole"), coloredplayerName, coloredRole);
                 if (Options.ShowTeamNextToRoleNameOnEject.GetBool())
                 {
                     name += " (";
@@ -512,21 +515,35 @@ class CheckForEndVotingPatch
         //迷你船员长大前被驱逐抢夺胜利
         if (crole == CustomRoles.NiceMini && Mini.Age !< 18)
         {
-            name = string.Format(GetString("ExiledNiceMini"), realName, coloredRole);
+            name = string.Format(GetString("ExiledNiceMini"), coloredplayerName, coloredRole);
             DecidedWinner = true;
         }
 
         //小丑胜利
         if (crole == CustomRoles.Jester)
         {
-            name = string.Format(GetString("ExiledJester"), realName, coloredRole);
-            DecidedWinner = true;
+            if (Jester.MeetingsNeededForWin.GetInt() <= Main.MeetingsPassed)
+            {
+                name = string.Format(GetString("ExiledJester"), coloredplayerName, coloredRole);
+                DecidedWinner = true;
+            }
+            else if (Options.CEMode.GetInt() == 2) name += string.Format(GetString("JesterMeetingLoose"), Jester.MeetingsNeededForWin.GetInt() + 1);
+        }
+
+        if (crole == CustomRoles.JesterKiller)
+        {
+            if (JesterKiller.MeetingsNeededForWin.GetInt() <= Main.MeetingsPassed)
+            {
+                name = string.Format(GetString("ExiledJester"), coloredplayerName, coloredRole);
+                DecidedWinner = true;
+            }
+            else if (Options.CEMode.GetInt() == 2) name += string.Format(GetString("JesterMeetingLoose"), JesterKiller.MeetingsNeededForWin.GetInt() + 1);
         }
 
         //处刑人胜利
         if (Executioner.CheckExileTarget(exiledPlayer, DecidedWinner, true))
         {
-            name = string.Format(GetString("ExiledExeTarget"), realName, coloredRole);
+            name = string.Format(GetString("ExiledExeTarget"), coloredplayerName, coloredRole);
             DecidedWinner = true;
         }
 
@@ -536,7 +553,7 @@ class CheckForEndVotingPatch
             if (!(!Options.InnocentCanWinByImp.GetBool() && crole.IsImpostor()))
             {
                 if (DecidedWinner) name += string.Format(GetString("ExiledInnocentTargetAddBelow"));
-                else name = string.Format(GetString("ExiledInnocentTargetInOneLine"), realName, coloredRole);
+                else name = string.Format(GetString("ExiledInnocentTargetInOneLine"), coloredplayerName, coloredRole);
                 DecidedWinner = true;
             }
         }
@@ -662,6 +679,8 @@ static class ExtendedMeetingHud
                 {
                     // 僵尸、活死人无法被票
                     if (target.Is(CustomRoles.Zombie)) VoteNum = 0;
+                    //Solsticer can not get voted out
+                    if (target.Is(CustomRoles.Solsticer)) VoteNum = 0;
                     // 记录破平者投票
                     if (CheckForEndVotingPatch.CheckRole(ps.TargetPlayerId, CustomRoles.Brakar))
                         if (!Main.BrakarVoteFor.Contains(target.PlayerId))
@@ -827,6 +846,13 @@ class MeetingHudStartPatch
                 AddMsg(Main.VirusNotify[pc.PlayerId], pc.PlayerId, Utils.ColorString(Utils.GetRoleColor(CustomRoles.Virus), GetString("VirusNoticeTitle")));
             if (Enigma.MsgToSend.ContainsKey(pc.PlayerId))
                 AddMsg(Enigma.MsgToSend[pc.PlayerId], pc.PlayerId, Utils.ColorString(Utils.GetRoleColor(CustomRoles.Enigma), Enigma.MsgToSendTitle[pc.PlayerId]));
+            if (pc.Is(CustomRoles.Solsticer))
+            {
+                Solsticer.SetShortTasksToAdd();
+                if (Solsticer.MurderMessage == "")
+                    Solsticer.MurderMessage = string.Format(GetString("SolsticerOnMeeting"), Solsticer.AddShortTasks);
+                AddMsg(Solsticer.MurderMessage, pc.PlayerId, Utils.ColorString(Utils.GetRoleColor(CustomRoles.Solsticer), GetString("SolsticerTitle")));
+            }
         }
         //宝箱怪的消息（合并）
         if (MimicMsg != "")
@@ -938,6 +964,15 @@ class MeetingHudStartPatch
                 }, 5.5f, "AntiBlackout.StoreExiledMessage");
             }
         }
+        
+        if ((MapNames)Main.NormalOptions.MapId == MapNames.Dleks)
+        {
+            _ = new LateTask(() =>
+            {
+                Utils.SendMessage(GetString("Warning.BrokenVentsInDleksMessage"), title: Utils.ColorString(Utils.GetRoleColor(CustomRoles.NiceMini), GetString("WarningTitle")));
+            }, 6f, "Message: Warning Broken Vents In Dleks");
+        }
+
 
         if (MeetingStates.FirstMeeting) TemplateManager.SendTemplate("OnFirstMeeting", noErr: true);
         TemplateManager.SendTemplate("OnMeeting", noErr: true);
@@ -1321,7 +1356,7 @@ class MeetingHudOnDestroyPatch
             Main.AllPlayerControls.Do(pc => RandomSpawn.CustomNetworkTransformPatch.NumOfTP[pc.PlayerId] = 0);
 
             Main.LastVotedPlayerInfo = null;
-            EAC.MeetingTimes = 0;
+            EAC.ReportTimes = new();
         }
     }
 }

@@ -32,19 +32,19 @@ public static class Venter
         SkillLimit = IntegerOptionItem.Create(Id + 13, "SkillLimit", new(1, 20, 1), 10, TabGroup.ImpostorRoles, false).SetParent(HasSkillLimit);
         HasImpostorVision = BooleanOptionItem.Create(Id + 14, "ImpostorVision", false, TabGroup.ImpostorRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Venter]);
     }
-    public static void ApplyGameOptions(IGameOptions opt)
+    public static void ApplyGameOptions(IGameOptions opt, byte playerId)
     {
         if (HasSkillLimit.GetBool())
         {
-            AURoleOptions.EngineerCooldown = CanUseSkill() ? VentCooldown.GetFloat() : 0f
-            AURoleOptions.EngineerInVentMaxTime = CanUseSkill() ? 1 : 0f
+            AURoleOptions.EngineerCooldown = CanUseSkill(playerId) ? VentCooldown.GetFloat() : 0f;
+            AURoleOptions.EngineerInVentMaxTime = CanUseSkill(playerId) ? 1 : 0f;
         }
         else
         {
             AURoleOptions.EngineerCooldown = VentCooldown.GetFloat();
             AURoleOptions.EngineerInVentMaxTime = 1;
         }
-        opt.SetVision(HasImpostorVision.GetBool())
+        opt.SetVision(HasImpostorVision.GetBool());
     }
 
     public static void Init()
@@ -78,6 +78,11 @@ public static class Venter
     }
     private static bool CanUseSkill(byte id) => KillLimit[id] >= 1;
 
+    private static bool CanBeKilled(this PlayerControl pc)
+    {
+        return pc.IsAlive() && !pc.Is(CustomRoleTypes.Madmate) && !pc.GetCustomSubRoles().Contains(CustomRoles.Madmate) && !(pc.GetCustomRole().IsImpostorTeam() && !CanKillImpostors.GetBool());
+    } 
+
     public static void OnEnterVent(PlayerControl pc)
     {
         if (!IsEnable) return;
@@ -90,7 +95,7 @@ public static class Venter
             SendRPC(pc.PlayerId);
         }
         
-        List<PlayerControl> list = Main.AllAlivePlayerControls.Where(x => x.PlayerId != pc.PlayerId && (CanKillImpostors.GetBool() ? x.GetCustomRole().IsImpostorTeam() : !x.GetCustomRole().IsImpostorTeam())).ToList();
+        List<PlayerControl> list = Main.AllAlivePlayerControls.Where(x => x.PlayerId != pc.PlayerId && x.CanBeKilled()).ToList();
         if (list.Count < 1)
         {
             Logger.Info($"No target to kill", "Venter");

@@ -34,6 +34,7 @@ enum CustomRPC
     SetKillOrCurse,
     SetSheriffShotLimit,
     SetVenterKillLimit,
+    SetLimitedKillLimit,
     //SetCopyCatMiscopyLimit,
     SetDousedPlayer,
     setPlaguedPlayer,
@@ -153,6 +154,7 @@ enum CustomRPC
     SyncShroud,
     SyncMiniCrewAge,
     SyncSabotageMasterSkill,
+    SyncSolsticerNotify,
 }
 public enum Sounds
 {
@@ -365,6 +367,10 @@ internal class RPCHandlerPatch
             case CustomRPC.SetVenterKillLimit:
                 Venter.ReceiveRPC(reader);
                 break;
+            case CustomRPC.SetLimitedKillLimit:
+                LimitedKiller.ReceiveRPC(reader);
+                break;
+            
         /*    case CustomRPC.SetCopyCatMiscopyLimit:
                 CopyCat.ReceiveRPC(reader);
                 break; */
@@ -725,6 +731,9 @@ internal class RPCHandlerPatch
             case CustomRPC.SyncSabotageMasterSkill:
                 SabotageMaster.ReceiveRPC(reader);
                 break;
+            case CustomRPC.SyncSolsticerNotify:
+                Solsticer.ReceiveRPC(reader);
+                break;
             case CustomRPC.SyncMiniCrewAge:
                 Mini.ReceiveRPC(reader);
                 break;
@@ -1010,6 +1019,9 @@ internal static class RPC
             //    break;
             case CustomRoles.Camouflager:
                 Camouflager.Add();
+                break;
+            case CustomRoles.LimitedKiller:
+                LimitedKiller.Add(targetId);
                 break;
             case CustomRoles.Jackal:
                 Jackal.Add(targetId);

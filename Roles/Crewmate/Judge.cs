@@ -73,7 +73,7 @@ public static class Judge
         var originMsg = msg;
 
         if (!AmongUsClient.Instance.AmHost) return false;
-        if (!GameStates.IsMeeting || pc == null || GameStates.IsExiling) return false;
+        if (!GameStates.IsMeeting || pc == null || GameStates.IsExilling) return false;
         if (!pc.Is(CustomRoles.Judge)) return false;
 
         int operate = 0; // 1:ID 2:猜测
@@ -139,10 +139,16 @@ public static class Judge
                     else pc.ShowPopUp(GetString("GuessMini"));
                     return true;
                 }
-                else if  (target.Is(CustomRoles.Rebound))
+                else if (target.Is(CustomRoles.Rebound))
                 {
                     Logger.Info($"{pc.GetNameWithRole()} judged {target.GetNameWithRole()}, judge sucide = true because target rebound", "JudgeTrialMsg");
                     judgeSuicide = true;
+                }
+                else if (target.Is(CustomRoles.Solsticer))
+                {
+                    if (!isUI) Utils.SendMessage(GetString("GuessSolsticer"), pc.PlayerId);
+                    else pc.ShowPopUp(GetString("GuessSolsticer"));
+                    return true;
                 }
                 else if (pc.Is(CustomRoles.Madmate)) judgeSuicide = false;
                 else if (pc.Is(CustomRoles.Charmed)) judgeSuicide = false;
