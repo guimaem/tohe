@@ -3,6 +3,7 @@ using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using System.Collections.Generic;
 using TOHE.Roles.AddOns.Crewmate;
+using TOHE.Roles.Neutral;
 
 namespace TOHE;
 
@@ -161,6 +162,16 @@ class RpcSetTasksPatch
         {
             (hasCommonTasks, NumLongTasks, NumShortTasks) = Workhorse.TaskData;
         }
+        
+        if (pc.Is(CustomRoles.Solsticer))
+        {
+            Solsticer.SetShortTasksToAdd();
+            NumShortTasks += Solsticer.AddShortTasks;
+            var taskState = pc.GetPlayerTaskState();
+            taskState.AllTasksCount = NumShortTasks + NumLongTasks;
+            hasCommonTasks = false;
+        }
+
 
         // Capitalism is going to wreak havoc on people
         if (Main.CapitalismAssignTask.ContainsKey(playerId))

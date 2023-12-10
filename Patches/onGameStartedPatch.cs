@@ -108,7 +108,6 @@ internal class ChangeRoleSettings
             Main.JinxSpellCount = new();
             Main.OverDeadPlayerList = new();
             Main.Provoked = new();
-            Main.ShieldPlayer = Options.ShieldPersonDiedFirst.GetBool() ? Main.FirstDied : byte.MaxValue;
             Main.FirstDied = byte.MaxValue;
             Main.MadmateNum = 0;
             Main.BardCreations = 0;
@@ -222,6 +221,7 @@ internal class ChangeRoleSettings
             SwordsMan.Init();
             EvilTracker.Init();
             Snitch.Init();
+            Solsticer.Init();
             Vampire.Init();
             Vampiress.Init();
             Poisoner.Init();
@@ -298,6 +298,7 @@ internal class ChangeRoleSettings
             Addict.Init();
             Mole.Init();
             Venter.Init();
+            LimitedKiller.Init();
             Deathpact.Init();
             Tracefinder.Init();
             Devourer.Init();
@@ -348,6 +349,7 @@ internal class ChangeRoleSettings
             MeetingStates.MeetingCalled = false;
             MeetingStates.FirstMeeting = true;
             GameStates.AlreadyDied = false;
+            EAC.ReportTimes = new();
         }
         catch (Exception ex)
         {
@@ -661,6 +663,9 @@ internal class SelectRolesPatch
                     case CustomRoles.Snitch:
                         Snitch.Add(pc.PlayerId);
                         break;
+                    case CustomRoles.Solsticer:
+                        Solsticer.Add(pc.PlayerId);
+                        break;
                     case CustomRoles.AntiAdminer:
                         AntiAdminer.Add(pc.PlayerId);
                         break;
@@ -883,6 +888,9 @@ internal class SelectRolesPatch
                         break;
                     case CustomRoles.Mole:
                         Mole.Add(pc.PlayerId);
+                        break;
+                    case CustomRoles.LimitedKiller:
+                        LimitedKiller.Add(pc.PlayerId);
                         break;
                     case CustomRoles.Venter:
                         Venter.Add(pc.PlayerId);
