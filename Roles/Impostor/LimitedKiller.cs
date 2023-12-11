@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Hazel;
 using TOHE.Modules;
+using UnityEngine;
 using static TOHE.Translator;
 using static TOHE.Options;
 
@@ -17,10 +18,9 @@ public static class LimitedKiller
     public static void SetupCustomOption()
     {
         SetupRoleOptions(Id, TabGroup.ImpostorRoles, CustomRoles.LimitedKiller);
-        KillLimit = IntegerOptionItem.Create(Id + 1, "KillLimit", new(1, 15, 1), 8, TabGroup.ImpostorRoles, false)
+        KillLimit = IntegerOptionItem.Create(Id + 2, "KillLimit", new(1, 15, 1), 8, TabGroup.ImpostorRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.LimitedKiller])
-            .SetValueFormat(OptionFormat.Multiplier);
-        KillCooldown = FloatOptionItem.Create(Id + 2, "KillCooldown", new(0f, 180f, 2.5f), 30f, TabGroup.ImpostorRoles,  false)
+        KillCooldown = FloatOptionItem.Create(Id + 3, "KillCooldown", new(0f, 180f, 2.5f), 30f, TabGroup.ImpostorRoles,  false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.LimitedKiller])
             .SetValueFormat(OptionFormat.Seconds);
     }
@@ -34,9 +34,11 @@ public static class LimitedKiller
         AbilityLimit.TryAdd(playerId, KillLimit.GetInt());
     }
 
-    public static void SetKillCooldown(this PlayerControl player) => Main.AllPlayerKillCooldown[player.PlayerId] = CanUseKillButton(player) ? KillCooldown.GetFloat() : 300f;
+    public static void SetKillCooldown(PlayerControl player) => Main.AllPlayerKillCooldown[player.PlayerId] = CanKill(player.PlayerId) ? KillCooldown.GetFloat() : 300f;
     private static bool CanKill(byte playerId) => AbilityLimit[playerId] >= 1;
-    public static bool CanUseKillButton(PlayerControl player) => !player.Data.IsDead && CanKill(player.PlayerId);
+    public static bool CanUseKillButton(this PlayerControl player) => !player.Data.IsDead && CanKill(player.PlayerId);
+
+     public static string GetKillLimit(byte playerId) => Utils.ColorString(AbilityLimit.ContainsKey(playerId) && CanKill(playerId) ? Utils.GetRoleColor(CustomRoles.Impostor).ShadeColor(0.25f) : Color.gray, AbilityLimit.TryGetValue(playerId, out var killLimit) ? $"({KillLimit.GetInt() - killLimit})" : "Invalid");
 
     private static void SendRPC(byte playerId)
     {
@@ -55,5 +57,11 @@ public static class LimitedKiller
             AbilityLimit.Add(LimitedId, KillLimit.GetInt());
     }
 
-    public static void UpdateLimit(byte killerId) => AbilityLimit[killerId]--; // on check murder
+    public static void UpdateLimit(byte killerId) // on check murder
+    {
+        AbilityLimit[killerId]--;
+        var player = Utils.GetPlayerById(killerId);
+        Logger.Info($"{player.GetNameWithRole()} : Number of kills left: {AbilityLimit[killerId]}", "Limited Reaper");
+        SendRPC(killerId);
+    }
 }
