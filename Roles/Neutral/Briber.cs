@@ -6,7 +6,6 @@ using UnityEngine;
 using TOHE.Roles.Crewmate;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Double;
-using TOHE.Roles.Madmate;
 using TOHE.Roles.AddOns.Crewmate;
 using static TOHE.Options;
 using static TOHE.Translator;
@@ -17,7 +16,7 @@ public static class Briber
 {
     private static readonly int Id = 3950;
 
-    //private static Dictionary<byte, byte> RecruitLimit = new();
+    //private static Dictionary<byte, int> RecruitLimit = new();
     public static List<byte> playerIdList = new();
 
     private static OptionItem RecruitCooldown;
@@ -39,7 +38,7 @@ public static class Briber
 
     public static void SetupCustomOption()
     {
-        Options.SetupRoleOptions(Id, TabGroup.OtherRoles, CustomRoles.Briber);
+        SetupRoleOptions(Id, TabGroup.OtherRoles, CustomRoles.Briber);
         /*CanKill = BooleanOptionItem.Create(Id + 10, "CanKill", false, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
         KillCooldown = FloatOptionItem.Create(Id + 14, "KillCooldown", new(5f, 180f, 2.5f), 30f, TabGroup.OtherRoles, false).SetParent(CanKill)
             .SetValueFormat(OptionFormat.Seconds);*/

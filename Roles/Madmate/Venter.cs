@@ -18,7 +18,7 @@ public static class Venter
 
     private static OptionItem VentCooldown;
     private static OptionItem CanKillImpostors;
-    private static OptionItem HasSkillLimit;    
+    public static OptionItem HasSkillLimit;    
     public static OptionItem SkillLimit;
     private static OptionItem HasImpostorVision;
    
@@ -28,7 +28,7 @@ public static class Venter
         VentCooldown = FloatOptionItem.Create(Id + 10, "VentCooldown", new(0f, 180f, 2.5f), 25f, TabGroup.ImpostorRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Venter])
             .SetValueFormat(OptionFormat.Seconds);
         CanKillImpostors = BooleanOptionItem.Create(Id + 11, "CanKillAllies", false, TabGroup.ImpostorRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Venter]);
-        HasSkillLimit = BooleanOptionItem.Create(Id + 12, "HasSkillLimit", false, TabGroup.ImpostorRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Venter]);
+        HasSkillLimit = BooleanOptionItem.Create(Id + 12, "HasSkillLimit", true, TabGroup.ImpostorRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Venter]);
         SkillLimit = IntegerOptionItem.Create(Id + 13, "SkillLimit", new(1, 20, 1), 10, TabGroup.ImpostorRoles, false).SetParent(HasSkillLimit);
         HasImpostorVision = BooleanOptionItem.Create(Id + 14, "ImpostorVision", false, TabGroup.ImpostorRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Venter]);
     }
@@ -59,6 +59,7 @@ public static class Venter
         IsEnable = true;
         if (HasSkillLimit.GetBool())
             KillLimit.TryAdd(playerId, SkillLimit.GetInt());
+	    //KillLimit.Add(playerId, 0);
     }
     private static void SendRPC(byte playerId)
     {
@@ -77,6 +78,8 @@ public static class Venter
             KillLimit.Add(VenterId, SkillLimit.GetInt());
     }
     private static bool CanUseSkill(byte id) => KillLimit[id] >= 1;
+
+    public static string GetSkillLimit(byte playerId) => Utils.ColorString(KillLimit.ContainsKey(playerId) && CanUseSkill(playerId) ? Utils.GetRoleColor(CustomRoles.Impostor).ShadeColor(0.25f) : Color.gray, KillLimit.TryGetValue(playerId, out var killLimit) ? $"({SkillLimit.GetInt() - killLimit})" : "Invalid");
 
     private static bool CanBeKilled(this PlayerControl pc)
     {

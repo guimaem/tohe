@@ -19,18 +19,18 @@ public static class Jester
     public static void SetupCustomOption()
     {
         SetupRoleOptions(Id, TabGroup.NeutralRoles, CustomRoles.Jester);
-        CanUseButton = BooleanOptionItem.Create(Id + 1, "JesterCanUseButton", false, TabGroup.NeutralRoles, false)
+        CanUseButton = BooleanOptionItem.Create(Id + 2, "JesterCanUseButton", false, TabGroup.NeutralRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Jester]);
-        CanVent = BooleanOptionItem.Create(Id + 2, "CanVent", true, TabGroup.NeutralRoles, false)
+        CanVent = BooleanOptionItem.Create(Id + 3, "CanVent", true, TabGroup.NeutralRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Jester]);
-        ImpostorVision = BooleanOptionItem.Create(Id + 3, "ImpostorVision", true, TabGroup.NeutralRoles, false)
+        ImpostorVision = BooleanOptionItem.Create(Id + 4, "ImpostorVision", true, TabGroup.NeutralRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Jester]);
-        HideVote = BooleanOptionItem.Create(Id + 4, "HideJesterVote", true, TabGroup.NeutralRoles, false)
+        HideVote = BooleanOptionItem.Create(Id + 5, "HideJesterVote", true, TabGroup.NeutralRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Jester]);
-        MeetingsNeededForWin = IntegerOptionItem.Create(Id + 5, "MeetingsNeededForWin", new(0, 10, 1), 2, TabGroup.NeutralRoles, false)
+        MeetingsNeededForWin = IntegerOptionItem.Create(Id + 6, "MeetingsNeededForWin", new(0, 10, 1), 2, TabGroup.NeutralRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Jester])
             .SetValueFormat(OptionFormat.Times);
-        SunnyboyChance = IntegerOptionItem.Create(Id + 6, "SunnyboyChance", new(0, 100, 5), 0, TabGroup.NeutralRoles, false)
+        SunnyboyChance = IntegerOptionItem.Create(Id + 7, "SunnyboyChance", new(0, 100, 5), 0, TabGroup.NeutralRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Jester])
             .SetValueFormat(OptionFormat.Percent);
     }
