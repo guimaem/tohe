@@ -230,12 +230,10 @@ public class PlayerGameOptionsSender : GameOptionsSender
                 AURoleOptions.ShapeshifterLeaveSkin = Options.ShapeshiftSkin.GetBool();
                 break;
             case CustomRoles.Bomber:
-                AURoleOptions.ShapeshifterCooldown = Options.BombCooldown.GetFloat();
-                AURoleOptions.ShapeshifterDuration = 2f;
+                Bomber.ApplyGameOptions();
                 break;
             case CustomRoles.Nuker:
-                AURoleOptions.ShapeshifterCooldown = Options.NukeCooldown.GetFloat();
-                AURoleOptions.ShapeshifterDuration = 2f;
+                Nuker.ApplyGameOptions();
                 break;
             case CustomRoles.Mafia:
                 AURoleOptions.ShapeshifterCooldown = Options.MafiaShapeshiftCD.GetFloat();
