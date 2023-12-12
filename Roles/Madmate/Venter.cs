@@ -58,8 +58,8 @@ public static class Venter
         //playerIdList.Add(playerId);
         IsEnable = true;
         if (HasSkillLimit.GetBool())
-            KillLimit.TryAdd(playerId, SkillLimit.GetInt());
-	    //KillLimit.Add(playerId, 0);
+            KillLimit.Add(playerId, SkillLimit.GetInt());
+	        //KillLimit.Add(playerId, 0);
     }
     private static void SendRPC(byte playerId)
     {
@@ -79,7 +79,11 @@ public static class Venter
     }
     private static bool CanUseSkill(byte id) => KillLimit[id] > 0;
 
-    public static string GetSkillLimit(byte playerId) => Utils.ColorString(KillLimit.ContainsKey(playerId) && CanUseSkill(playerId) ? Utils.GetRoleColor(CustomRoles.Impostor).ShadeColor(0.25f) : Color.gray, KillLimit.TryGetValue(playerId, out var killLimit) ? $"({SkillLimit.GetInt() - killLimit})" : "Invalid");
+    public static string GetSkillLimit(byte playerId)
+    {
+        return Utils.ColorString(KillLimit.ContainsKey(playerId) && CanUseSkill(playerId) ? Utils.GetRoleColor(CustomRoles.Madmate).ShadeColor(0.25f) : Color.gray,
+        KillLimit.TryGetValue(playerId, out var killLimit) ? $"({SkillLimit.GetInt() - killLimit})" : "Invalid");
+    }
 
     private static bool CanBeKilled(this PlayerControl pc)
     {

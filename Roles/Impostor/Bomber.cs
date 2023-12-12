@@ -93,6 +93,6 @@ public static class Bomber
                 }
                 Utils.NotifyRoles();
             }, 1.5f, "Bomber Suiscide");
-                }
+        }
     }
 }
