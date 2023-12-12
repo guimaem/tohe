@@ -64,21 +64,18 @@ class ExileControllerWrapUpPatch
             var role = exiled.GetCustomRole();
 
             //判断冤罪师胜利
-            var pcList = Main.AllPlayerControls.Where(x => x.Is(CustomRoles.Innocent) && !x.IsAlive() && x.GetRealKiller()?.PlayerId == exiled.PlayerId).ToList();
-            if (pcList.Any())
+            var pcArray = Main.AllPlayerControls.Where(x => x.Is(CustomRoles.Innocent) && !x.IsAlive() && x.GetRealKiller()?.PlayerId == exiled.PlayerId).ToArray();
+            if (pcArray.Any())
             {
                 if (!Options.InnocentCanWinByImp.GetBool() && role.IsImpostor())
                 {
-                    Logger.Info("Exeiled Winner Check for impostor", "Innocent");
+                    Logger.Info("Exiled Winner Check for impostor", "Innocent");
                 }
                 else
                 {
                     bool isInnocentWinConverted = false;
-                    var pcListCount = pcList.Count;
-                    for (int item = 0; item < pcListCount; item++)
+                    foreach (var Innocent in pcArray)
                     {
-                        PlayerControl Innocent = pcList[item];
-
                         if (CustomWinnerHolder.CheckForConvertedWinner(Innocent.PlayerId))
                         {
                             isInnocentWinConverted = true;
@@ -96,7 +93,7 @@ class ExileControllerWrapUpPatch
                             CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Innocent);
                         }
 
-                        pcList.Do(x => CustomWinnerHolder.WinnerIds.Add(x.PlayerId));
+                        pcArray.Do(x => CustomWinnerHolder.WinnerIds.Add(x.PlayerId));
                     }
                     DecidedWinner = true;
                 }
@@ -197,11 +194,9 @@ class ExileControllerWrapUpPatch
             }
         }
 
-        var allPlayerControls = Main.AllPlayerControls;
-        int allPlayerControlsCount = Main.AllPlayerControls.Count;
-        for (int item = 0; item < allPlayerControlsCount; item++)
+        foreach (var player in Main.AllPlayerControls)
         {
-            PlayerControl player = allPlayerControls[item];
+            //PlayerControl player = allPlayerControls[item];
             CustomRoles playerRole = player.GetCustomRole(); // Only roles (no add-ons)
 
             switch (playerRole)

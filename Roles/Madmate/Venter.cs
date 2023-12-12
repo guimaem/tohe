@@ -77,7 +77,7 @@ public static class Venter
         else
             KillLimit.Add(VenterId, SkillLimit.GetInt());
     }
-    private static bool CanUseSkill(byte id) => KillLimit[id] >= 1;
+    private static bool CanUseSkill(byte id) => KillLimit[id] > 0;
 
     public static string GetSkillLimit(byte playerId) => Utils.ColorString(KillLimit.ContainsKey(playerId) && CanUseSkill(playerId) ? Utils.GetRoleColor(CustomRoles.Impostor).ShadeColor(0.25f) : Color.gray, KillLimit.TryGetValue(playerId, out var killLimit) ? $"({SkillLimit.GetInt() - killLimit})" : "Invalid");
 

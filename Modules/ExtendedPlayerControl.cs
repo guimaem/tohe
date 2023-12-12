@@ -61,7 +61,7 @@ static class ExtendedPlayerControl
     {
         try
         {
-            var client = AmongUsClient.Instance.allClients.ToArray().Where(cd => cd.Character.PlayerId == player.PlayerId).FirstOrDefault();
+            var client = AmongUsClient.Instance.allClients.ToArray().FirstOrDefault(cd => cd.Character.PlayerId == player.PlayerId);
             return client;
         }
         catch
@@ -123,10 +123,8 @@ static class ExtendedPlayerControl
     }
     public static void RpcSetNameEx(this PlayerControl player, string name)
     {
-        int allPlayerControlsCount = Main.AllPlayerControls.Count;
-        for (int item = 0; item < allPlayerControlsCount; item++)
+        foreach (var seer in Main.AllPlayerControls)
         {
-            PlayerControl seer = Main.AllPlayerControls[item];
             Main.LastNotifyNames[(player.PlayerId, seer.PlayerId)] = name;
         }
         HudManagerPatch.LastSetNameDesyncCount++;
@@ -474,7 +472,7 @@ static class ExtendedPlayerControl
     }
     public static bool CanUseKillButton(this PlayerControl pc)
     {
-        int playerCount = Main.AllAlivePlayerControls.Count;
+        int playerCount = Main.AllAlivePlayerControls.Length;
         if (!pc.IsAlive() || pc.Data.Role.Role == RoleTypes.GuardianAngel || Pelican.IsEaten(pc.PlayerId)) return false;
         if (Mastermind.ManipulatedPlayers.ContainsKey(pc.PlayerId)) return true;
 
@@ -1209,11 +1207,8 @@ static class ExtendedPlayerControl
                 ChiefOfPolice.SetKillCooldown(player.PlayerId);
                 break;
             case CustomRoles.EvilMini:
-                int allPlayerControlsCount = Main.AllPlayerControls.Count;
-                for (int item = 0; item < allPlayerControlsCount; item++)
+                foreach (var pc in Main.AllPlayerControls)
                 {
-                    PlayerControl pc = Main.AllPlayerControls[item];
-                    
                     if (pc.Is(CustomRoles.EvilMini) && Mini.Age == 0)
                     {
                         Main.AllPlayerKillCooldown[player.PlayerId] = Mini.MinorCD.GetFloat();

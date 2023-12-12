@@ -53,7 +53,7 @@ namespace TOHE.Roles.Neutral
             Count = 0;
             MurderMessage = "";
         }
-
+        
         public static void Add(byte playerId)
         {
             playerid = playerId;
@@ -100,7 +100,7 @@ namespace TOHE.Roles.Neutral
         }
         public static void ActiveWarning(PlayerControl pc)
         {
-            foreach (var target in Main.AllAlivePlayerControls.Where(x => x.IsSolsticerTarget(onlyKiller: true)).ToList())
+            foreach (var target in Main.AllAlivePlayerControls.Where(x => x.IsSolsticerTarget(onlyKiller: true)).ToArray())
             {
                 TargetArrow.Add(target.PlayerId, pc.PlayerId);
             }
@@ -139,7 +139,7 @@ namespace TOHE.Roles.Neutral
         } //My idea is to encourage everyone to kill Solsticer and won't waste shoots on it, only resets cd.
         public static void AfterMeetingTasks()
         {
-            foreach (var pc in Main.AllAlivePlayerControls.Where(x => x.Is(CustomRoles.Solsticer)).ToList())
+            foreach (var pc in Main.AllAlivePlayerControls.Where(x => x.Is(CustomRoles.Solsticer)).ToArray())
             {
                 Main.AllPlayerSpeed[pc.PlayerId] = SolsticerSpeed.GetFloat();
                 ReportDeadBodyPatch.CanReport[pc.PlayerId] = true;
@@ -222,7 +222,7 @@ namespace TOHE.Roles.Neutral
         public static void SetShortTasksToAdd()
         {
             var TotalPlayer = Main.PlayerStates.Count(x => x.Value.deathReason != PlayerState.DeathReason.Disconnected);
-            var AlivePlayer = Main.AllAlivePlayerControls.Count;
+            var AlivePlayer = Main.AllAlivePlayerControls.Length;
 
             AddShortTasks = (int)((TotalPlayer - AlivePlayer) * AddTasksPreDeadPlayer.GetFloat());
         }
