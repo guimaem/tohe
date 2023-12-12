@@ -306,6 +306,7 @@ internal class RPCHandlerPatch
                 if (AmongUsClient.Instance.AmHost) break;
 
                 List<OptionItem> listOptions = new();
+                List<OptionItem> allOptionsList = OptionItem.AllOptions.ToList();
 
                 var startAmount = reader.ReadInt32();
                 var lastAmount = reader.ReadInt32();
@@ -315,7 +316,7 @@ internal class RPCHandlerPatch
                 // Add Options
                 for (var option = startAmount; option < countAllOptions && option <= lastAmount; option++)
                 {
-                    listOptions.Add(OptionItem.AllOptions[option]);
+                    listOptions.Add(allOptionsList[option]);
                 }
 
                 var countOptions = listOptions.Count;
@@ -833,11 +834,12 @@ internal static class RPC
         writer.Write(lastAmount);
 
         List<OptionItem> listOptions = new();
+        List<OptionItem> allOptionsList = OptionItem.AllOptions.ToList();
 
         // Add Options
         for (var option = startAmount; option < amountAllOptions && option <= lastAmount; option++)
         {
-            listOptions.Add(OptionItem.AllOptions[option]);
+            listOptions.Add(allOptionsList[option]);
         }
 
         var countListOptions = listOptions.Count;

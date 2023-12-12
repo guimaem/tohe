@@ -250,8 +250,12 @@ public static class Utils
     public static void TargetDies(PlayerControl killer, PlayerControl target)
     {
         if (!target.Data.IsDead || GameStates.IsMeeting) return;
-        foreach (var seer in Main.AllPlayerControls)
+        
+        int allPlayerControlsCount = Main.AllPlayerControls.Count;
+        for (int item = 0; item < allPlayerControlsCount; item++)
         {
+            PlayerControl seer = Main.AllPlayerControls[item];
+            
             if (KillFlashCheck(killer, target, seer))
             {
                 seer.KillFlash();
@@ -341,7 +345,7 @@ public static class Utils
     }
     public static string GetRoleMode(CustomRoles role, bool parentheses = true)
     {
-        if (Options.HideGameSettings.GetBool() && Main.AllPlayerControls.Count() > 1)
+        if (Options.HideGameSettings.GetBool() && Main.AllPlayerControls.Count > 1)
             return string.Empty;
         string mode = role.GetMode() switch
         {
@@ -1698,8 +1702,11 @@ public static class Utils
         var taskState = GetPlayerById(Terrorist.PlayerId).GetPlayerTaskState();
         if (taskState.IsTaskFinished && (!Main.PlayerStates[Terrorist.PlayerId].IsSuicide() || Options.CanTerroristSuicideWin.GetBool())) //タスクが完了で（自殺じゃない OR 自殺勝ちが許可）されていれば
         {
-            foreach (var pc in Main.AllPlayerControls)
+            int allPlayerControlsCount = Main.AllPlayerControls.Count;
+            for (int item = 0; item < allPlayerControlsCount; item++)
             {
+                PlayerControl pc = Main.AllPlayerControls[item];
+
                 if (pc.Is(CustomRoles.Terrorist))
                 {
                     if (Main.PlayerStates[pc.PlayerId].deathReason == PlayerState.DeathReason.Vote)
@@ -2027,8 +2034,11 @@ public static class Utils
 
         //seer: player who updates the nickname/role/mark
         //target: seer updates nickname/role/mark of other targets
-        foreach (var seer in seerList)
+        int seerListCount = seerList.Count;
+        for (int item = 0; item < seerListCount; item++)
         {
+            PlayerControl seer = seerList[item];
+
             // Do nothing when the seer is not present in the game
             if (seer == null || seer.Data.Disconnected) continue;
             
@@ -2285,8 +2295,11 @@ public static class Utils
                 || MushroomMixupIsActive
                 || NoCache
                 || ForceLoop)
-                foreach (var target in Main.AllPlayerControls)
+                int allPlayerControlsCount = Main.AllPlayerControls.Count;
+                for (int item1 = 0; item1 < allPlayerControlsCount; item1++)
                 {
+                    PlayerControl target = Main.AllPlayerControls[item];
+
                     // if the target is the seer itself, do nothing
                     if (target.PlayerId == seer.PlayerId) continue;
 
@@ -2711,9 +2724,12 @@ public static class Utils
             case CustomRoles.CyberStar:
                 if (GameStates.IsMeeting)
                 {
-                    //网红死亡消息提示
-                    foreach (var pc in Main.AllPlayerControls)
+                    //Death Message
+                    int allPlayerControlsCount = Main.AllPlayerControls.Count;
+                    for (int item = 0; item < allPlayerControlsCount; item++)
                     {
+                        PlayerControl pc = Main.AllPlayerControls[item];
+
                         if (!Options.ImpKnowCyberStarDead.GetBool() && pc.GetCustomRole().IsImpostor()) continue;
                         if (!Options.NeutralKnowCyberStarDead.GetBool() && pc.GetCustomRole().IsNeutral()) continue;
                         SendMessage(string.Format(GetString("CyberStarDead"), target.GetRealName()), pc.PlayerId, ColorString(GetRoleColor(CustomRoles.CyberStar), GetString("CyberStarNewsTitle")));
@@ -2743,14 +2759,18 @@ public static class Utils
                 case CustomRoles.Cyber:
                 if (GameStates.IsMeeting)
                 {
-                    //网红死亡消息提示
-                    foreach (var pc in Main.AllPlayerControls)
-                    {
-                        if (!Options.ImpKnowCyberDead.GetBool() && pc.GetCustomRole().IsImpostor()) continue;
-                        if (!Options.NeutralKnowCyberDead.GetBool() && pc.GetCustomRole().IsNeutral()) continue;
-                        if (!Options.CrewKnowCyberDead.GetBool() && pc.GetCustomRole().IsCrewmate()) continue;
-                        SendMessage(string.Format(GetString("CyberDead"), target.GetRealName()), pc.PlayerId, ColorString(GetRoleColor(CustomRoles.Cyber), GetString("CyberNewsTitle")));
-                    }
+                        //Death Message
+                        int allPlayerControlsCount = Main.AllPlayerControls.Count;
+                        for (int item = 0; item < allPlayerControlsCount; item++)
+                        {
+                            PlayerControl pc = Main.AllPlayerControls[item];
+
+                            if (!Options.ImpKnowCyberDead.GetBool() && pc.GetCustomRole().IsImpostor()) continue;
+                            if (!Options.NeutralKnowCyberDead.GetBool() && pc.GetCustomRole().IsNeutral()) continue;
+                            if (!Options.CrewKnowCyberDead.GetBool() && pc.GetCustomRole().IsCrewmate()) continue;
+
+                            SendMessage(string.Format(GetString("CyberDead"), target.GetRealName()), pc.PlayerId, ColorString(GetRoleColor(CustomRoles.Cyber), GetString("CyberNewsTitle")));
+                        }
                 }
                 break;    
             } 
@@ -2843,12 +2863,15 @@ public static class Utils
     {
         int draw = 0;
         int all = Options.RevolutionistDrawCount.GetInt();
-        int max = Main.AllAlivePlayerControls.Count();
+        int max = Main.AllAlivePlayerControls.Count;
         if (!Main.PlayerStates[playerId].IsDead) max--;
         winnerList = new();
         if (all > max) all = max;
-        foreach (var pc in Main.AllPlayerControls)
+        
+        int allPlayerControlsCount = Main.AllPlayerControls.Count;
+        for (int item = 0; item < allPlayerControlsCount; item++)
         {
+            PlayerControl pc = Main.AllPlayerControls[item];
             if (Main.isDraw.TryGetValue((playerId, pc.PlayerId), out var isDraw) && isDraw)
             {
                 winnerList.Add(pc);
