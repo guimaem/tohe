@@ -114,6 +114,8 @@ namespace TOHE.Roles.Neutral
                 CustomRoles.RuthlessRomantic or
                 CustomRoles.VengefulRomantic or
                 CustomRoles.Sidekick or
+                CustomRoles.SidekickB or
+                CustomRoles.Briber or
                 CustomRoles.Jackal or
                 CustomRoles.Virus or
                 CustomRoles.Infectious or

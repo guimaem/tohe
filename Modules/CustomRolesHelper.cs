@@ -1721,7 +1721,7 @@ static class CustomRolesHelper
         if (role.IsImpostor()) type = CustomRoleTypes.Impostor;
         if (role.IsNeutral() && !role.IsMadmate()) type = CustomRoleTypes.Neutral;
         if (role.IsAdditionRole()) type = CustomRoleTypes.Addon;
-	if (role.IsMadmate()) type = CustomRoleTypes.Madmate;
+	    if (role.IsMadmate()) type = CustomRoleTypes.Madmate;
         return type;
     }
     public static bool RoleExist(this CustomRoles role, bool countDead = false) => Main.AllPlayerControls.Any(x => x.Is(role) && (x.IsAlive() || countDead));
