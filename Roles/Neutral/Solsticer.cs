@@ -222,7 +222,7 @@ namespace TOHE.Roles.Neutral
         public static void SetShortTasksToAdd()
         {
             var TotalPlayer = Main.PlayerStates.Count(x => x.Value.deathReason != PlayerState.DeathReason.Disconnected);
-            var AlivePlayer = Main.AllAlivePlayerControls.Count();
+            var AlivePlayer = Main.AllAlivePlayerControls.Count;
 
             AddShortTasks = (int)((TotalPlayer - AlivePlayer) * AddTasksPreDeadPlayer.GetFloat());
         }

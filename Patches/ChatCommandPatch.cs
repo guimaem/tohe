@@ -1080,6 +1080,7 @@ internal class ChatCommands
             "靈魂論者" or "灵魂论者" => GetString("Spiritualist"),
             "變色龍" or "变色龙" or "变色" => GetString("Chameleon"),
             "檢查員" or "检查员" or "检查" => GetString("ParityCop"),
+            "队长" => GetString("Captain"),
             "仰慕者" or "仰慕" => GetString("Admirer"),
             "時間之主" or "时间之主" or "回溯时间" => GetString("TimeMaster"),
             "十字軍" or "十字军" => GetString("Crusader"),

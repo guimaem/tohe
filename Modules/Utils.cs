@@ -2061,6 +2061,7 @@ public static class Utils
                 if (seer.Is(CustomRoles.SuperStar) && Options.EveryOneKnowSuperStar.GetBool())
                     SelfMark.Append(ColorString(GetRoleColor(CustomRoles.SuperStar), "★"));
 
+
                 if (seer.Is(CustomRoles.Cyber) && Options.CyberKnown.GetBool())
                     SelfMark.Append(ColorString(GetRoleColor(CustomRoles.Cyber), "★"));
 
@@ -2332,6 +2333,12 @@ public static class Utils
 
                         if (target.Is(CustomRoles.SuperStar) && Options.EveryOneKnowSuperStar.GetBool())
                             TargetMark.Append(ColorString(GetRoleColor(CustomRoles.SuperStar), "★"));
+                        
+                        if (Captain.IsEnable)
+                            if ((target.PlayerId != seer.PlayerId) && (target.Is(CustomRoles.Captain) && Captain.OptionCrewCanFindCaptain.GetBool()) && 
+                                (seer.GetCustomRole().IsCrewmate() && !seer.Is(CustomRoles.Madmate) || (seer.Is(CustomRoles.Madmate) && Captain.OptionMadmateCanFindCaptain.GetBool())))
+                                TargetMark.Append(ColorString(GetRoleColor(CustomRoles.Captain), "☆"));
+
 
                         if (target.Is(CustomRoles.Cyber) && Options.CyberKnown.GetBool())
                             TargetMark.Append(ColorString(GetRoleColor(CustomRoles.Cyber), "★"));

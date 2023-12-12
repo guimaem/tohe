@@ -218,6 +218,7 @@ public static class Divinator
                 CustomRoles.Bastion or
                 CustomRoles.Mole or
                 CustomRoles.Chronomancer or
+                CustomRoles.LimitedKiller or
                 CustomRoles.Alchemist or
                 CustomRoles.Morphling
                 => "Result11",
@@ -226,6 +227,7 @@ public static class Divinator
                 CustomRoles.Zombie or
                 CustomRoles.CyberStar or
                 CustomRoles.SuperStar or
+                CustomRoles.Captain or
                 CustomRoles.Deathpact or
                 CustomRoles.Investigator or
                 CustomRoles.Devourer
@@ -269,6 +271,7 @@ public static class Divinator
                 CustomRoles.Medic or
                 CustomRoles.Mario or
                 CustomRoles.Jester or
+                CustomRoles.JesterKiller or
                 CustomRoles.Lurker or
                 CustomRoles.Swapper or
                 CustomRoles.Sunnyboy or

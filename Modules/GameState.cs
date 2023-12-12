@@ -376,6 +376,7 @@ public class TaskState
 
         if (AmongUsClient.Instance.AmHost)
         {
+            if (player.Is(CustomRoles.Captain)) Captain.OnTaskComplete(player);
             //FIXME:SpeedBooster class transplant
             if (player.IsAlive()
             && player.Is(CustomRoles.SpeedBooster)

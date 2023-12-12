@@ -36,6 +36,11 @@ enum CustomRPC
     SetVenterKillLimit,
     SetLimitedKillLimit,
     //SetCopyCatMiscopyLimit,
+    SetCaptainTargetSpeed,
+    RevertCaptainTargetSpeed,
+    RevertCaptainAllTargetSpeed,
+    SetCaptainVotedTarget,
+    RevertCaptainVoteRemove,
     SetDousedPlayer,
     setPlaguedPlayer,
     SetNameColorData,
@@ -370,6 +375,23 @@ internal class RPCHandlerPatch
             case CustomRPC.SetLimitedKillLimit:
                 LimitedKiller.ReceiveRPC(reader);
                 break;
+            
+            case CustomRPC.SetCaptainTargetSpeed:
+                Captain.ReceiveRPCSetSpeed(reader);
+                break;
+            case CustomRPC.RevertCaptainTargetSpeed:
+                Captain.ReceiveRPCRevertSpeed(reader);
+                break;
+            case CustomRPC.RevertCaptainAllTargetSpeed:
+                Captain.ReceiveRPCRevertAllSpeed(reader);
+                break;
+            case CustomRPC.SetCaptainVotedTarget:
+                Captain.ReceiveRPCVoteAdd(reader);
+                break;
+            case CustomRPC.RevertCaptainVoteRemove:
+                Captain.ReceiveRPCVoteRemove(reader);
+                break;
+
             
         /*    case CustomRPC.SetCopyCatMiscopyLimit:
                 CopyCat.ReceiveRPC(reader);
@@ -1049,6 +1071,9 @@ internal static class RPC
                 break;
             case CustomRoles.CopyCat:
                 CopyCat.Add(targetId);
+                break;
+            case CustomRoles.Captain:
+                Captain.Add(targetId);
                 break;
             case CustomRoles.Pickpocket:
                 Pickpocket.Add(targetId);

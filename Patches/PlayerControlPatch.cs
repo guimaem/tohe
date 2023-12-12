@@ -2340,6 +2340,7 @@ class ReportDeadBodyPatch
         if (Seeker.IsEnable) Seeker.OnReportDeadBody();
         if (Jailer.IsEnable) Jailer.OnReportDeadBody();
         if (Romantic.IsEnable) Romantic.OnReportDeadBody();
+        if (Captain.IsEnable) Captain.OnReportDeadBody();
 
 
         // if (Councillor.IsEnable) Councillor.OnReportDeadBody();
@@ -3165,6 +3166,10 @@ class FixedUpdatePatch
                 Mark.Append(Gamer.TargetMark(seer, target));
                 Mark.Append(Totocalcio.TargetMark(seer, target));
                 Mark.Append(Romantic.TargetMark(seer, target));
+                if (Captain.IsEnable)
+                    if ((target.PlayerId != seer.PlayerId) && (target.Is(CustomRoles.Captain) && Captain.OptionCrewCanFindCaptain.GetBool()) &&
+                        (seerRole.IsCrewmate() && !seer.Is(CustomRoles.Madmate) || (seer.Is(CustomRoles.Madmate) && Captain.OptionMadmateCanFindCaptain.GetBool())))
+                        Mark.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Captain), "☆"));
                 Mark.Append(Lawyer.LawyerMark(seer, target));
                 Mark.Append(Snitch.GetWarningArrow(seer, target));
 
