@@ -806,6 +806,7 @@ class CheckMurderPatch
         if (!AmongUsClient.Instance.AmHost) return false;
         if (target == null) target = killer;
 
+        if (!Benefactor.OnCheckMurder(target)) return false;
         //Jackal can kill Sidekick
         if (killer.Is(CustomRoles.Jackal) && target.Is(CustomRoles.Sidekick) && !Jackal.JackalCanKillSidekick.GetBool())
             return false;
@@ -2789,6 +2790,10 @@ class FixedUpdatePatch
                     case CustomRoles.Spy:
                         Spy.OnFixedUpdate(player);
                         break;
+                    
+                    case CustomRoles.Benefactor:
+                        Benefactor.OnFixedUpdate();
+                        break;
 
                     case CustomRoles.Glitch:
                         Glitch.UpdateHackCooldown(player);
@@ -3837,6 +3842,7 @@ class PlayerControlCompleteTaskPatch
         if (pc != null)
         {
             var playerTask = pc.myTasks[taskIndex];
+            Benefactor.OnTasKComplete(pc, playerTask);
             Taskinator.OnTasKComplete(pc, playerTask);
         }
         var isTaskFinish = pc.GetPlayerTaskState().IsTaskFinished;

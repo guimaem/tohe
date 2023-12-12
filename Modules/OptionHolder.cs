@@ -1806,6 +1806,12 @@ public static class Options
         TextOptionItem.Create(10000008, "RoleType.CrewSupport", TabGroup.CrewmateRoles)
             .SetGameMode(CustomGameMode.Standard)
             .SetColor(new Color32(140, 255, 255, byte.MaxValue));
+        
+        /*
+         * Benefactor 
+         */
+        Benefactor.SetupCustomOption();
+
 
         /*
          * Chameleon

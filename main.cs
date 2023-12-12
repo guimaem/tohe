@@ -656,6 +656,7 @@ public enum CustomRoles
     Transporter,
     TimeManager,
     Veteran,
+    Benefactor,
     Bodyguard,
     Counterfeiter,
     Witness,
