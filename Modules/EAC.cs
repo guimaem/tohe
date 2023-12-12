@@ -35,7 +35,7 @@ internal class EAC
             var rpc = (RpcCalls)callId;
             switch (rpc)
             {
-                case RpcCalls.CheckName:
+                /*case RpcCalls.CheckName:
                     string name = sr.ReadString();
                     if (sr.BytesRemaining > 0 && sr.ReadBoolean()) return false;
                     if (
@@ -67,7 +67,7 @@ internal class EAC
                         Logger.Fatal($"非法设置玩家【{pc.GetClientId()}:{pc.GetRealName()}】的游戏名称，已驳回", "EAC");
                         return true;
                     }
-                    break;
+                    break;*/
                 case RpcCalls.SetRole:
                     var role = (RoleTypes)sr.ReadUInt16();
                     if (GameStates.IsLobby && (role is RoleTypes.CrewmateGhost or RoleTypes.ImpostorGhost))

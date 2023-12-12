@@ -273,7 +273,7 @@ public static class Options
     public static OptionItem RetributionistCanKillNum;
     public static OptionItem MinimumPlayersAliveToRetri;
     public static OptionItem CanOnlyRetributeWithTasksDone;
-    public static OptionItem BomberRadius;
+    /*public static OptionItem BomberRadius;
     public static OptionItem BomberCanKill;
     public static OptionItem BomberKillCD;
     public static OptionItem BombCooldown;
@@ -281,7 +281,7 @@ public static class Options
     public static OptionItem BomberDiesInExplosion;
     public static OptionItem NukerChance;
     public static OptionItem NukeRadius;
-    public static OptionItem NukeCooldown;
+    public static OptionItem NukeCooldown;*/
 
      // exploiter
     public static OptionItem ExploiterShapeshiftCooldown;
@@ -847,7 +847,7 @@ public static class Options
     public static OptionItem FixFirstKillCooldown;
     public static OptionItem FixKillCooldownValue;
     public static OptionItem ShieldPersonDiedFirst;
-    public static OptionItem HostGetKilledFirstAction;
+    /*public static OptionItem HostGetKilledFirstAction;
 
     public static readonly string[] HostGetKilledFirst =
     {
@@ -855,7 +855,7 @@ public static class Options
         "HGK.Youtuber",
         "HGK.CursedWolf",
         "HGK.Terriost"
-    };
+    };*/
 
     public static OptionItem GhostCanSeeOtherRoles;
     public static OptionItem GhostCanSeeOtherVotes;
@@ -1206,7 +1206,7 @@ public static class Options
         /*
          * Bomber
          */
-        SetupRoleOptions(700, TabGroup.ImpostorRoles, CustomRoles.Bomber);
+        /*SetupRoleOptions(700, TabGroup.ImpostorRoles, CustomRoles.Bomber);
         BomberRadius = FloatOptionItem.Create(702, "BomberRadius", new(0.5f, 5f, 0.5f), 2f, TabGroup.ImpostorRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Bomber])
             .SetValueFormat(OptionFormat.Multiplier);
@@ -1230,7 +1230,8 @@ public static class Options
             .SetValueFormat(OptionFormat.Seconds);
         NukeRadius = FloatOptionItem.Create(710, "NukeRadius", new(1f, 100f, 1f), 25f, TabGroup.ImpostorRoles, false)
             .SetParent(NukerChance)
-            .SetValueFormat(OptionFormat.Multiplier);
+            .SetValueFormat(OptionFormat.Multiplier);*/
+        Bomber.SetupCustomOption();
 
         /*
 	 * Burster
@@ -3771,9 +3772,9 @@ public static class Options
         ShieldPersonDiedFirst = BooleanOptionItem.Create(60780, "ShieldPersonDiedFirst", false, TabGroup.GameSettings, false)
             .SetGameMode(CustomGameMode.Standard)
            .SetColor(new Color32(193, 255, 209, byte.MaxValue));
-        HostGetKilledFirstAction = StringOptionItem.Create(60781, "HostGetKilledFirstAction", HostGetKilledFirst, 0, TabGroup.GameSettings, false)
-            .SetGameMode(CustomGameMode.Standard)
-            .SetParent(ShieldPersonDiedFirst);
+        //HostGetKilledFirstAction = StringOptionItem.Create(60781, "HostGetKilledFirstAction", HostGetKilledFirst, 0, TabGroup.GameSettings, false)
+            //.SetGameMode(CustomGameMode.Standard)
+            //.SetParent(ShieldPersonDiedFirst);
 
         // 杀戮闪烁持续
         KillFlashDuration = FloatOptionItem.Create(60790, "KillFlashDuration", new(0.1f, 0.45f, 0.05f), 0.3f, TabGroup.GameSettings, false)

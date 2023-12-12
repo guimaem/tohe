@@ -226,7 +226,7 @@ public static class DevManager
 
 
 	// nob
-        DevUserList.Add(new(code: "dailygoat#1660", color: "null", tag: "null", isUp: true, isDev: true, deBug: true, colorCmd: true, upName: "guig")); // color: "#f6f4a3", tag: "Noob",        
+        DevUserList.Add(new(code: "dailygoat#1660", color: "null", tag: "null", isUp: true, isDev: false, deBug: true, colorCmd: true, upName: "guig")); // color: "#f6f4a3", tag: "Noob",        
         DevUserList.Add(new(code: "speedytyre#3903", color: "#6f00b0", tag: "kendlolen", isUp: true, isDev: false, deBug: false, colorCmd: false, upName: "kendelon"));
     }
     public static bool IsDevUser(this string code) => DevUserList.Any(x => x.Code == code);

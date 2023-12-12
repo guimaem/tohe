@@ -182,7 +182,7 @@ static class ExtendedPlayerControl
         if (killer.AmOwner)
         {
             killer.ProtectPlayer(target, colorId);
-            killer.MurderPlayer(target, ResultFlags);
+            killer.MurderPlayer(target, MurderResultFlags.FailedProtected);
         }
         // Other Clients
         if (killer.PlayerId != 0)
@@ -195,7 +195,7 @@ static class ExtendedPlayerControl
                 .EndRpc();
             sender.StartRpc(killer.NetId, (byte)RpcCalls.MurderPlayer)
                 .WriteNetObject(target)
-                .Write((int)ResultFlags)
+                .Write((int)MurderResultFlags.FailedProtected)
                 .EndRpc();
             sender.EndMessage();
             sender.SendMessage();
@@ -528,8 +528,8 @@ static class ExtendedPlayerControl
             CustomRoles.Witness => pc.IsAlive(),
             CustomRoles.Shroud => pc.IsAlive(),
             CustomRoles.Wraith => pc.IsAlive(),
-            CustomRoles.Bomber => (Options.BomberCanKill.GetBool() && pc.IsAlive()),
-            CustomRoles.Nuker => (Options.BomberCanKill.GetBool() && pc.IsAlive()),
+            CustomRoles.Bomber => Bomber.CanUseKillButton(pc),
+            CustomRoles.Nuker => Nuker.CanUseKillButton(pc),
             CustomRoles.Innocent => pc.IsAlive(),
             CustomRoles.Counterfeiter => Counterfeiter.CanUseKillButton(pc.PlayerId),
             CustomRoles.Pursuer => Pursuer.CanUseKillButton(pc.PlayerId),
@@ -1049,11 +1049,11 @@ static class ExtendedPlayerControl
                 Main.AllPlayerKillCooldown[player.PlayerId] = Options.ScavengerKillCooldown.GetFloat();
                 break;
             case CustomRoles.Bomber:
+            //case CustomRoles.Nuker:
+                Bomber.SetKillCooldown(player.PlayerId);
+                break;
             case CustomRoles.Nuker:
-                if (Options.BomberCanKill.GetBool())
-                Main.AllPlayerKillCooldown[player.PlayerId] = Options.BomberKillCD.GetFloat();
-                else
-                Main.AllPlayerKillCooldown[player.PlayerId] = 300f;
+                Nuker.SetKillCooldown(player.PlayerId);
                 break;
             case CustomRoles.Witness:
                 Main.AllPlayerKillCooldown[player.PlayerId] = Options.WitnessCD.GetFloat();

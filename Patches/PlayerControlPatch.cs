@@ -64,7 +64,6 @@ class CmdCheckMurderPatch
         
         if (!AmongUsClient.Instance.AmHost) return true;
         CheckMurderPatch.Prefix(__instance, target); 
-        //The return bool is not needed here
         return false;
     }
 }
@@ -756,7 +755,7 @@ class CheckMurderPatch
                     if (!player.IsModClient()) player.KillFlash();
                     if (!player.IsAlive() || Pelican.IsEaten(player.PlayerId)) continue;
                     if (player == killer) continue;
-                    if (Vector2.Distance(killer.transform.position, player.transform.position) <= Options.BomberRadius.GetFloat())
+                    if (Vector2.Distance(killer.transform.position, player.transform.position) <= Bomber.BomberRadius.GetFloat())
                     {
                         Main.PlayerStates[player.PlayerId].deathReason = PlayerState.DeathReason.Bombed;
                         player.SetRealKiller(killer);
@@ -1312,33 +1311,12 @@ class CheckMurderPatch
         }
 
         //首刀保护
-        if (target.PlayerId == PlayerControl.LocalPlayer.PlayerId && Utils.IsAllAlive && Options.ShieldPersonDiedFirst.GetBool() && killer.PlayerId != target.PlayerId)
+        if (Main.ShieldPlayer != "" && Main.ShieldPlayer == target.GetClient().GetHashedPuid() && Utils.IsAllAlive)
         {
-            //Main.ShieldPlayer = byte.MaxValue;
-            switch (Options.HostGetKilledFirstAction.GetInt())
-            {
-                case 0:
-                    killer.SetKillCooldown(forceAnime: true);
-                    return false;
-                case 1:
-                    CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Youtuber);
-                    CustomWinnerHolder.WinnerIds.Add(target.PlayerId);
-                    return false;
-                case 2:
-                    target.RpcMurderPlayerV3(killer);
-                    return false;
-                case 3:
-                    Main.AllAlivePlayerControls
-                        .Where(x => x.PlayerId != target.PlayerId)
-                        .Do(x =>
-                        {
-                            x.RpcSpecificMurderPlayer(x, x);
-                            x.SetRealKiller(target);
-                            Main.PlayerStates[x.PlayerId].deathReason = PlayerState.DeathReason.Revenge;
-                        });
-                    CustomWinnerHolder.ResetAndSetWinner(CustomWinner.None);
-                    break;
-            }
+            Main.ShieldPlayer = "";
+            killer.RpcGuardAndKill(target);
+            killer.SetKillCooldown(forceAnime: true);
+            return false;
         }
 
         //首刀叛变
@@ -1415,7 +1393,7 @@ class MurderPlayerPatch
         }
 
         //看看UP是不是被首刀了
-        if (Main.FirstDied == byte.MaxValue && target.Is(CustomRoles.Youtuber))
+        if (Main.FirstDied == "" && target.Is(CustomRoles.Youtuber))
         {
             CustomSoundsManager.RPCPlayCustomSoundAll("Congrats");
             if (!CustomWinnerHolder.CheckForConvertedWinner(target.PlayerId))
@@ -1427,8 +1405,8 @@ class MurderPlayerPatch
         }
 
         //记录首刀
-        if (Main.FirstDied == byte.MaxValue)
-            Main.FirstDied = target.PlayerId;
+        if (Main.FirstDied == "")
+            Main.FirstDied = target.GetClient().GetHashedPuid();
 
         if (target.Is(CustomRoles.Bait))
         {
@@ -1692,76 +1670,10 @@ class ShapeshiftPatch
                     }
                     break;
                 case CustomRoles.Bomber:
-                    if (shapeshifting)
-                    {
-                        Logger.Info("炸弹爆炸了", "Boom");
-                        CustomSoundsManager.RPCPlayCustomSoundAll("Boom");
-                        foreach (var tg in Main.AllPlayerControls)
-                        {
-                            if (!tg.IsModClient()) tg.KillFlash();
-                            var pos = shapeshifter.transform.position;
-                            var dis = Vector2.Distance(pos, tg.transform.position);
-
-                            if (!tg.IsAlive() || Pelican.IsEaten(tg.PlayerId) || Medic.ProtectList.Contains(tg.PlayerId) || (tg.Is(CustomRoleTypes.Impostor) && Options.ImpostorsSurviveBombs.GetBool()) || tg.inVent || tg.Is(CustomRoles.Pestilence)) continue;
-                            if (dis > Options.BomberRadius.GetFloat()) continue;
-                            if (tg.PlayerId == shapeshifter.PlayerId) continue;
-
-                            Main.PlayerStates[tg.PlayerId].deathReason = PlayerState.DeathReason.Bombed;
-                            tg.SetRealKiller(shapeshifter);
-                            tg.RpcMurderPlayerV3(tg);
-                            Medic.IsDead(tg);
-                        }
-                        _ = new LateTask(() =>
-                        {
-                            var totalAlive = Main.AllAlivePlayerControls.Count();
-                            //自分が最後の生き残りの場合は勝利のために死なない
-                            if (Options.BomberDiesInExplosion.GetBool())
-                            {
-                                if (totalAlive > 0 && !GameStates.IsEnded)
-                                {
-                                    Main.PlayerStates[shapeshifter.PlayerId].deathReason = PlayerState.DeathReason.Bombed;
-                                    shapeshifter.RpcMurderPlayerV3(shapeshifter);
-                                }
-                            }
-                            Utils.NotifyRoles();
-                        }, 1.5f, "Bomber Suiscide");
-                    }
+                    Bomber.OnShapeshift(shapeshifter, shapeshifting);
                     break;
                 case CustomRoles.Nuker:
-                    if (shapeshifting)
-                    {
-                        Logger.Info("炸弹爆炸了", "Boom");
-                        CustomSoundsManager.RPCPlayCustomSoundAll("Boom");
-                        foreach (var tg in Main.AllPlayerControls)
-                        {
-                            if (!tg.IsModClient()) tg.KillFlash();
-                            var pos = shapeshifter.transform.position;
-                            var dis = Vector2.Distance(pos, tg.transform.position);
-
-                            if (!tg.IsAlive() || Pelican.IsEaten(tg.PlayerId) || Medic.ProtectList.Contains(tg.PlayerId) || tg.inVent || tg.Is(CustomRoles.Pestilence)) continue;
-                            if (dis > Options.NukeRadius.GetFloat()) continue;
-                            if (tg.PlayerId == shapeshifter.PlayerId) continue;
-
-                            Main.PlayerStates[tg.PlayerId].deathReason = PlayerState.DeathReason.Bombed;
-                            tg.SetRealKiller(shapeshifter);
-                            tg.RpcMurderPlayerV3(tg);
-                            Medic.IsDead(tg);
-                        }
-                        _ = new LateTask(() =>
-                        {
-                            var totalAlive = Main.AllAlivePlayerControls.Count();
-                            //自分が最後の生き残りの場合は勝利のために死なない
-                            //    if (Options.BomberDiesInExplosion.GetBool())
-                            {
-                                if (totalAlive > 0 && !GameStates.IsEnded)
-                                {
-                                    Main.PlayerStates[shapeshifter.PlayerId].deathReason = PlayerState.DeathReason.Bombed;
-                                    shapeshifter.RpcMurderPlayerV3(shapeshifter);
-                                }
-                            }
-                            Utils.NotifyRoles();
-                        }, 1.5f, "Nuke");
-                    }
+                    Nuker.OnShapeshift(shapeshifter, shapeshifting);
                     break;
                 case CustomRoles.Assassin:
                     Assassin.OnShapeshift(shapeshifter, shapeshifting);
