@@ -1165,7 +1165,7 @@ class CheckMurderPatch
                     x.PlayerId != killer.PlayerId &&
                     x.PlayerId != target.PlayerId &&
                     Vector2.Distance(x.transform.position, target.transform.position) < 2f
-                    ).ToList().Count >= 1) return false;
+                    ).Any()) return false;
                 break;
             //玩家被击杀事件
             case CustomRoles.Gamer:
@@ -1263,8 +1263,8 @@ class CheckMurderPatch
                     Logger.Info($"{killer.GetNameWithRole()} 击杀了萧暮触发随机复仇 => {target.GetNameWithRole()}", "Randomizer");
                     NameNotifyManager.Notify(killer, Utils.ColorString(Utils.GetRoleColor(CustomRoles.Randomizer), GetString("YouKillRandomizer4")));
                     {
-                        var pcList = Main.AllAlivePlayerControls.Where(x => x.PlayerId != target.PlayerId).ToList();
-                        var rp = pcList[IRandom.Instance.Next(0, pcList.Count)];
+                        var pcArray = Main.AllAlivePlayerControls.Where(x => x.PlayerId != target.PlayerId).ToArray();
+                        var rp = pcArray[IRandom.Instance.Next(0, pcArray.Length)];
                         if (!rp.Is(CustomRoles.Pestilence))
                         {
                             Main.PlayerStates[rp.PlayerId].deathReason = PlayerState.DeathReason.Revenge;
@@ -1279,7 +1279,7 @@ class CheckMurderPatch
         //保镖保护
         if (killer.PlayerId != target.PlayerId)
         {
-            foreach (var pc in Main.AllAlivePlayerControls.Where(x => x.PlayerId != target.PlayerId))
+            foreach (var pc in Main.AllAlivePlayerControls.Where(x => x.PlayerId != target.PlayerId).ToArray())
             {
                 var pos = target.transform.position;
                 var dis = Vector2.Distance(pos, pc.transform.position);
@@ -1304,7 +1304,7 @@ class CheckMurderPatch
                     x.PlayerId != killer.PlayerId &&
                     x.PlayerId != target.PlayerId &&
                     Vector2.Distance(x.transform.position, target.transform.position) < 2f
-                    ).ToList().Count >= 1) 
+                    ).Any()) 
                     return false;
 
                 }
@@ -1499,11 +1499,11 @@ class MurderPlayerPatch
 
         if (target.Is(CustomRoles.Avanger))
         {
-            var pcList = Main.AllAlivePlayerControls.Where(x => x.PlayerId != target.PlayerId && !Pelican.IsEaten(x.PlayerId) && !Medic.ProtectList.Contains(x.PlayerId) 
+            var pcArray = Main.AllAlivePlayerControls.Where(x => x.PlayerId != target.PlayerId && !Pelican.IsEaten(x.PlayerId) && !Medic.ProtectList.Contains(x.PlayerId).ToArray()
             && !x.Is(CustomRoles.Pestilence) && !x.Is(CustomRoles.Masochist) && !x.Is(CustomRoles.Solsticer) && !((x.Is(CustomRoles.NiceMini) || x.Is(CustomRoles.EvilMini)) && Mini.Age < 18)).ToList();
-            if (pcList.Any())
+            if (pcArray.Any())
             {
-                PlayerControl rp = pcList[IRandom.Instance.Next(0, pcList.Count)];
+                PlayerControl rp = pcArray[IRandom.Instance.Next(0, pcArray.Length)];
                 Main.PlayerStates[rp.PlayerId].deathReason = PlayerState.DeathReason.Revenge;
                 rp.SetRealKiller(target);
                 rp.RpcMurderPlayerV3(rp);
@@ -1515,7 +1515,7 @@ class MurderPlayerPatch
             Oiiai.OnMurderPlayer(killer, target);
         }
 
-        foreach (var pc in Main.AllAlivePlayerControls.Where(x => x.Is(CustomRoles.Mediumshiper)))
+        foreach (var pc in Main.AllAlivePlayerControls.Where(x => x.Is(CustomRoles.Mediumshiper)).ToArray())
             pc.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Mediumshiper), GetString("MediumshiperKnowPlayerDead")));
 
         if (Executioner.Target.ContainsValue(target.PlayerId))
@@ -2351,7 +2351,7 @@ class ReportDeadBodyPatch
         if (Spiritualist.IsEnable) Spiritualist.OnReportDeadBody(target);
         if (Enigma.IsEnable) Enigma.OnReportDeadBody(player, target);
 
-        foreach (var pid in Main.AwareInteracted.Keys)
+        foreach (var pid in Main.AwareInteracted.Keys.ToArray())
         {
             var Awarepc = Utils.GetPlayerById(pid);
             if (Main.AwareInteracted[pid].Count > 0 && Awarepc.IsAlive())
@@ -2367,9 +2367,9 @@ class ReportDeadBodyPatch
             }
         }
 
-        foreach (var x in Main.RevolutionistStart)
+        foreach (var x in Main.RevolutionistStart.Keys.ToArray())
         {
-            var tar = Utils.GetPlayerById(x.Key);
+            var tar = Utils.GetPlayerById(x);
             if (tar == null) continue;
             tar.Data.IsDead = true;
             Main.PlayerStates[tar.PlayerId].deathReason = PlayerState.DeathReason.Sacrifice;
@@ -2742,7 +2742,7 @@ class FixedUpdatePatch
                             {
                                 Utils.GetDrawPlayerCount(playerId, out var list);
 
-                                foreach (var pc in list.Where(x => x != null && x.IsAlive()))
+                                foreach (var pc in list.Where(x => x != null && x.IsAlive()).ToArray())
                                 {
                                     pc.Data.IsDead = true;
                                     Main.PlayerStates[pc.PlayerId].deathReason = PlayerState.DeathReason.Sacrifice;
@@ -3370,13 +3370,13 @@ class FixedUpdatePatch
     {
         if (Options.LoverSuicide.GetBool() && Main.isLoversDead == false)
         {
-            foreach (var loversPlayer in Main.LoversPlayers)
+            foreach (var loversPlayer in Main.LoversPlayers.ToArray())
             {
                 //生きていて死ぬ予定でなければスキップ
                 if (!loversPlayer.Data.IsDead && loversPlayer.PlayerId != deathId) continue;
 
                 Main.isLoversDead = true;
-                foreach (var partnerPlayer in Main.LoversPlayers)
+                foreach (var partnerPlayer in Main.LoversPlayers.ToArray())
                 {
                     //本人ならスキップ
                     if (loversPlayer.PlayerId == partnerPlayer.PlayerId) continue;
@@ -3673,7 +3673,7 @@ class CoEnterVentPatch
             {
                 _ = new LateTask(() =>
                 {
-                    foreach (var bastion in Main.AllAlivePlayerControls.Where(bastion => bastion.GetCustomRole() == CustomRoles.Bastion))
+                    foreach (var bastion in Main.AllAlivePlayerControls.Where(bastion => bastion.GetCustomRole() == CustomRoles.Bastion).ToArray())
                     {
                         pc.SetRealKiller(bastion);
                         bastion.Notify(GetString("BastionNotify"));
@@ -3681,7 +3681,7 @@ class CoEnterVentPatch
                         Main.PlayerStates[pc.PlayerId].deathReason = PlayerState.DeathReason.Bombed;
                         pc.RpcMurderPlayerV3(pc);
                         Main.BombedVents.Remove(id);}
-                }, 0.5f);
+                }, 0.5f, "Player bombed by Bastion");
                 return true;
             }
         }
@@ -3701,7 +3701,10 @@ class CoEnterVentPatch
                         Main.PlayerStates[pc.PlayerId].SetDead();
                     }
                 }
-                foreach (var pc in Main.AllPlayerControls) pc.KillFlash();
+                foreach (var pc in Main.AllPlayerControls) 
+                {
+                    pc.KillFlash();
+                }
                 if (!CustomWinnerHolder.CheckForConvertedWinner(__instance.myPlayer.PlayerId))
                 {
                     CustomWinnerHolder.ShiftWinnerAndSetWinner(CustomWinner.Arsonist); //焼殺で勝利した人も勝利させる
@@ -3724,7 +3727,7 @@ class CoEnterVentPatch
                         pc.RpcMurderPlayerV3(pc);
                         Main.PlayerStates[pc.PlayerId].SetDead();
                     }
-                    if (Main.AllAlivePlayerControls.Count() == 1)
+                    if (Main.AllAlivePlayerControls.Length == 1)
                     {
                         if (!CustomWinnerHolder.CheckForConvertedWinner(__instance.myPlayer.PlayerId))
                         {
@@ -3820,10 +3823,10 @@ class PlayerControlCompleteTaskPatch
             return false;
 
         //来自资本主义的任务
-        if (Main.CapitalismAddTask.ContainsKey(player.PlayerId))
+        if (Main.CapitalismAddTask.TryGetValue(player.PlayerId, out var task))
         {
             var taskState = player.GetPlayerTaskState();
-            taskState.AllTasksCount += Main.CapitalismAddTask[player.PlayerId];
+            taskState.AllTasksCount += task;
             Main.CapitalismAddTask.Remove(player.PlayerId);
             taskState.CompletedTasksCount++;
             GameData.Instance.RpcSetTasks(player.PlayerId, Array.Empty<byte>()); //タスクを再配布
@@ -3848,8 +3851,10 @@ class PlayerControlCompleteTaskPatch
         var isTaskFinish = pc.GetPlayerTaskState().IsTaskFinished;
         if (isTaskFinish && pc.Is(CustomRoles.Snitch) && pc.Is(CustomRoles.Madmate))
         {
-            foreach (var impostor in Main.AllAlivePlayerControls.Where(pc => pc.Is(CustomRoleTypes.Impostor)))
+            foreach (var impostor in Main.AllAlivePlayerControls.Where(pc => pc.Is(CustomRoleTypes.Impostor)).ToArray())
+            {
                 NameColorManager.Add(impostor.PlayerId, pc.PlayerId, "#ff1919");
+            }
             Utils.NotifyRoles(SpecifySeer: pc);
         }
         if ((isTaskFinish &&

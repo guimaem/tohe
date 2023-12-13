@@ -319,7 +319,7 @@ class BeginCrewmatePatch
         switch (role)
         {
             case CustomRoles.Terrorist:
-                var sound = ShipStatus.Instance.CommonTasks.Where(task => task.TaskType == TaskTypes.FixWiring).FirstOrDefault()
+                var sound = ShipStatus.Instance.CommonTasks.FirstOrDefault(task => task.TaskType == TaskTypes.FixWiring);
                 .MinigamePrefab.OpenSound;
                 PlayerControl.LocalPlayer.Data.Role.IntroSound = sound;
                 break;
@@ -435,7 +435,7 @@ class BeginCrewmatePatch
     }
     public static AudioClip GetIntroSound(RoleTypes roleType)
     {
-        return RoleManager.Instance.AllRoles.Where((role) => role.Role == roleType).FirstOrDefault().IntroSound;
+        return RoleManager.Instance.AllRoles.FirstOrDefault((role) => role.Role == roleType).IntroSound;
     }
     private static async void StartFadeIntro(IntroCutscene __instance, Color start, Color end)
     {
@@ -501,7 +501,7 @@ class BeginImpostorPatch
         {
             yourTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             yourTeam.Add(PlayerControl.LocalPlayer);
-            foreach (var pc in Main.AllPlayerControls.Where(x => !x.AmOwner).ToList())
+            foreach (var pc in Main.AllPlayerControls.Where(x => !x.AmOwner).ToArray())
             {
                 yourTeam.Add(pc);
             }
@@ -513,7 +513,7 @@ class BeginImpostorPatch
         {
             yourTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             yourTeam.Add(PlayerControl.LocalPlayer);
-            foreach (var pc in Main.AllPlayerControls.Where(x => !x.AmOwner).ToList())
+            foreach (var pc in Main.AllPlayerControls.Where(x => !x.AmOwner).ToArray())
             {
                 yourTeam.Add(pc);
             }

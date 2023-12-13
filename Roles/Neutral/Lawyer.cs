@@ -174,7 +174,7 @@ public static class Lawyer
     {
         if (!IsEnable) return false;
 
-        foreach (var kvp in Target.Where(x => x.Value == exiled.PlayerId))
+        foreach (var kvp in Target.Keys.Where(x => x.Value == exiled.PlayerId).ToArray())
         {
             var lawyer = Utils.GetPlayerById(kvp.Key);
             if (lawyer == null || lawyer.Data.Disconnected) continue;

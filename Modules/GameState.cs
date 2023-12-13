@@ -425,10 +425,9 @@ public class TaskState
             && player.Is(CustomRoles.Transporter)
             && ((CompletedTasksCount + 1) <= Options.TransporterTeleportMax.GetInt()))
             {
-                Logger.Info("传送师触发传送:" + player.GetNameWithRole(), "Transporter");
+                Logger.Info("Transporter: " + player.GetNameWithRole() + " completed the task", "Transporter");
                 var rd = IRandom.Instance;
-                List<PlayerControl> AllAlivePlayer = new();
-                foreach (var pc in Main.AllAlivePlayerControls.Where(x => x.CanBeTeleported())) AllAlivePlayer.Add(pc);
+                List<PlayerControl> AllAlivePlayer = Main.AllAlivePlayerControls.Where(x => x.CanBeTeleported()).ToList();
                 if (AllAlivePlayer.Count >= 2)
                 {
                     var tar1 = AllAlivePlayer[rd.Next(0, AllAlivePlayer.Count)];
@@ -437,12 +436,13 @@ public class TaskState
                     var posTar1 = tar1.GetCustomPosition();
                     tar1.RpcTeleport(tar2.GetCustomPosition());
                     tar2.RpcTeleport(posTar1);
+                    AllAlivePlayer.Clear()
                     tar1.RPCPlayCustomSound("Teleport");
                     tar2.RPCPlayCustomSound("Teleport");
                     tar1.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Transporter), string.Format(Translator.GetString("TeleportedByTransporter"), tar2.GetRealName())));
                     tar2.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Transporter), string.Format(Translator.GetString("TeleportedByTransporter"), tar1.GetRealName())));
                 }
-                else if (player.Is(CustomRoles.Transporter))
+                else
                 {
                     player.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Impostor), string.Format(Translator.GetString("ErrorTeleport"), player.GetRealName())));
                 }

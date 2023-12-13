@@ -42,7 +42,7 @@ public class PlayerGameOptionsSender : GameOptionsSender
         if (player.AmOwner)
         {
             var opt = BuildGameOptions();
-            foreach (var com in GameManager.Instance.LogicComponents)
+            foreach (var com in GameManager.Instance.LogicComponents.ToArray())
             {
                 if (com.TryCast<LogicOptions>(out var lo))
                     lo.SetGameOptions(opt);
