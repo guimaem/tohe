@@ -1156,7 +1156,8 @@ static class CustomRolesHelper
             case CustomRoles.DoubleShot:
                 if (!Options.GuesserMode.GetBool() && !pc.Is(CustomRoles.EvilGuesser) && !pc.Is(CustomRoles.NiceGuesser) && !pc.Is(CustomRoles.Doomsayer) && !pc.Is(CustomRoles.Guesser))
                     return false;
-                if (pc.Is(CustomRoles.CopyCat))
+                if (pc.Is(CustomRoles.CopyCat)
+                    || pc.Is(CustomROles.Workaholic))
                     return false;
                 if (Options.GuesserMode.GetBool())
                 {
