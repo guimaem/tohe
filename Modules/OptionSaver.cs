@@ -42,7 +42,7 @@ public static class OptionSaver
     {
         Dictionary<int, int> singleOptions = new();
         Dictionary<int, int[]> presetOptions = new();
-        foreach (var option in OptionItem.AllOptions)
+        foreach (var option in OptionItem.AllOptions.ToArray())
         {
             if (option.IsSingleValue)
             {

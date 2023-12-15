@@ -819,7 +819,7 @@ class CheckMurderPatch
         if (killer.Is(CustomRoles.Recruit) && target.Is(CustomRoles.Jackal) && !Jackal.SidekickCanKillJackal.GetBool())
             return false;
         //禁止内鬼刀叛徒
-        if (killer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoles.Madmate) && !Options.ImpCanKillMadmate.GetBool())
+        if (killer.Is(CustomRoleTypes.Impostor) && (target.Is(CustomRoles.Madmate) || target.Is(CustomRoleTypes.Madmate)) && !Options.ImpCanKillMadmate.GetBool())
             return false;
 
         // Guardian can't die on task completion
@@ -3461,7 +3461,7 @@ class EnterVentPatch
             pc?.MyPhysics?.RpcBootFromVent(__instance.Id);            
         } */
 
-        if (pc.Is(CustomRoles.Paranoia))
+        else if (pc.Is(CustomRoles.Paranoia))
         {
             if (Main.ParaUsedButtonCount.TryGetValue(pc.PlayerId, out var count) && count < Options.ParanoiaNumOfUseButton.GetInt())
             {
@@ -3478,7 +3478,7 @@ class EnterVentPatch
             }
         }
 
-        if (pc.Is(CustomRoles.Mario))
+        else if (pc.Is(CustomRoles.Mario))
         {
             pc.RPCPlayCustomSound("MarioJump");
             Main.MarioVentCount.TryAdd(pc.PlayerId, 0);
@@ -3747,7 +3747,7 @@ class CoEnterVentPatch
                 CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Revolutionist);//革命者胜利
                 Utils.GetDrawPlayerCount(__instance.myPlayer.PlayerId, out var x);
                 CustomWinnerHolder.WinnerIds.Add(__instance.myPlayer.PlayerId);
-                foreach (var apc in x) CustomWinnerHolder.WinnerIds.Add(apc.PlayerId);//胜利玩家
+                foreach (var apc in x.ToArray()).ToArray() CustomWinnerHolder.WinnerIds.Add(apc.PlayerId);//胜利玩家
             }
             return true;
         }
@@ -3807,7 +3807,7 @@ class GameDataCompleteTaskPatch
 {
     public static void Postfix(PlayerControl pc)
     {
-        Logger.Info($"TaskComplete:{pc.GetNameWithRole()}", "CompleteTask");
+        Logger.Info($"Task Complete: {pc.GetNameWithRole()}", "CompleteTask");
         Main.PlayerStates[pc.PlayerId].UpdateTask(pc);
         Utils.NotifyRoles();
     }

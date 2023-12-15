@@ -20,7 +20,7 @@ public class OptionBackupData
         }
         foreach (BoolOptionNames name in EnumHelper.GetAllValues<BoolOptionNames>())
         {
-            if (name == BoolOptionNames.GhostsDoTasks) continue;
+            if (name is BoolOptionNames.GhostsDoTasks) continue;
 
             if (option.TryGetBool(name, out var value))
                 AllValues.Add(new BoolOptionBackupValue(name, value));
@@ -49,7 +49,7 @@ public class OptionBackupData
 
     public IGameOptions Restore(IGameOptions option)
     {
-        foreach (var value in AllValues)
+        foreach (var value in AllValues.ToArray())
         {
             value.Restore(option);
         }

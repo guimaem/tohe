@@ -57,7 +57,7 @@ public static class Reverie
     }
     public static void OnReportDeadBody()
     {
-        foreach(var playerId in NowCooldown.Keys)
+        foreach (var playerId in NowCooldown.Keys)
         {
             if (ResetCooldownMeeting.GetBool())
             {

@@ -24,11 +24,11 @@ class EndGamePatch
         Logger.Info("-----------游戏结束-----------", "Phase");
         if (!GameStates.IsModHost) return;
         SummaryText = new();
-        foreach (var id in Main.PlayerStates.Keys)
+        foreach (var id in Main.PlayerStates.Keys.ToArray())
         {
             if (Doppelganger.IsEnable)
             {
-                if (Doppelganger.DoppelVictim.Keys.Contains(id))
+                if (Doppelganger.DoppelVictim.ContainsKey(id))
                 {
                     var dpc = Utils.GetPlayerById(id);
                     if (dpc != null) 
@@ -81,7 +81,7 @@ class EndGamePatch
 
         Main.winnerNameList = new();
         Main.winnerList = new();
-        foreach (var pc in winner)
+        foreach (var pc in winner.ToArray())
         {
             if (CustomWinnerHolder.WinnerTeam is not CustomWinner.Draw && pc.Is(CustomRoles.GM)) continue;
 
@@ -266,13 +266,13 @@ class SetEverythingUpPatch
 
         StringBuilder sb = new($"{GetString("RoleSummaryText")}");
         List<byte> cloneRoles = new(Main.PlayerStates.Keys);
-        foreach (var id in Main.winnerList)
+        foreach (var id in Main.winnerList.ToArray())
         {
             if (EndGamePatch.SummaryText[id].Contains("<INVALID:NotAssigned>")) continue;
             sb.Append($"\n<color={CustomWinnerColor}>★</color> ").Append(EndGamePatch.SummaryText[id]);
             cloneRoles.Remove(id);
         }
-        foreach (var id in cloneRoles)
+        foreach (var id in cloneRoles.ToArray())
         {
             if (EndGamePatch.SummaryText[id].Contains("<INVALID:NotAssigned>")) continue;
             sb.Append($"\n　 ").Append(EndGamePatch.SummaryText[id]);
