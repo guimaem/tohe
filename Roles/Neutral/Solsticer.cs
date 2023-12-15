@@ -16,6 +16,7 @@ namespace TOHE.Roles.Neutral
         public static OptionItem SolsticerKnowKiller;
         public static OptionItem SolsticerCanGuess;
         public static OptionItem SolsticerSpeed;
+        private static OptionItem VentCooldown;
         public static OverrideTasksData SolsticerTasks;
         public static OptionItem AddTasksPreDeadPlayer;
         private static OptionItem RemainingTasksToBeWarned;
@@ -43,6 +44,7 @@ namespace TOHE.Roles.Neutral
             AddTasksPreDeadPlayer = FloatOptionItem.Create(Id + 16, "SAddTasksPreDeadPlayer", new(0, 15, 0.1f), 0.5f, TabGroup.OtherRoles, false)
                 .SetParent(CustomRoleSpawnChances[CustomRoles.Solsticer]);
             SolsticerTasks = OverrideTasksData.Create(Id + 17, TabGroup.OtherRoles, CustomRoles.Solsticer);
+            VentCooldown = FloatOptionItem.Create(Id + 18, "VentCooldown", new(0f, 180f, 2.5f), 0f, TabGroup.OtherRoles, CustomRoles.Solsticer).SetParent(SolsticerCanVent)
         }
         public static void Init()
         {
@@ -60,7 +62,7 @@ namespace TOHE.Roles.Neutral
         }
         public static void ApplyGameOptions()
         {
-            AURoleOptions.EngineerCooldown = 0f;
+            AURoleOptions.EngineerCooldown = VentCooldown.GetFloat();
             AURoleOptions.EngineerInVentMaxTime = 0f;
             AURoleOptions.PlayerSpeedMod = !patched ? SolsticerSpeed.GetFloat() : 0.5f;
         } //Enabled Solsticer can vent
