@@ -92,6 +92,7 @@ public static class Briber
 
 	        killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Briber), GetString("GangsterSuccessfullyRecruited")));
 	        target.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Briber), GetString("BeRecruitedByBriber")));
+            //Utils.NotifyRoles(SpecifySeer: killer, SpecifySeer: target, ForceLoop: true);
             Utils.NotifyRoles();
 
             killer.ResetKillCooldown();
