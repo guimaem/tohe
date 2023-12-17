@@ -38,7 +38,7 @@ public static class Nuker
             }
             _ = new LateTask(() =>
             {
-                var totalAlive = Main.AllAlivePlayerControls.Count();
+                var totalAlive = Main.AllAlivePlayerControls.Length;
                 //自分が最後の生き残りの場合は勝利のために死なない
                 //    if (Bomber.BomberDiesInExplosion.GetBool())
                 {
