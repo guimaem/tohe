@@ -2743,17 +2743,18 @@ public static class Utils
                 case CustomRoles.Cyber:
                     if (GameStates.IsMeeting)
                     {
-                        //Death Message
+                        //网红死亡消息提示
                         foreach (var pc in Main.AllPlayerControls)
                         {
                             if (!Options.ImpKnowCyberDead.GetBool() && pc.GetCustomRole().IsImpostor()) continue;
                             if (!Options.NeutralKnowCyberDead.GetBool() && pc.GetCustomRole().IsNeutral()) continue;
                             if (!Options.CrewKnowCyberDead.GetBool() && pc.GetCustomRole().IsCrewmate()) continue;
-
-                            SendMessage(string.Format(GetString("CyberDead"), target.GetRealName()), pc.PlayerId, ColorString(GetRoleColor(CustomRoles.Cyber), GetString("CyberNewsTitle")));
+                             SendMessage(string.Format(GetString("CyberDead"), target.GetRealName()), pc.PlayerId, ColorString(GetRoleColor(CustomRoles.Cyber), GetString("CyberNewsTitle")));
                         }
+
+                        SendMessage(string.Format(GetString("CyberDead"), target.GetRealName()), pc.PlayerId, ColorString(GetRoleColor(CustomRoles.Cyber), GetString("CyberNewsTitle")));
                     }
-                    break;    
+                    break; 
             } 
         }
         if (Executioner.Target.ContainsValue(target.PlayerId))
