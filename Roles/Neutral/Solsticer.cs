@@ -25,6 +25,7 @@ namespace TOHE.Roles.Neutral
         public static bool patched;
         public static int AddShortTasks;
         public static bool warningActived;
+        public static bool CanGuess;
         public static string MurderMessage;
         public static void SetupCustomOption()
         {
@@ -52,6 +53,7 @@ namespace TOHE.Roles.Neutral
             warningActived = false;
             patched = false;
             AddShortTasks = 0;
+            CanGuess = true;
             Count = 0;
             MurderMessage = "";
         }
@@ -119,7 +121,6 @@ namespace TOHE.Roles.Neutral
             if (!GameStates.IsMeeting)
             {
                 Utils.RpcTeleport(target, ExtendedPlayerControl.GetBlackRoomPosition());
-                Main.AllPlayerSpeed[target.PlayerId] = 0.5f;
                 ReportDeadBodyPatch.CanReport[target.PlayerId] = false;
                 NameNotifyManager.Notify(target, string.Format(GetString("SolsticerMurdered"), killer.GetRealName()));
                 target.RpcGuardAndKill();
@@ -167,8 +168,16 @@ namespace TOHE.Roles.Neutral
                 if (dis < 1f)
                     return;
 
-                if (GameStates.IsMeeting) return;
+                if (GameStates.IsMeeting || !patched) return;
                 pc.RpcTeleport(pos);
+            }
+            else if (GameStates.IsInGame)
+            {
+                if (Main.AllPlayerSpeed[pc.PlayerId] != SolsticerSpeed.GetFloat())
+                {
+                    Main.AllPlayerSpeed[pc.PlayerId] = SolsticerSpeed.GetFloat();
+                    pc.MarkDirtySettings();
+                }
             }
         }
         public static void SendRPC()

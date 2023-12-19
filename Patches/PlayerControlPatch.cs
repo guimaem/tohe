@@ -2343,6 +2343,7 @@ class ReportDeadBodyPatch
         if (Jailer.IsEnable) Jailer.OnReportDeadBody();
         if (Romantic.IsEnable) Romantic.OnReportDeadBody();
         if (Captain.IsEnable) Captain.OnReportDeadBody();
+        Solsticer.patched = false;
 
 
         // if (Councillor.IsEnable) Councillor.OnReportDeadBody();

@@ -386,8 +386,8 @@ internal class SelectRolesPatch
                 PlayerControl.LocalPlayer.Data.IsDead = true;
                 Main.PlayerStates[PlayerControl.LocalPlayer.PlayerId].SetDead();
             }
-                   
-
+            
+            EAC.OriginalRoles = new();
             SelectCustomRoles();
             SelectAddonRoles();
             CalculateVanillaRoleCount();
@@ -1036,6 +1036,7 @@ internal class SelectRolesPatch
                 .Select(p => p.PlayerId)
                 .ToArray());
 
+            EAC.LogAllRoles();
             Utils.CountAlivePlayers(true);
             Utils.SyncAllSettings();
             SetColorPatch.IsAntiGlitchDisabled = false;

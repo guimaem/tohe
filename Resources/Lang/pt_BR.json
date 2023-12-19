@@ -3533,6 +3533,8 @@
   "GuessSolsticer": "Desculpe, mas você não pode adivinhar o Speedruner!",
   "VoteSolsticer": "Desculpe, mas você não pode votar no Speedrunner!",
   "SolsticerTasksReset": "Suas tarefas foram resetadas!",
+  "SolsticerMisGuessed": "Você errou sua aposta! Então você não pode mais adivinhar.",
+  "SolsticerGuessMax": "Por você ja ter errado uma aposta, você não pode mais adivinhar.",
 
   "VoteDead": "Desculpe, mas o jogador que você votou já está morto, então seu voto é retornado."
 }
