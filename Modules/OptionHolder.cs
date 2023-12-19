@@ -2446,6 +2446,8 @@ public static class Options
         CyberKnown = BooleanOptionItem.Create(19109, "CyberKnown", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Cyber]);
         
+        SetupAdtRoleOptions(19130, CustomRoles.Famous, canSetNum: true);
+        
         SetupAdtRoleOptions(19200, CustomRoles.DoubleShot, canSetNum: true, tab: TabGroup.Addons);
         ImpCanBeDoubleShot = BooleanOptionItem.Create(19203, "ImpCanBeDoubleShot", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.DoubleShot]);

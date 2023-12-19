@@ -137,10 +137,7 @@ public static class NameColorManager
                 if (target.Is(CustomRoleTypes.Impostor)) color = Main.roleColors[CustomRoles.Impostor];
                 if (target.Is(CustomRoles.Madmate)) color = Main.roleColors[CustomRoles.Impostor];
                 if (target.Is(CustomRoles.Admired)) color = Main.roleColors[CustomRoles.Bait];
-                if (target.Is(CustomRoles.Parasite)) color = Main.roleColors[CustomRoles.Impostor];
-                if (target.Is(CustomRoles.Crewpostor)) color = Main.roleColors[CustomRoles.Impostor];
-                if (target.Is(CustomRoles.Convict)) color = Main.roleColors[CustomRoles.Impostor];
-                if (target.Is(CustomRoles.Refugee)) color = Main.roleColors[CustomRoles.Impostor];
+                if (target.Is(CustomRoleTypes.Madmate)) color = Main.roleColors[CustomRoles.Impostor];
                 if (target.Is(CustomRoles.Rascal)) color = Main.roleColors[CustomRoles.Impostor];
                 if (target.Is(CustomRoleTypes.Crewmate)) color = Main.roleColors[CustomRoles.Bait];
                 if (target.Is(CustomRoleTypes.Neutral)) color = Main.roleColors[CustomRoles.SwordsMan];
@@ -224,6 +221,7 @@ public static class NameColorManager
             || (seer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoles.Madmate) && Options.ImpKnowWhosMadmate.GetBool())
             || (seer.Is(CustomRoles.Madmate) && target.Is(CustomRoles.Madmate) && Options.MadmateKnowWhosMadmate.GetBool())
             || (target.Is(CustomRoles.SuperStar) && Options.EveryOneKnowSuperStar.GetBool())
+            || (target.Is(CustomRoles.Famous))
             || (target.Is(CustomRoles.Workaholic) && Workaholic.WorkaholicVisibleToEveryone.GetBool())
             || (target.Is(CustomRoles.Doctor) && !target.IsEvilAddons() && Options.DoctorVisibleToEveryone.GetBool())
             || (target.Is(CustomRoles.Gravestone) && Main.PlayerStates[target.Data.PlayerId].IsDead)

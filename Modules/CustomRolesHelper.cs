@@ -289,6 +289,7 @@ static class CustomRolesHelper
             CustomRoles.LastImpostor or
             CustomRoles.Ntr or
             CustomRoles.Cyber or
+            CustomRoles.Famous or
             CustomRoles.Madmate or
             CustomRoles.Watcher or
             CustomRoles.Admired or
@@ -1180,9 +1181,19 @@ static class CustomRolesHelper
                     || (pc.GetCustomRole().IsImpostor() && !Options.ImpCanBeCyber.GetBool()))
                     return false;
                 break;
+            
+            case CustomRoles.Famous:
+                if (pc.Is(CustomRoles.Snitch) 
+                    || pc.Is(CustomRoles.President)
+                    || pc.Is(CustomRoles.Doctor) && !Options.DoctorVisibleToEveryone.GetBool()
+                    || pc.Is(CustomRoles.Marshall)) 
+                    return false;
+                if (!pc.GetCustomRole().IsCrewmate() && !pc.GetCustomSubRoles.Contains(CustomRoles.Madmate))
+                    return false;
+                break;
 
             case CustomRoles.Reach:
-                if (!pc.CanUseKillButton())
+                if (!pc.HasImpKillButton())
                     return false;
                 break;
 

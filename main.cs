@@ -850,6 +850,7 @@ public enum CustomRoles
     Plumber,
     Repairman,
     Cyber,
+    Famous,
     Stubborn,
     Overclocked,
     Hurried,
