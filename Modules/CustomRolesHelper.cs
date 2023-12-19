@@ -1186,7 +1186,8 @@ static class CustomRolesHelper
                 if (pc.Is(CustomRoles.Snitch) 
                     || pc.Is(CustomRoles.President)
                     || pc.Is(CustomRoles.Doctor) && !Options.DoctorVisibleToEveryone.GetBool()
-                    || pc.Is(CustomRoles.Marshall)) 
+                    || pc.Is(CustomRoles.Marshall)
+                    || pc.Is(CustomRoles.Captain)) 
                     return false;
                 if (!pc.GetCustomRole().IsCrewmate() && !pc.GetCustomSubRoles.Contains(CustomRoles.Madmate))
                     return false;
