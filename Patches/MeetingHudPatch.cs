@@ -116,6 +116,9 @@ class CheckForEndVotingPatch
                             case CustomRoles.Cleanser:
                                 Cleanser.OnVote(pc, voteTarget);
                                 break;
+                            case CustomRoles.Keeper:
+                                Keeper.OnVote(pc, voteTarget);
+                                break;
                             case CustomRoles.Tracker:
                                 Tracker.OnVote(pc, voteTarget);
                                 break;
@@ -223,9 +226,11 @@ class CheckForEndVotingPatch
                 if (CheckRole(ps.TargetPlayerId, CustomRoles.Tracker) && Tracker.HideVote.GetBool() && Tracker.TempTrackLimit[ps.TargetPlayerId] > 0) continue;
                 // Hide Oracle Vote
                 if (CheckRole(ps.TargetPlayerId, CustomRoles.Oracle) && Oracle.HideVote.GetBool() && Oracle.TempCheckLimit[ps.TargetPlayerId] > 0) continue;
-                // Hide Oracle Vote
+                // Hide Cleanser Vote
                 if (CheckRole(ps.TargetPlayerId, CustomRoles.Cleanser) && Cleanser.HideVote.GetBool() && Cleanser.CleanserUses[ps.TargetPlayerId] > 0) continue;
-                
+                // Hide Keeper Vote
+                if (CheckRole(ps.TargetPlayerId, CustomRoles.Keeper) && Keeper.HideVote.GetBool() && Keeper.keeperUses[ps.TargetPlayerId] > 0) continue;
+
                 // Hide Jester Vote
                 if (CheckRole(ps.TargetPlayerId, CustomRoles.Jester) && Jester.HideVote.GetBool()) continue;
                 // Hide Jester Killer Vote
@@ -348,6 +353,27 @@ class CheckForEndVotingPatch
                     VotingData = __instance.CustomCalculateVotes(); 
             //Change voting data for influenced once
 
+            for (int i = 0; i < statesList.Count; i++)
+            {
+                var voterstate = statesList[i];
+                var voterpc = Utils.GetPlayerById(voterstate.VoterId);
+                if (voterpc == null || !voterpc.IsAlive()) continue;
+                var voterpva = GetPlayerVoteArea(voterstate.VoterId);
+                if (voterpva.VotedFor != voterstate.VotedForId)
+                {
+                    voterstate.VotedForId = voterpva.VotedFor;
+                }
+                if (voterpc.Is(CustomRoles.Silent))
+                {
+                    voterstate.VotedForId = 254; //Change to non should work
+                }
+                statesList[i] = voterstate;
+            }
+            /*This change the voter icon on meetinghud to the player the voter actually voted for.
+             Should work for Influenced and swapeer , Also change role like mayor that has mutiple vote icons
+             Does not effect the votenum and vote result, simply change display icons
+             God Niko cant think about a better way to do this, so niko just loops every voterstate LOL*/
+
             byte exileId = byte.MaxValue;
             int max = 0;
             voteLog.Info("===Decision to expel player processing begins===");
@@ -421,6 +447,13 @@ class CheckForEndVotingPatch
             }
             else if (!braked)
                 exiledPlayer = GameData.Instance.AllPlayers.ToArray().FirstOrDefault(info => !tie && info.PlayerId == exileId);
+            
+            if (Keeper.IsTargetExiled(exileId))
+            {
+                exileId = 0xff;
+                exiledPlayer = Utils.GetPlayerInfoById(exileId);
+            }
+
             exiledPlayer?.Object.SetRealKiller(null);
 
             //RPC
@@ -1153,7 +1186,7 @@ class MeetingHudStartPatch
             if (Captain.IsEnable)
                 if ((target.PlayerId != seer.PlayerId) && (target.Is(CustomRoles.Captain) && Captain.OptionCrewCanFindCaptain.GetBool()) &&
                     (seer.GetCustomRole().IsCrewmate() && !seer.Is(CustomRoles.Madmate) || (seer.Is(CustomRoles.Madmate) && Captain.OptionMadmateCanFindCaptain.GetBool())))
-                    sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Captain), "☆"));
+                    sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Captain), " ☆"));
             switch (seer.GetCustomRole())
             {
                 case CustomRoles.Arsonist:

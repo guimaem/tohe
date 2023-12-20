@@ -315,6 +315,7 @@ internal class ChangeRoleSettings
             Wildling.Init();
             Morphling.Init();
             ParityCop.Init(); // *giggle* party cop
+            Keeper.Init(); // *giggle* party cop
             Spiritcaller.Init();
             Lurker.Init();
             PlagueBearer.Init();
@@ -924,6 +925,9 @@ internal class SelectRolesPatch
                         break;
                     case CustomRoles.ParityCop:
                         ParityCop.Add(pc.PlayerId);
+                        break;
+                    case CustomRoles.Keeper:
+                        Keeper.Add(pc.PlayerId);
                         break;
                     case CustomRoles.Spiritcaller:
                         Spiritcaller.Add(pc.PlayerId);

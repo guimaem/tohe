@@ -1054,7 +1054,7 @@ public static class Options
     public static void Load()
     {
         //#######################################
-        // 26300 lasted id for roles/add-ons (Next use 26400)
+        // 26500 lasted id for roles/add-ons (Next use 26600)
         // Limit id for  roles/add-ons --- "59999"
         //#######################################
         // Start Load Settings
@@ -1873,6 +1873,12 @@ public static class Options
         ParityCop.SetupCustomOption();
 
         /*
+         *  Keeper
+         */
+        Keeper.SetupCustomOption();
+
+
+        /*
          * Lighter
          */
         SetupSingleRoleOptions(8400, TabGroup.CrewmateRoles, CustomRoles.Lighter, 1);
@@ -2480,6 +2486,7 @@ public static class Options
         NeutralCanBeLucky = BooleanOptionItem.Create(19506, "NeutralCanBeLucky", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Lucky]);
         
+        // Necroview
         SetupAdtRoleOptions(19600, CustomRoles.Necroview, canSetNum: true, tab: TabGroup.Addons);
         ImpCanBeNecroview = BooleanOptionItem.Create(19603, "ImpCanBeNecroview", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Necroview]);
@@ -2488,12 +2495,14 @@ public static class Options
         NeutralCanBeNecroview = BooleanOptionItem.Create(19605, "NeutralCanBeNecroview", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Necroview]);
         
+        // Nimble
         SetupAdtRoleOptions(19700, CustomRoles.Nimble, canSetNum: true, tab: TabGroup.Addons);
         /*CrewCanBeNimble = BooleanOptionItem.Create(19704, "CrewCanBeNimble", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Nimble]);
         NeutralCanBeNimble = BooleanOptionItem.Create(19705, "NeutralCanBeNimble", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Nimble]); */
 
+        // Overclocked
         SetupAdtRoleOptions(19800, CustomRoles.Overclocked, canSetNum: true);
         OverclockedReduction = FloatOptionItem.Create(19803, "OverclockedReduction", new(0f, 90f, 5f), 40f, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Overclocked])
@@ -2501,6 +2510,7 @@ public static class Options
         
         Repairman.SetupCustomOption(); //Repairman
         
+        // Seer
         SetupAdtRoleOptions(20000, CustomRoles.Seer, canSetNum: true);
         ImpCanBeSeer = BooleanOptionItem.Create(20003, "ImpCanBeSeer", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Seer]);
@@ -2509,6 +2519,7 @@ public static class Options
         NeutralCanBeSeer = BooleanOptionItem.Create(20005, "NeutralCanBeSeer", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Seer]);
         
+        // Sleuth
         SetupAdtRoleOptions(20100, CustomRoles.Sleuth, canSetNum: true);
         ImpCanBeSleuth = BooleanOptionItem.Create(20103, "ImpCanBeSleuth", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Sleuth]);
@@ -2519,6 +2530,7 @@ public static class Options
         SleuthCanKnowKillerRole = BooleanOptionItem.Create(20106, "SleuthCanKnowKillerRole", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Sleuth]);
 
+        // Brakar
         SetupAdtRoleOptions(20200, CustomRoles.Brakar, canSetNum: true);
         ImpCanBeTiebreaker = BooleanOptionItem.Create(20203, "ImpCanBeTiebreaker", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Brakar]);
@@ -2527,6 +2539,7 @@ public static class Options
         NeutralCanBeTiebreaker = BooleanOptionItem.Create(20205, "NeutralCanBeTiebreaker", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Brakar]);
         
+        // Torch
         SetupAdtRoleOptions(20300, CustomRoles.Torch, canSetNum: true);
         TorchVision = FloatOptionItem.Create(20303, "TorchVision", new(0.5f, 5f, 0.25f), 1.25f, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Torch])
@@ -2534,6 +2547,7 @@ public static class Options
         TorchAffectedByLights = BooleanOptionItem.Create(20304, "TorchAffectedByLights", false, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Torch]);
         
+        // Watcher
         SetupAdtRoleOptions(20400, CustomRoles.Watcher, canSetNum: true);
         ImpCanBeWatcher = BooleanOptionItem.Create(20403, "ImpCanBeWatcher", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Watcher]);
@@ -2541,6 +2555,12 @@ public static class Options
             .SetParent(CustomRoleSpawnChances[CustomRoles.Watcher]);
         NeutralCanBeWatcher = BooleanOptionItem.Create(20405, "NeutralCanBeWatcher", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Watcher]);
+        
+        /*
+         * Silent
+        */
+        Silent.SetupCustomOptions();
+
 
         TextOptionItem.Create(10000016, "RoleType.Harmful", TabGroup.Addons) // HARMFUL
             .SetGameMode(CustomGameMode.Standard)

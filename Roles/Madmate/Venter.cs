@@ -82,7 +82,7 @@ public static class Venter
     public static string GetSkillLimit(byte playerId)
     {
         return Utils.ColorString(KillLimit.ContainsKey(playerId) && CanUseSkill(playerId) ? Utils.GetRoleColor(CustomRoles.Madmate).ShadeColor(0.25f) : Color.gray,
-        KillLimit.TryGetValue(playerId, out var killLimit) ? $"({SkillLimit.GetInt() - killLimit})" : "Invalid");
+        KillLimit.TryGetValue(playerId, out var killLimit) ? $"({SkillLimit.GetInt() - killLimit}/{SkillLimit.GetInt()})" : "Invalid");
     }
 
     private static bool CanBeKilled(this PlayerControl pc)

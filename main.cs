@@ -689,6 +689,7 @@ public enum CustomRoles
     Spiritualist,
     Chameleon,
     ParityCop,
+    Keeper,
     Admirer,
     TimeMaster,
     Crusader,
@@ -855,7 +856,8 @@ public enum CustomRoles
     Overclocked,
     Hurried,
     Oiiai,
-    Influenced
+    Influenced,
+    Silent
     // QuickFix
 }
 //WinData

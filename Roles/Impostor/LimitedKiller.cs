@@ -41,7 +41,7 @@ public static class LimitedKiller
     private static bool CanKill(byte playerId) => AbilityLimit[playerId] > 0;
     public static bool CanUseKillButton(this PlayerControl player) => !player.Data.IsDead && CanKill(player.PlayerId);
 
-    public static string GetKillLimit(byte playerId) => Utils.ColorString(AbilityLimit.ContainsKey(playerId) && CanKill(playerId) ? Utils.GetRoleColor(CustomRoles.Impostor).ShadeColor(0.25f) : Color.gray, AbilityLimit.TryGetValue(playerId, out var killLimit) ? $"({KillLimit.GetInt() - killLimit})" : "Invalid");
+    public static string GetKillLimit(byte playerId) => Utils.ColorString(AbilityLimit.ContainsKey(playerId) && CanKill(playerId) ? Utils.GetRoleColor(CustomRoles.Impostor).ShadeColor(0.25f) : Color.gray, AbilityLimit.TryGetValue(playerId, out var kLimit) ? $"({KillLimit.GetInt() - kLimit}/{KillLimit.GetInt()})" : "Invalid");
 
     private static void SendRPC(byte playerId)
     {
