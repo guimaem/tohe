@@ -1150,7 +1150,6 @@ static class CustomRolesHelper
                     else return false;
                 }
                 else return false;
-                break;
 
 
             case CustomRoles.Onbound:
