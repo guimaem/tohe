@@ -190,6 +190,14 @@ public static class GuessManager
                     else pc.ShowPopUp(GetString("GuessDisabled"));
                     return true;
                 }
+                
+                if (!Mundane.OnGuess(pc))
+                {
+                    if (!isUI) Utils.SendMessage(GetString("GuessedAsMundane"), pc.PlayerId);
+                    else pc.ShowPopUp(GetString("GuessedAsMundane"));
+                    return true;
+                }
+
 
                 if (!Main.GuesserGuessed.ContainsKey(pc.PlayerId)) Main.GuesserGuessed.Add(pc.PlayerId, 0);
                 if (pc.Is(CustomRoles.NiceGuesser) && Main.GuesserGuessed[pc.PlayerId] >= Options.GGCanGuessTime.GetInt())
