@@ -35,7 +35,7 @@ public static class Jester
             .SetValueFormat(OptionFormat.Percent);
     }
 
-    public static void ApplyGameOptions(IGameOptions opt)
+    public static void ApplyGameOptions(IGameOptions opt) // can vent
     {
         AURoleOptions.EngineerCooldown = 0f;
         AURoleOptions.EngineerInVentMaxTime = 0f;

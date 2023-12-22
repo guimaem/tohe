@@ -643,7 +643,7 @@ static class CustomRolesHelper
             CustomRoles.Shroud or
             CustomRoles.Pestilence;
     }
-    public static bool IsCK(this CustomRoles role)
+    public static bool IsCK(this CustomRoles role) // Crewmate Killer
     {
         return role is
             CustomRoles.SwordsMan or
