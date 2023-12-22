@@ -219,6 +219,7 @@ internal class ChangeRoleSettings
             Sheriff.Init();
             CopyCat.Init();
             Captain.Init();
+            GuessMaster.Init();
             Cleanser.Init();
             SwordsMan.Init();
             EvilTracker.Init();
@@ -650,6 +651,9 @@ internal class SelectRolesPatch
                         break;
                     case CustomRoles.Captain:
                         Captain.Add(pc.PlayerId);
+                        break;
+                    case CustomRoles.GuessMaster:
+                        GuessMaster.Add(pc.PlayerId);
                         break;
                     case CustomRoles.TimeMaster:
                         Main.TimeMasterNum[pc.PlayerId] = 0;
