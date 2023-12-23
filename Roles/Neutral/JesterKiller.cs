@@ -40,10 +40,5 @@ public static class JesterKiller
 
     public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = KillCooldown.GetFloat();
 
-    public static void ApplyGameOptions(IGameOptions opt)
-    {
-        AURoleOptions.EngineerCooldown = 0f;
-        AURoleOptions.EngineerInVentMaxTime = 0f;
-        opt.SetVision(ImpVision.GetBool());
-    }
+    public static void ApplyGameOptions(IGameOptions opt) => opt.SetVision(ImpVision.GetBool());
 }

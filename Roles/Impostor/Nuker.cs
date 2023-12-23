@@ -1,5 +1,9 @@
 using System.Collections.Generic;
 using TOHE.Roles.Impostor;
+using TOHE.Roles.Neutral;
+using TOHE.Roles.Crewmate;
+using TOHE.Modules;
+using UnityEngine;
 using static TOHE.Translator;
 
 namespace TOHE.Roles.Impostor;

@@ -1499,8 +1499,8 @@ class MurderPlayerPatch
 
         if (target.Is(CustomRoles.Avanger))
         {
-            var pcArray = Main.AllAlivePlayerControls.Where(x => x.PlayerId != target.PlayerId && !Pelican.IsEaten(x.PlayerId) && !Medic.ProtectList.Contains(x.PlayerId).ToArray()
-            && !x.Is(CustomRoles.Pestilence) && !x.Is(CustomRoles.Masochist) && !x.Is(CustomRoles.Solsticer) && !((x.Is(CustomRoles.NiceMini) || x.Is(CustomRoles.EvilMini)) && Mini.Age < 18)).ToList();
+            var pcArray = Main.AllAlivePlayerControls.Where(x => x.PlayerId != target.PlayerId && !Pelican.IsEaten(x.PlayerId) && !Medic.ProtectList.Contains(x.PlayerId)
+            && !x.Is(CustomRoles.Pestilence) && !x.Is(CustomRoles.Masochist) && !x.Is(CustomRoles.Solsticer) && !((x.Is(CustomRoles.NiceMini) || x.Is(CustomRoles.EvilMini)) && Mini.Age < 18)).ToArray();
             if (pcArray.Any())
             {
                 PlayerControl rp = pcArray[IRandom.Instance.Next(0, pcArray.Length)];
@@ -3749,7 +3749,10 @@ class CoEnterVentPatch
                 CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Revolutionist);//革命者胜利
                 Utils.GetDrawPlayerCount(__instance.myPlayer.PlayerId, out var x);
                 CustomWinnerHolder.WinnerIds.Add(__instance.myPlayer.PlayerId);
-                foreach (var apc in x.ToArray()).ToArray() CustomWinnerHolder.WinnerIds.Add(apc.PlayerId);//胜利玩家
+                foreach (var apc in x.ToArray()) 
+                {
+                    CustomWinnerHolder.WinnerIds.Add(apc.PlayerId);//胜利玩家
+                }
             }
             return true;
         }

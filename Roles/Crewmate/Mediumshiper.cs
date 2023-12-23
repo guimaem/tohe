@@ -105,7 +105,7 @@ public static class Mediumshiper
     public static bool CheckCommond(ref string msg, string command, bool exact = true)
     {
         var comList = command.Split('|');
-        foreach (var comm in comList.Count)
+        foreach (var comm in comList)
         {
             if (exact)
             {

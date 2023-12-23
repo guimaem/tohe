@@ -667,6 +667,18 @@ class CheckForEndVotingPatch
         var player = Main.AllPlayerControls.FirstOrDefault(pc => pc.PlayerId == id);
         return player != null && player.Is(role);
     }
+    public static PlayerVoteArea GetPlayerVoteArea(byte playerId)
+    {
+        if (MeetingHud.Instance == null || MeetingHud.Instance.playerStates.Count < 1) return null;
+        //This function should only be used to get vote states after voting complete
+
+        foreach (var pva in MeetingHud.Instance.playerStates)
+        {
+            if (pva.TargetPlayerId == playerId) return pva;
+        }
+
+        return null; //if pva doesnt exist
+    }
     public static void TryAddAfterMeetingDeathPlayers(PlayerState.DeathReason deathReason, params byte[] playerIds)
     {
         var AddedIdList = new List<byte>();

@@ -1,8 +1,12 @@
 using AmongUs.GameOptions;
 using System.Collections.Generic;
 using TOHE.Modules;
+using TOHE.Roles.Crewmate;
+using TOHE.Roles.Impostor;
+using TOHE.Roles.Neutral;
 using static TOHE.Translator;
 using static TOHE.Options;
+using UnityEngine;
 
 namespace TOHE.Roles.Impostor;
 
@@ -10,7 +14,7 @@ public static class Bomber
 {
     private static readonly int Id = 700;
 
-    private static OptionItem BomberRadius;
+    public static OptionItem BomberRadius;
     public static OptionItem CanKill;
     private static OptionItem BombCooldown;
     private static OptionItem KillCooldown;
@@ -29,7 +33,7 @@ public static class Bomber
         CanKill = BooleanOptionItem.Create(Id + 11, "CanKill", false, TabGroup.ImpostorRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Bomber]);
         KillCooldown = FloatOptionItem.Create(Id + 12, "KillCooldown", new(0f, 180f, 2.5f), 30f, TabGroup.ImpostorRoles, false)
-            .SetParent(BomberCanKill)
+            .SetParent(CanKill)
             .SetValueFormat(OptionFormat.Seconds);
         BombCooldown = FloatOptionItem.Create(Id + 13, "BombCooldown", new(5f, 180f, 2.5f), 60f, TabGroup.ImpostorRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Bomber])

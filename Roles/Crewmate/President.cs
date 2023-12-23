@@ -153,7 +153,7 @@ public static class President
     public static bool CheckCommond(ref string msg, string command, bool exact = true)
     {
         var comList = command.Split('|');
-        foreach (comm in comList)
+        foreach (var comm in comList)
         {
             if (exact)
             {

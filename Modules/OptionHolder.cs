@@ -412,6 +412,9 @@ public static class Options
     public static OptionItem NeutralKnowCyberDead;
     public static OptionItem CyberKnown;
 
+    public static OptionItem ImpKnowFamous;
+    public static OptionItem NeutralKnowFamous;
+
     // Sleuth
     public static OptionItem SleuthCanKnowKillerRole;
     public static OptionItem ImpCanBeSleuth;
@@ -2464,7 +2467,11 @@ public static class Options
             .SetParent(CustomRoleSpawnChances[CustomRoles.Cyber]);
         
         SetupAdtRoleOptions(19130, CustomRoles.Famous, canSetNum: true, tab: TabGroup.Addons);
-        
+        ImpKnowFamous = BooleanOptionItem.Create(19131, "ImpKnowFamous", true, TabGroup.Addons, false)
+	    .SetParent(CustomRoleSpawnChances[CustomRoles.Famous]);
+	NeutralKnowFamous = BooleanOptionItem.Create(19132, "NeutralKnowFamous", true, TabGroup.Addons, false)
+	    .SetParent(CustomRoleSpawnChances[CustomRoles.Famous]);
+	
         // Double Shot
         SetupAdtRoleOptions(19200, CustomRoles.DoubleShot, canSetNum: true, tab: TabGroup.Addons);
         ImpCanBeDoubleShot = BooleanOptionItem.Create(19203, "ImpCanBeDoubleShot", true, TabGroup.Addons, false)

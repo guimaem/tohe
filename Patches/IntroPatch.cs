@@ -113,7 +113,7 @@ class CoBeginPatch
             Main.PlayerStates[player.PlayerId].InitTask(player);
         }
 
-        /logger.Info($"Number players: {allPlayerControlsCount}");
+        logger.Info($"Number players: {allPlayerControlsArray}");
 
         //for (int item = 0; item < allPlayerControlsCount; item++)
         //{
@@ -156,15 +156,15 @@ class BeginCrewmatePatch
             __instance.overlayHandle.color = Palette.ImpostorRed;
             return false;
         }
-         else if (PlayerControl.LocalPlayer.Is(CustomRoleTypes.Madmate))
+        else if (PlayerControl.LocalPlayer.Is(CustomRoleTypes.Madmate))
         {
             teamToDisplay = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             teamToDisplay.Add(PlayerControl.LocalPlayer);
-           __instance.BeginImpostor(teamToDisplay);
-           __instance.overlayHandle.color = Palette.ImpostorRed;
+            __instance.BeginImpostor(teamToDisplay);
+            __instance.overlayHandle.color = Palette.ImpostorRed;
             return false;
         }
-         else if (PlayerControl.LocalPlayer.GetCustomRole().IsMadmate())
+        else if (PlayerControl.LocalPlayer.GetCustomRole().IsMadmate())
         {
             teamToDisplay = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             teamToDisplay.Add(PlayerControl.LocalPlayer);
@@ -173,37 +173,37 @@ class BeginCrewmatePatch
             return false;
         }
         if (PlayerControl.LocalPlayer.Is(CustomRoles.Executioner))
+        {
+            var exeTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
+            exeTeam.Add(PlayerControl.LocalPlayer);
+            foreach (var execution in Executioner.Target.Values)
             {
-                var exeTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
-                exeTeam.Add(PlayerControl.LocalPlayer);
-                foreach (var execution in Executioner.Target.Values)
-                {
-                    PlayerControl executing = Utils.GetPlayerById(execution);
-                    exeTeam.Add(executing);
-                }
-                teamToDisplay = exeTeam;
+                PlayerControl executing = Utils.GetPlayerById(execution);
+                exeTeam.Add(executing);
             }
+            teamToDisplay = exeTeam;
+        }
         if (PlayerControl.LocalPlayer.Is(CustomRoles.Lawyer))
+        {
+            var lawyerTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
+            lawyerTeam.Add(PlayerControl.LocalPlayer);
+            foreach (var help in Lawyer.Target.Values)
             {
-                var lawyerTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
-                lawyerTeam.Add(PlayerControl.LocalPlayer);
-                foreach (var help in Lawyer.Target.Values)
-                {
-                    PlayerControl helping = Utils.GetPlayerById(help.Value);
-                    lawyerTeam.Add(helping);
-                }
-                teamToDisplay = lawyerTeam;
+                PlayerControl helping = Utils.GetPlayerById(help);
+                lawyerTeam.Add(helping);
             }
+            teamToDisplay = lawyerTeam;
+        }
         if (PlayerControl.LocalPlayer.Is(CustomRoles.NSerialKiller))
+        {
+            var serialkillerTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
+            serialkillerTeam.Add(PlayerControl.LocalPlayer);
+            foreach (var ar in PlayerControl.AllPlayerControls)
             {
-                var serialkillerTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
-                serialkillerTeam.Add(PlayerControl.LocalPlayer);
-                foreach (var ar in PlayerControl.AllPlayerControls)
-                {
-                    if (ar.Is(CustomRoles.NSerialKiller) && ar != PlayerControl.LocalPlayer)
-                        serialkillerTeam.Add(ar);
-                }
-                teamToDisplay = serialkillerTeam;
+                if (ar.Is(CustomRoles.NSerialKiller) && ar != PlayerControl.LocalPlayer)
+                    serialkillerTeam.Add(ar);
+            }
+            teamToDisplay = serialkillerTeam;
         }
        
         return true;
@@ -245,10 +245,11 @@ class BeginCrewmatePatch
                 __instance.ImpostorText.text = GetString("SubText.Madmate");
                 break;
         }
+        
         switch (role)
         {
             case CustomRoles.Terrorist:
-                var sound = ShipStatus.Instance.CommonTasks.FirstOrDefault(task => task.TaskType == TaskTypes.FixWiring);
+                var sound = ShipStatus.Instance.CommonTasks.FirstOrDefault(task => task.TaskType == TaskTypes.FixWiring)
                 .MinigamePrefab.OpenSound;
                 PlayerControl.LocalPlayer.Data.Role.IntroSound = sound;
                 break;

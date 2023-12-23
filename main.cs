@@ -122,7 +122,7 @@ public class Main : BasePlugin
     public static HashSet<byte> KillGhoul = new();
     public static HashSet<string> winnerNameList = new();
     public static HashSet<int> clientIdList = new();
-    public static HashSet<(string, byte, string)> MessagesToSend = new();
+    public static List<(string, byte, string)> MessagesToSend = new();
     public static bool isChatCommand = false;
     public static bool MeetingIsStarted = false;
     public static HashSet<PlayerControl> LoversPlayers = new();
@@ -781,6 +781,9 @@ public enum CustomRoles
     Mini,
    // Sorcerer,
    // Flux,
+
+   // FFA
+   Killer,
 
     //GM
     GM,

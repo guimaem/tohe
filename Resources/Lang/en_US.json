@@ -3061,6 +3061,10 @@
   "CrewKnowCyberDead": "<color=#8cffff>Crewmates</color> know if Cyber died",
   "NeutralKnowCyberDead": "<color=#7f8c8d>Neutrals</color> know if Cyber died",
   "CyberKnown": "Everyone can see Cyber",
+  
+  "ImpKnowFamous": "<color=#ff1919>Impostors</color> can see Famous",
+  "NeutralKnowFamous": "<color=#7f8c8d>Neutrals</color> can see Famous",
+
   "ImpCanBeRepairman": "<color=#ff1919>Impostors</color> can become Repairman",
   "CrewCanBeRepairman": "<color=#8cffff>Crewmates</color> can become Repairman",
   "NeutralCanBeRepairman": "<color=#7f8c8d>Neutrals</color> can become Repairman",
@@ -3631,6 +3635,7 @@
   "SolsticerGuessMax": "Because you already misguessed, you are no longer allowed to guess.",
 
   "VoteDead": "Sorry, but the player you just voted is already died, so your vote is returned.",
+
   "ImpCanBeSilent": "<color=#ff1919>Impostors</color> can become Silent",
   "CrewCanBeSilent": "<color=#8cffff>Crewmates</color> can become Silent",
   "NeutralCanBeSilent": "<color=#7f8c8d>Neutrals</color> can become Silent"

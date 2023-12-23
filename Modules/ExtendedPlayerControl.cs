@@ -1439,6 +1439,7 @@ static class ExtendedPlayerControl
         else if (seer.Is(CustomRoles.Venter) && target.Is(CustomRoleTypes.Impostor)) return true;
         else if (seer.Is(CustomRoles.Madmate) && target.Is(CustomRoles.Venter)) return true;
         else if (seer.Is(CustomRoles.Venter) && target.Is(CustomRoles.Madmate)) return true;
+        else if (target.Is(CustomRoles.Famous) && !(seer.Is(CustomRoleTypes.Impostor) && !Options.ImpKnowFamous.GetBool()) && !(seer.Is(CustomRoleTypes.Neutral) && !Options.NeutralKnowFamous.GetBool())) return true;
         else if (Workaholic.WorkaholicVisibleToEveryone.GetBool() && target.Is(CustomRoles.Workaholic)) return true;
         else if (Options.DoctorVisibleToEveryone.GetBool() && target.Is(CustomRoles.Doctor) && !target.IsEvilAddons()) return true;
         else if (Options.MayorRevealWhenDoneTasks.GetBool() && target.Is(CustomRoles.Mayor) && target.GetPlayerTaskState().IsTaskFinished) return true;

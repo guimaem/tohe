@@ -20,7 +20,7 @@ public static class LimitedKiller
     {
         SetupRoleOptions(Id, TabGroup.ImpostorRoles, CustomRoles.LimitedKiller);
         KillLimit = IntegerOptionItem.Create(Id + 2, "KillLimit", new(1, 15, 1), 8, TabGroup.ImpostorRoles, false)
-            .SetParent(CustomRoleSpawnChances[CustomRoles.LimitedKiller])
+            .SetParent(CustomRoleSpawnChances[CustomRoles.LimitedKiller]);
         KillCooldown = FloatOptionItem.Create(Id + 3, "KillCooldown", new(0f, 180f, 2.5f), 30f, TabGroup.ImpostorRoles,  false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.LimitedKiller])
             .SetValueFormat(OptionFormat.Seconds);

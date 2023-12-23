@@ -187,7 +187,7 @@ namespace TOHE.Roles.Impostor
             if (!target.IsAlive()) return;
             
             Main.PlayerStates[target.PlayerId].deathReason = PlayerState.DeathReason.Suicide;
-            target.SetRealKiller(otgh);
+            target.SetRealKiller(deathpact);
             target.RpcMurderPlayerV3(target);
         }
 

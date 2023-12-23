@@ -278,20 +278,19 @@ class ExileControllerWrapUpPatch
                 case 3:
                     map = new RandomSpawn.DleksSpawnMap();
                     Main.AllPlayerControls.Do(map.RandomTeleport);
-                break;
+                    break;
                 case 5:
                     map = new RandomSpawn.FungleSpawnMap();
                     Main.AllPlayerControls.Do(map.RandomTeleport);
                     break;
-                }
             }
-            
-            FallFromLadder.Reset();
-            Utils.CountAlivePlayers(true);
-            Utils.AfterMeetingTasks();
-            Utils.SyncAllSettings();
-            Utils.NotifyRoles();
         }
+            
+        FallFromLadder.Reset();
+        Utils.CountAlivePlayers(true);
+        Utils.AfterMeetingTasks();
+        Utils.SyncAllSettings();
+        Utils.NotifyRoles();
     }
 
     static void WrapUpFinalizer(GameData.PlayerInfo exiled)

@@ -221,7 +221,7 @@ public static class NameColorManager
             || (seer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoles.Madmate) && Options.ImpKnowWhosMadmate.GetBool())
             || (seer.Is(CustomRoles.Madmate) && target.Is(CustomRoles.Madmate) && Options.MadmateKnowWhosMadmate.GetBool())
             || (target.Is(CustomRoles.SuperStar) && Options.EveryOneKnowSuperStar.GetBool())
-            || (target.Is(CustomRoles.Famous))
+            || (target.Is(CustomRoles.Famous) && !(seer.Is(CustomRoleTypes.Impostor) && !Options.ImpKnowFamous.GetBool()) && !(seer.Is(CustomRoleTypes.Neutral) && !Options.NeutralKnowFamous.GetBool()))
             || (target.Is(CustomRoles.Workaholic) && Workaholic.WorkaholicVisibleToEveryone.GetBool())
             || (target.Is(CustomRoles.Doctor) && !target.IsEvilAddons() && Options.DoctorVisibleToEveryone.GetBool())
             || (target.Is(CustomRoles.Gravestone) && Main.PlayerStates[target.Data.PlayerId].IsDead)

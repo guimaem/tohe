@@ -3034,6 +3034,8 @@
   "CrewKnowCyberDead": "<color=#8cffff>Tripulantes</color> sabem quando o Cibernético morre",
   "NeutralKnowCyberDead": "<color=#7f8c8d>Neutros</color> sabem quando o Cibernético morre",
   "CyberKnown": "<color=#7f8c8d>Neutros</color> sabem quando o Cibernético morre",
+  "ImpKnowFamous": "<color=#ff1919>Impostores</color> podem ver o Famoso",
+  "NeutralKnowFamous": "<color=#7f8c8d>Neutros</color> podem ver o Famoso",
   "ImpCanBeRepairman": "<color=#ff1919>Impostores</color> podem se tornar Reparador",
   "CrewCanBeRepairman": "<color=#ff1919>Impostores</color> podem se tornar Reparador",
   "NeutralCanBeRepairman": "<color=#7f8c8d>Neutros</color> podem se tornar Reparador",

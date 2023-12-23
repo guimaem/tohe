@@ -1162,7 +1162,7 @@ static class CustomRolesHelper
                     || pc.Is(CustomRoles.Mare)
                     || pc.Is(CustomRoles.Solsticer)
                     || pc.Is(CustomRoles.Rebound)
-                    || pc.Is(CustomRoles.Workaholic) && !Workaholic.WorkaholicVisibleToEveryone.GetBool()))
+                    || pc.Is(CustomRoles.Workaholic) && !Workaholic.WorkaholicVisibleToEveryone.GetBool())
                     return false; //Based on guess manager
                 if ((pc.GetCustomRole().IsCrewmate() && !Options.CrewCanBeOnbound.GetBool()) || (pc.GetCustomRole().IsNeutral() && !Options.NeutralCanBeOnbound.GetBool()) || (pc.GetCustomRole().IsImpostor() && !Options.ImpCanBeOnbound.GetBool()))
                     return false;
@@ -1178,7 +1178,7 @@ static class CustomRolesHelper
                     || pc.Is(CustomRoles.Mare)
                     || pc.Is(CustomRoles.Solsticer)
                     || pc.Is(CustomRoles.Onbound)
-                    || pc.Is(CustomRoles.Workaholic) && !Workaholic.WorkaholicVisibleToEveryone.GetBool()))
+                    || pc.Is(CustomRoles.Workaholic) && !Workaholic.WorkaholicVisibleToEveryone.GetBool())
                 {
                     return false;
                 } //Based on guess manager
@@ -1190,7 +1190,7 @@ static class CustomRolesHelper
                 if (!Options.GuesserMode.GetBool() && !pc.Is(CustomRoles.EvilGuesser) && !pc.Is(CustomRoles.NiceGuesser) && !pc.Is(CustomRoles.Doomsayer) && !pc.Is(CustomRoles.Guesser))
                     return false;
                 if (pc.Is(CustomRoles.CopyCat)
-                    || pc.Is(CustomROles.Workaholic))
+                    || pc.Is(CustomRoles.Workaholic))
                     return false;
                 if (Options.GuesserMode.GetBool())
                 {
@@ -1221,12 +1221,12 @@ static class CustomRolesHelper
                     || pc.Is(CustomRoles.Marshall)
                     || pc.Is(CustomRoles.Captain)) 
                     return false;
-                if (!pc.GetCustomRole().IsCrewmate() && !pc.GetCustomSubRoles.Contains(CustomRoles.Madmate))
+                if (!pc.GetCustomRole().IsCrewmate() && !pc.GetCustomSubRoles().Contains(CustomRoles.Madmate))
                     return false;
                 break;
 
             case CustomRoles.Reach:
-                if (!pc.HasImpKillButton())
+                if (!pc.CanUseKillButton())
                     return false;
                 break;
 

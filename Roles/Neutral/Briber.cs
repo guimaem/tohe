@@ -118,7 +118,7 @@ public static class Briber
 
     private static bool CanBeRecruited(PlayerControl pc)
     {
-        return pc != null && (pc.GetCustomRole().IsCK() && pc.GetCustomRole().HasImpKillButton() && CanRecruitCrewmate.GetBool() || pc.GetCustomRole().IsImpostor() && CanRecruitImpostors.GetBool() || (pc.GetCustomRole().IsMadmate() || pc.GetCustomSubRoles().Contains(CustomRoles.Madmate)) && CanRecruitMadmate.GetBool() || pc.GetCustomRole().IsNeutral() && CanRecruitNeutral.GetBool())
+        return pc != null && (pc.GetCustomRole().IsCK() && pc.HasImpKillButton(considerVanillaShift: true) && CanRecruitCrewmate.GetBool() || pc.GetCustomRole().IsImpostor() && CanRecruitImpostors.GetBool() || (pc.GetCustomRole().IsMadmate() || pc.GetCustomSubRoles().Contains(CustomRoles.Madmate)) && CanRecruitMadmate.GetBool() || pc.GetCustomRole().IsNeutral() && CanRecruitNeutral.GetBool())
             && !pc.Is(CustomRoles.Soulless)&& !pc.Is(CustomRoles.Madmate) && !pc.Is(CustomRoles.Lovers) && !pc.Is(CustomRoles.Loyal)
 	    && !pc.Is(CustomRoles.Admired)
             && !((pc.Is(CustomRoles.NiceMini) || pc.Is(CustomRoles.EvilMini)) && Mini.Age < 18)
