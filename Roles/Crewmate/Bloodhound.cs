@@ -104,7 +104,7 @@
 
         public static void Clear()
         {
-            foreach (var apc in playerIdList)
+            foreach (var apc in playerIdList.ToArray())
             {
                 LocateArrow.RemoveAllTarget(apc);
                 SendRPC(apc, false);

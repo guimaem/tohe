@@ -228,9 +228,12 @@ public static class Sniper
             var snipedTarget = targets.OrderBy(c => c.Value).First().Key;
             snipeTarget[sniperId] = snipedTarget.PlayerId;
             snipedTarget.CheckMurder(snipedTarget);
-            //あたった通知
-            if (!Options.DisableShieldAnimations.GetBool()) sniper.RpcGuardAndKill();
-            else sniper.SetKillCooldown();
+            
+            if (!Options.DisableShieldAnimations.GetBool())
+                sniper.RpcGuardAndKill();
+            else
+                sniper.SetKillCooldown();
+
             snipeTarget[sniperId] = 0x7F;
 
             //スナイプが起きたことを聞こえそうな対象に通知したい
@@ -243,8 +246,8 @@ public static class Sniper
                 Utils.NotifyRoles(SpecifySeer: otherPc);
             }
             SendRPC(sniperId);
-            _ = new LateTask(
-                () =>
+            
+            _ = new LateTask(() =>
                 {
                     snList.Clear();
                     foreach (var otherPc in targets.Keys)
@@ -253,8 +256,7 @@ public static class Sniper
                     }
                     SendRPC(sniperId);
                 },
-                0.5f, "Sniper shot Notify"
-                );
+                0.5f, "Sniper shot Notify");
         }
     }
     public static void OnFixedUpdate(PlayerControl pc)

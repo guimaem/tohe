@@ -90,14 +90,21 @@ public static class Briber
 
 	        killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Briber), GetString("GangsterSuccessfullyRecruited")));
 	        target.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Briber), GetString("BeRecruitedByBriber")));
-            //Utils.NotifyRoles(SpecifySeer: killer, SpecifySeer: target, ForceLoop: true);
-            Utils.NotifyRoles();
+            
+            //Utils.NotifyRoles();
+            Utils.NotifyRoles(SpecifySeer: killer, SpecifyTarget: target, ForceLoop: true);
+            Utils.NotifyRoles(SpecifySeer: target, SpecifyTarget: killer, ForceLoop: true);
 
             killer.ResetKillCooldown();
             killer.SetKillCooldown();
-            if (!DisableShieldAnimations.GetBool()) killer.RpcGuardAndKill(target);
-            target.RpcGuardAndKill(killer);
-            target.RpcGuardAndKill(target);
+            if (!DisableShieldAnimations.GetBool()) 
+            {
+                killer.RpcGuardAndKill(target);
+                target.RpcGuardAndKill(killer);
+                target.RpcGuardAndKill(target);
+            }
+            else
+                target.SetKillCooldown();
 
             Logger.Info("设置职业:" + target?.Data?.PlayerName + " = " + target.GetCustomRole().ToString() + " + " + CustomRoles.SidekickB.ToString(), "Assign " + CustomRoles.SidekickB.ToString());
                 
@@ -116,7 +123,7 @@ public static class Briber
 
     private static bool CanBeRecruited(PlayerControl pc)
     {
-        return pc != null && (pc.GetCustomRole().IsCK() && pc.HasImpKillButton(considerVanillaShift: true) && CanRecruitCrewmate.GetBool() || pc.GetCustomRole().IsImpostor() && CanRecruitImpostors.GetBool() || (pc.GetCustomRole().IsMadmate() || pc.GetCustomSubRoles().Contains(CustomRoles.Madmate)) && CanRecruitMadmate.GetBool() || pc.GetCustomRole().IsNeutral() && CanRecruitNeutral.GetBool())
+        return pc != null && (pc.GetCustomRole().IsAbleToBeSidekicked() && pc.GetCustomRole().IsCrewmate() && CanRecruitCrewmate.GetBool() || pc.GetCustomRole().IsImpostor() && CanRecruitImpostors.GetBool() || (pc.GetCustomRole().IsMadmate() || pc.GetCustomSubRoles().Contains(CustomRoles.Madmate)) && CanRecruitMadmate.GetBool() || pc.GetCustomRole().IsNeutral() && CanRecruitNeutral.GetBool())
             && !pc.Is(CustomRoles.Soulless)&& !pc.Is(CustomRoles.Madmate) && !pc.Is(CustomRoles.Lovers) && !pc.Is(CustomRoles.Loyal)
 	    && !pc.Is(CustomRoles.Admired)
             && !((pc.Is(CustomRoles.NiceMini) || pc.Is(CustomRoles.EvilMini)) && Mini.Age < 18)

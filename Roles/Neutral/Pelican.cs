@@ -140,7 +140,8 @@ public static class Pelican
 
         Utils.NotifyRoles(SpecifySeer: pc);
         Utils.NotifyRoles(SpecifySeer: target);
-        Logger.Info($"{pc.GetRealName()} 吞掉了 {target.GetRealName()}", "Pelican");
+        
+        Logger.Info($"{pc.GetRealName()} eat player => {target.GetRealName()}", "Pelican");
     }
 
     public static void OnReportDeadBody()
@@ -159,7 +160,8 @@ public static class Pelican
                 Main.PlayerStates[tar].deathReason = PlayerState.DeathReason.Eaten;
                 Main.PlayerStates[tar].SetDead();
                 Utils.AfterPlayerDeathTasks(target, true);
-                Logger.Info($"{killer.GetRealName()} 消化了 {target.GetRealName()}", "Pelican");
+                
+                Logger.Info($"{Utils.GetPlayerById(pc).GetRealName()} dead, player return back: {target.GetRealName()}", "Pelican");
             }
         }
         eatenList.Clear();
@@ -206,15 +208,17 @@ public static class Pelican
 
         foreach (var pc in eatenList)
         {
-            foreach (var tar in pc.Value)
+            foreach (var tar in pc.Value.ToArray())
             {
                 var target = Utils.GetPlayerById(tar);
                 if (target == null) continue;
+
                 var pos = GetBlackRoomPSForPelican();
                 var dis = Vector2.Distance(pos, target.GetCustomPosition());
                 if (dis < 1f) continue;
+
                 target.RpcTeleport(pos);
-                Utils.NotifyRoles(SpecifySeer: target, ForceLoop: false);
+                //Utils.NotifyRoles(SpecifySeer: target, ForceLoop: false);
             }
         }
     }

@@ -1366,6 +1366,8 @@ class MurderPlayerPatch
         if (Main.OverDeadPlayerList.Contains(target.PlayerId)) return;
 
         PlayerControl killer = __instance; //読み替え変数
+        bool needUpadteNotifyRoles = true;
+
         if (Pelican.IsEnable && target.Is(CustomRoles.Pelican)) 
             Pelican.OnPelicanDied(target.PlayerId);
         if (Main.GodfatherTarget.Contains(target.PlayerId) && !(killer.GetCustomRole().IsImpostor() || killer.GetCustomRole().IsMadmate() || killer.Is(CustomRoles.Madmate)))
@@ -1454,7 +1456,9 @@ class MurderPlayerPatch
         if (target.Is(CustomRoles.Trapper) && killer != target)
             killer.TrapperKilled(target);
 
-        Main.AllKillers.Remove(killer.PlayerId);
+        if (Main.AllKillers.ContainsKey(killer.PlayerId))
+            Main.AllKillers.Remove(killer.PlayerId);
+
         if (!killer.Is(CustomRoles.Trickster))
             Main.AllKillers.Add(killer.PlayerId, Utils.GetTimeStamp());
 
@@ -1467,15 +1471,6 @@ class MurderPlayerPatch
         }
         switch (killer.GetCustomRole())
         {
-        /*    case CustomRoles.BoobyTrap:
-                if (!Options.TrapOnlyWorksOnTheBodyBoobyTrap.GetBool() && killer != target)
-                {
-                    if (!Main.BoobyTrapBody.Contains(target.PlayerId)) Main.BoobyTrapBody.Add(target.PlayerId);
-                    if (!Main.KillerOfBoobyTrapBody.ContainsKey(target.PlayerId)) Main.KillerOfBoobyTrapBody.Add(target.PlayerId, killer.PlayerId);
-                    Main.PlayerStates[killer.PlayerId].deathReason = PlayerState.DeathReason.Misfire;
-                    killer.RpcMurderPlayerV3(killer);
-                }
-                break; */
             case CustomRoles.SwordsMan:
                 if (killer != target)
                     SwordsMan.OnMurder(killer);
@@ -1529,12 +1524,12 @@ class MurderPlayerPatch
 
         if (Lawyer.Target.ContainsValue(target.PlayerId))
             Lawyer.ChangeRoleByTarget(target);
-        Hacker.AddDeadBody(target);
-        Mortician.OnPlayerDead(target);
-        Bloodhound.OnPlayerDead(target);
-        Tracefinder.OnPlayerDead(target);
-        Vulture.OnPlayerDead(target);
-        SoulCollector.OnPlayerDead(target);
+        if (Hacker.IsEnable) Hacker.AddDeadBody(target);
+        if (Mortician.IsEnable) Mortician.OnPlayerDead(target);
+        if (Bloodhound.IsEnable) Bloodhound.OnPlayerDead(target);
+        if (Tracefinder.IsEnable) Tracefinder.OnPlayerDead(target);
+        if (Vulture.IsEnable) Vulture.OnPlayerDead(target);
+        if (SoulCollector.IsEnable) SoulCollector.OnPlayerDead(target);
 
         Utils.AfterPlayerDeathTasks(target);
 
@@ -1545,6 +1540,7 @@ class MurderPlayerPatch
         if (Camouflager.AbilityActivated && target.Is(CustomRoles.Camouflager))
         {
             Camouflager.IsDead();
+            needUpadteNotifyRoles = false;
         }
         Utils.TargetDies(__instance, target);
 
@@ -1552,13 +1548,21 @@ class MurderPlayerPatch
         {
             __instance.MarkDirtySettings();
             target.MarkDirtySettings();
-            Utils.NotifyRoles(SpecifySeer: killer);
-            Utils.NotifyRoles(SpecifySeer: target);
+            
+            if (needUpadteNotifyRoles)
+            {
+                Utils.NotifyRoles(SpecifySeer: killer);
+                Utils.NotifyRoles(SpecifySeer: target);
+            }
         }
         else
         {
             Utils.SyncAllSettings();
-            Utils.NotifyRoles();
+            
+            if (needUpadteNotifyRoles)
+            {
+                Utils.NotifyRoles();
+            }
         }
     }
 }
@@ -2512,6 +2516,17 @@ class FixedUpdatePatch
                                 Logger.Info(msg, "Low Level Temp Ban");
                             }
                         }
+                    }
+                }
+                
+                if (KickPlayerPatch.AttemptedKickPlayerList.Any())
+                {
+                    foreach (var item in KickPlayerPatch.AttemptedKickPlayerList)
+                    {
+                        KickPlayerPatch.AttemptedKickPlayerList[item.Key]++;
+
+                        if (item.Value > 11)
+                            KickPlayerPatch.AttemptedKickPlayerList.Remove(item.Key);
                     }
                 }
             }

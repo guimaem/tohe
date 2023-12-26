@@ -141,10 +141,16 @@ public static class Bandit
         }
         TotalSteals[killer.PlayerId]++;
         SendRPC(killer.PlayerId);
-        Utils.NotifyRoles();
+        
+        Utils.NotifyRoles(SpecifySeer: killer, SpecifyTarget: target, ForceLoop: true);
+        Utils.NotifyRoles(SpecifySeer: target, SpecifyTarget: killer, ForceLoop: true);
+
         killer.ResetKillCooldown();
         killer.SetKillCooldown();
-        if (!DisableShieldAnimations.GetBool()) killer.RpcGuardAndKill(target);
+        
+        if (!DisableShieldAnimations.GetBool())
+            killer.RpcGuardAndKill(target);
+
         return false;
     }
 
