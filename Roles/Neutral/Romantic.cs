@@ -156,7 +156,7 @@ public static class Romantic
                     killer.Notify("ProtectingOver");
                     tpc.Notify("ProtectingOver");
                     killer.SetKillCooldown();
-                }, ProtectDuration.GetFloat());
+                }, ProtectDuration.GetFloat(), "Romantic Protecting Is Over");
             }
         }
 

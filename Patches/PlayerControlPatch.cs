@@ -2388,6 +2388,11 @@ class ReportDeadBodyPatch
             .Do(pc => Camouflage.RpcSetSkin(pc, RevertToDefault: true));
 
         MeetingTimeManager.OnReportDeadBody();
+        
+        // Clear all Notice players
+        NameNotifyManager.Notice.Clear();
+
+        // Update Notify Roles for Meeting
 
         Utils.DoNotifyRoles(isForMeeting: true, NoCache: true, CamouflageIsForMeeting: true);
 
@@ -3435,7 +3440,7 @@ class CoExitVentPatch
         _ = new LateTask(() =>
         {
             Mole.OnExitVent(__instance.myPlayer, id);
-        }, 0.1f);
+        }, 0.1f, "Mole On Exit Vent");
     }
 }
 
@@ -3663,7 +3668,7 @@ class CoEnterVentPatch
             {
                 __instance.myPlayer?.Notify(string.Format(GetString("HackedByGlitch"), GetString("GlitchVent")));
                 __instance.myPlayer?.MyPhysics?.RpcBootFromVent(id);
-            }, 0.5f);
+            }, 0.5f, "Player Boot From Vent By Glith");
             return true;
         }
 
@@ -3938,6 +3943,18 @@ public static class PlayerControlCheckUseZiplinePatch
         return true;
     }
 }
+
+[HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.Die))]
+public static class PlayerControlDiePatch
+{
+    public static void Postfix(PlayerControl __instance)
+    {
+        if (!AmongUsClient.Instance.AmHost) return;
+
+        __instance.RpcRemovePet();
+    }
+}
+
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSetRole))]
 class PlayerControlSetRolePatch
 {

@@ -2,11 +2,9 @@ using AmongUs.GameOptions;
 using Hazel;
 using System.Collections.Generic;
 using TOHE.Roles.Neutral;
-using UnityEngine;
-using TOHE.Roles.Crewmate;
-using TOHE.Roles.Impostor;
 using TOHE.Roles.Double;
 using TOHE.Roles.AddOns.Crewmate;
+using UnityEngine;
 using static TOHE.Options;
 using static TOHE.Translator;
 
@@ -38,24 +36,24 @@ public static class Briber
 
     public static void SetupCustomOption()
     {
-        SetupRoleOptions(Id, TabGroup.OtherRoles, CustomRoles.Briber);
-        /*CanKill = BooleanOptionItem.Create(Id + 10, "CanKill", false, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
-        KillCooldown = FloatOptionItem.Create(Id + 14, "KillCooldown", new(5f, 180f, 2.5f), 30f, TabGroup.OtherRoles, false).SetParent(CanKill)
+        SetupRoleOptions(Id, TabGroup.NeutralRoles, CustomRoles.Briber);
+        /*CanKill = BooleanOptionItem.Create(Id + 10, "CanKill", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
+        KillCooldown = FloatOptionItem.Create(Id + 14, "KillCooldown", new(5f, 180f, 2.5f), 30f, TabGroup.NeutralRoles, false).SetParent(CanKill)
             .SetValueFormat(OptionFormat.Seconds);*/
-        RecruitCooldown = FloatOptionItem.Create(Id + 13, "RecruitCooldown", new(0f, 180f, 2.5f), 20f, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber])
+        RecruitCooldown = FloatOptionItem.Create(Id + 13, "RecruitCooldown", new(0f, 180f, 2.5f), 20f, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber])
             .SetValueFormat(OptionFormat.Seconds);
-        RecruitedKillCD = FloatOptionItem.Create(Id + 11, "RecruitedKillCooldown", new(0f, 180f, 2.5f), 30f, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber])
+        RecruitedKillCD = FloatOptionItem.Create(Id + 11, "RecruitedKillCooldown", new(0f, 180f, 2.5f), 30f, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber])
             .SetValueFormat(OptionFormat.Seconds);
-        RecruitedCanSabotage = BooleanOptionItem.Create(Id + 12,  "RecruitedCanSabotage", true, TabGroup.OtherRoles, false).SetParent(RecruitedKillCD);
-        CanSabotage = BooleanOptionItem.Create(Id + 15, "CanUseSabotage", true, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
-     	HasTasks = BooleanOptionItem.Create(Id + 16, "HasTasks", false, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);  
+        RecruitedCanSabotage = BooleanOptionItem.Create(Id + 12,  "RecruitedCanSabotage", true, TabGroup.NeutralRoles, false).SetParent(RecruitedKillCD);
+        CanSabotage = BooleanOptionItem.Create(Id + 15, "CanUseSabotage", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
+     	HasTasks = BooleanOptionItem.Create(Id + 16, "HasTasks", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);  
       //RecruitLimitOption = IntegerOptionItem.Create(Id + 1, "RecruitLimit", new(1, 15, 1), 3).SetParent(CustomRoleSpawnChances[CustomRoles.Briber])
             //.SetValueFormat(OptionFormat.Times);
-        HasImpostorVision = BooleanOptionItem.Create(Id + 17, "ImpostorVision", true, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
-    	CanRecruitNeutral = BooleanOptionItem.Create(Id + 18, "CanRecruitNeutral", true, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
-	    CanRecruitImpostors = BooleanOptionItem.Create(Id + 19, "CanRecruitImpostors", true, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
-	    CanRecruitCrewmate = BooleanOptionItem.Create(Id + 20, "CanRecruitCrewmate", false, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
-		CanRecruitMadmate = BooleanOptionItem.Create(Id + 21, "CanRecruitMadmate", true, TabGroup.OtherRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
+        HasImpostorVision = BooleanOptionItem.Create(Id + 17, "ImpostorVision", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
+    	CanRecruitNeutral = BooleanOptionItem.Create(Id + 18, "CanRecruitNeutral", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
+	    CanRecruitImpostors = BooleanOptionItem.Create(Id + 19, "CanRecruitImpostors", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
+	    CanRecruitCrewmate = BooleanOptionItem.Create(Id + 20, "CanRecruitCrewmate", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
+		CanRecruitMadmate = BooleanOptionItem.Create(Id + 21, "CanRecruitMadmate", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Briber]);
 	}
     public static void Init()
     {
