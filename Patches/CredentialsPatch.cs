@@ -72,24 +72,34 @@ public static class Credentials
             Main.credentialsText = $"\r\n<color={Main.ModColor}>{Main.ModName}</color> v{Main.PluginDisplayVersion}";
             var buildtype = "";
 #if RELEASE
-            if (TranslationController.Instance.currentLanguage.languageID == SupportedLangs.Brazilian) Main.credentialsText += $"\r\n<color=#a54aff>Por <color=#ffc0cb>KARPED1EM</color> e </color><color=#f34c50>Moe</color>";
-            else Main.credentialsText += $"\r\n<color=#a54aff>By <color=#ffc0cb>KARPED1EM</color> & </color><color=#f34c50>Moe</color>";
+            if (Main.ShowCredentials.Value)
+            {
+                if (TranslationController.Instance.currentLanguage.languageID == SupportedLangs.Brazilian) Main.credentialsText += $"\r\n<color=#a54aff>Por <color=#ffc0cb>KARPED1EM</color> e </color><color=#f34c50>Moe</color>";
+                else Main.credentialsText += $"\r\n<color=#a54aff>By <color=#ffc0cb>KARPED1EM</color> & </color><color=#f34c50>Moe</color>";
+            }
             buildtype = "Release";
+            
 #endif
 
 #if CANARY
-            Main.credentialsText += $"\r\n<color=#ffc0cb>Canary:</color><color=#f34c50>{ThisAssembly.Git.Branch}</color>(<color=#ffc0cb>{ThisAssembly.Git.Commit}</color>)";
-            Main.credentialsText += $"\r\n<color=#a54aff>By <color=#ffc0cb>KARPED1EM</color> & </color><color=#f34c50>Moe</color>";
+            if (Main.ShowCredentials.Value)
+            {
+                Main.credentialsText += $"\r\n<color=#ffc0cb>Canary:</color><color=#f34c50>{ThisAssembly.Git.Branch}</color>(<color=#ffc0cb>{ThisAssembly.Git.Commit}</color>)";
+                Main.credentialsText += $"\r\n<color=#a54aff>By <color=#ffc0cb>KARPED1EM</color> & </color><color=#f34c50>Moe</color>";
+            }
             buildtype = "Canary";
 #endif
 
 #if DEBUG
-            Main.credentialsText += $"\r\n<color=#ffc0cb>Debug:</color><color=#f34c50>{ThisAssembly.Git.Branch}</color>(<color=#ffc0cb>{ThisAssembly.Git.Commit}</color>)";
-            Main.credentialsText += $"\r\n<color=#a54aff>By <color=#ffc0cb>KARPED1EM</color> & </color><color=#f34c50>Moe</color>";
+            if (Main.ShowCredentials.Value)
+            {
+                Main.credentialsText += $"\r\n<color=#ffc0cb>Debug:</color><color=#f34c50>{ThisAssembly.Git.Branch}</color>(<color=#ffc0cb>{ThisAssembly.Git.Commit}</color>)";
+                Main.credentialsText += $"\r\n<color=#a54aff>By <color=#ffc0cb>KARPED1EM</color> & </color><color=#f34c50>Moe</color>";
+            }
             buildtype = "Debug";
 #endif
 
-            if (Main.IsAprilFools)
+            if (Main.IsAprilFools && !Main.ShowCredentials.Value)
                 Main.credentialsText = $"\r\n<color=#00bfff>Town Of Host</color> v11.45.14";
 
             var credentials = Object.Instantiate(__instance.text);

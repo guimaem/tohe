@@ -21,6 +21,7 @@ public static class OptionsMenuBehaviourStartPatch
     private static ClientOptionItem ModeForSmallScreen;
     private static ClientOptionItem EnableRoleSummary;
     private static ClientOptionItem SwitchVanilla;
+    private static ClientOptionItem ShowCredentials;
 #if DEBUG
     private static ClientOptionItem VersionCheat;
 #endif
@@ -54,6 +55,10 @@ public static class OptionsMenuBehaviourStartPatch
         if (AutoMuteUs == null || AutoMuteUs.ToggleButton == null)
         {
             AutoMuteUs = ClientOptionItem.Create("AutoMuteUs", Main.AutoMuteUs, __instance);
+        }
+        if (ShowCredentials == null || ShowCredentials.ToggleButton == null)
+        {
+            ShowCredentials = ClientOptionItem.Create("ShowCredentials", Main.ShowCredentials, __instance);
         }
         if (HorseMode == null || HorseMode.ToggleButton == null)
         {
