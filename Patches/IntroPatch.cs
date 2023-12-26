@@ -47,7 +47,7 @@ class CoBeginPatch
     public static void Prefix()
     {
         var logger = Logger.Handler("Info");
-        Utils.NotifyRoles();
+        Utils.NotifyRoles(ForceLoop: true);
 
         var allPlayerControlsArray = Main.AllPlayerControls.ToArray();
 

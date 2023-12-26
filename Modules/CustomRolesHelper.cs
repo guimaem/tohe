@@ -858,6 +858,8 @@ static class CustomRolesHelper
             CustomRoles.Crusader or
             CustomRoles.Investigator or
             CustomRoles.Deputy or
+            CustomRoles.Exploiter or
+            CustomRoles.JesterKiller or
             CustomRoles.Glitch or
             CustomRoles.PotionMaster or
             CustomRoles.CopyCat or

@@ -534,9 +534,9 @@ class GameEndChecker
         {
             reason = GameOverReason.ImpostorByKill;
             if (CustomWinnerHolder.WinnerTeam != CustomWinner.Default) return false;
-            if (CheckGameEndByLivingPlayers(out reason)) return true;
-            if (CheckGameEndByTask(out reason)) return true;
             if (CheckGameEndBySabotage(out reason)) return true;
+            if (CheckGameEndByTask(out reason)) return true;
+            if (CheckGameEndByLivingPlayers(out reason)) return true;
 
             return false;
         }
@@ -660,6 +660,7 @@ public abstract class GameEndPredicate
     /// <summary>ShipStatus.Systems内の要素をもとにサボタージュ勝利が可能かを判定します。</summary>
     public virtual bool CheckGameEndBySabotage(out GameOverReason reason)
     {
+        Logger.Info($"Start", "CheckGameEndBySabotage");
         reason = GameOverReason.ImpostorByKill;
         if (ShipStatus.Instance.Systems == null) return false;
 
@@ -674,6 +675,7 @@ public abstract class GameEndPredicate
             CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Impostor);
             reason = GameOverReason.ImpostorBySabotage;
             LifeSupp.Countdown = 10000f;
+            Logger.Info($"Game End By LifeSupp Sabotage", "CheckGameEndBySabotage");
             return true;
         }
 
@@ -682,6 +684,8 @@ public abstract class GameEndPredicate
         else if (systems.ContainsKey(SystemTypes.Laboratory)) sys = systems[SystemTypes.Laboratory];
         else if (systems.ContainsKey(SystemTypes.HeliSabotage)) sys = systems[SystemTypes.HeliSabotage];
 
+        Logger.Info($"Systems is - {sys}", "CheckGameEndBySabotage");
+   
         ICriticalSabotage critical;
         if (sys != null && // サボタージュ存在確認
             (critical = sys.TryCast<ICriticalSabotage>()) != null && // キャスト可能確認
@@ -691,6 +695,7 @@ public abstract class GameEndPredicate
             CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Impostor);
             reason = GameOverReason.ImpostorBySabotage;
             critical.ClearSabotage();
+            Logger.Info($"Game End By Critical Sabotage", "CheckGameEndBySabotage");
             return true;
         }
 
