@@ -40,13 +40,13 @@ public static class Utils
             _ = new LateTask(() =>
             {
                 Logger.SendInGame(GetString("AntiBlackOutLoggerSendInGame"), true);
-            }, 3f, "Anti-Black Msg SendInGame");
+            }, 3f, "Anti-Black Msg SendInGame 3");
             _ = new LateTask(() =>
             {
                 CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Error);
                 GameManager.Instance.LogicFlow.CheckEndCriteria();
                 RPC.ForceEndGame(CustomWinner.Error);
-            }, 5.5f, "Anti-Black End Game");
+            }, 5.5f, "Anti-Black End Game 3");
         }
         else
         {
@@ -58,19 +58,19 @@ public static class Utils
                 _ = new LateTask(() =>
                 {
                     Logger.SendInGame(GetString("AntiBlackOutRequestHostToForceEnd"), true);
-                }, 3f, "Anti-Black Msg SendInGame");
+                }, 3f, "Anti-Black Msg SendInGame 4");
             }
             else
             {
                 _ = new LateTask(() =>
                 {
                     Logger.SendInGame(GetString("AntiBlackOutHostRejectForceEnd"), true);
-                }, 3f, "Anti-Black Msg SendInGame");
+                }, 3f, "Anti-Black Msg SendInGame 5");
                 _ = new LateTask(() =>
                 {
                     AmongUsClient.Instance.ExitGame(DisconnectReasons.Custom);
                     Logger.Fatal($"{text} 错误，已断开游戏", "Anti-black");
-                }, 8f, "Anti-Black Exit Game");
+                }, 8f, "Anti-Black Exit Game 4");
             }
         }
     }
@@ -319,7 +319,7 @@ public static class Utils
         {
             Main.PlayerStates[player.PlayerId].IsBlackOut = false; //ブラックアウト解除
             player.MarkDirtySettings();
-        }, Options.KillFlashDuration.GetFloat(), "RemoveKillFlash");
+        }, Options.KillFlashDuration.GetFloat(), "Remove Kill Flash");
     }
     public static void BlackOut(this IGameOptions opt, bool IsBlackOut)
     {
@@ -583,8 +583,8 @@ public static class Utils
                 hasTasks = Briber.HasTasks.GetBool();
                 break;
             case CustomRoles.Medic:
-                //hasTasks = Medic.MedicHasTasks.GetBool();
-                hasTasks = true;
+                hasTasks = Medic.MedicHasTasks.GetBool();
+                //hasTasks = true;
                 break;
             case CustomRoles.Workaholic:
             case CustomRoles.Terrorist:
@@ -1960,7 +1960,7 @@ public static class Utils
                 };
             }
             
-            if (!name.Contains('\r') && player.FriendCode.GetDevUser().HasTag() && !Main.AutoMuteUs.Value)
+            if (!name.Contains('\r') && player.FriendCode.GetDevUser().HasTag() && !Main.AutoMuteUs.Value && (player.AmOwner || player.IsModClient()))
             {
                 name = player.FriendCode.GetDevUser().GetTag() + "<size=1.5>" + modtag + "</size>" + name;
             }
@@ -2014,6 +2014,8 @@ public static class Utils
         {
             MushroomMixupIsActive = IsActive(SystemTypes.MushroomMixupSabotage);
         }
+
+        Logger.Info($" START - Count Seers: {seerList.Length} & Count Target: {targetList.Length}", "DoNotifyRoles", force: true);
 
         //seer: player who updates the nickname/role/mark
         //target: seer updates nickname/role/mark of other targets
@@ -2612,12 +2614,10 @@ public static class Utils
 
                         target.RpcSetNamePrivate(TargetName, true, seer, force: NoCache);
                     }
-
-                    logger.Info("NotifyRoles-Loop2-" + target.GetNameWithRole() + ":END");
                 }
-
-            logger.Info("NotifyRoles-Loop1-" + seer.GetNameWithRole() + ":END");
         }
+        //Logger.Info($" Loop for Targets: {}", "DoNotifyRoles", force: true);
+        Logger.Info($" END", "DoNotifyRoles", force: true);
         return Task.CompletedTask;
     }
     public static void MarkEveryoneDirtySettings()

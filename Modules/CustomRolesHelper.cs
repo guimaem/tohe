@@ -997,6 +997,8 @@ static class CustomRolesHelper
     }
     public static bool IsTasklessCrewmate(this CustomRoles role)
     {
+        if (role is CustomRoles.Medic && !Medic.MedicHasTasks.GetBool()) return true;
+
         return role is
             CustomRoles.Sheriff or
             CustomRoles.Medic or
@@ -1218,10 +1220,11 @@ static class CustomRolesHelper
                 if (pc.Is(CustomRoles.Snitch) 
                     || pc.Is(CustomRoles.President)
                     || pc.Is(CustomRoles.Doctor) && !Options.DoctorVisibleToEveryone.GetBool()
+                    || pc.Is(CustomRoles.SuperStar) && !Options.EveryOneKnowSuperStar.GetBool()
                     || pc.Is(CustomRoles.Marshall)
                     || pc.Is(CustomRoles.Captain)) 
                     return false;
-                if (!pc.GetCustomRole().IsCrewmate() && !pc.GetCustomSubRoles().Contains(CustomRoles.Madmate))
+                if (!pc.GetCustomRole().IsCrewmate() || pc.GetCustomRole().Contains(CustomRoles.Madmate))
                     return false;
                 break;
 

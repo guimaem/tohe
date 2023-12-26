@@ -250,6 +250,9 @@ class ExileControllerWrapUpPatch
             {
                 Shroud.MurderShroudedPlayers(player);
             }
+            
+            player.RpcRemovePet();
+
 
             player.ResetKillCooldown();
             player.RpcResetAbilityCooldown();

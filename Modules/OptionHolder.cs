@@ -697,7 +697,6 @@ public static class Options
     public static OptionItem FungleChance;
 
     public static OptionItem UseMoreRandomMapSelection;
-    public static OptionItem AddedDleks;
     public static OptionItem RandomSpawn;
     public static OptionItem SpawnRandomLocation;
     public static OptionItem AirshipAdditionalSpawn;
@@ -711,6 +710,9 @@ public static class Options
     public static OptionItem DisableZiplineFromUnder;
     public static OptionItem ResetDoorsEveryTurns;
     public static OptionItem DoorsResetMode;
+    public static OptionItem ChangeDecontaminationTime;
+    public static OptionItem DecontaminationTimeOnMiraHQ;
+    public static OptionItem DecontaminationTimeOnPolus;
 
     // Sabotage
     public static OptionItem CommsCamouflage;
@@ -888,6 +890,7 @@ public static class Options
     public static OptionItem SendRoleDescriptionFirstMeeting;
     public static OptionItem RoleAssigningAlgorithm;
     public static OptionItem EndWhenPlayerBug;
+    public static OptionItem RemovePetsAtDeadPlayers;
 
     public static OptionItem EnableUpMode;
     public static OptionItem AutoKickStart;
@@ -2338,6 +2341,8 @@ public static class Options
 
         Jackal.SetupCustomOption();
 
+	Briber.SetupCustomOption();
+
         Jinx.SetupCustomOption();
 
         Juggernaut.SetupCustomOption();
@@ -2466,10 +2471,10 @@ public static class Options
         CyberKnown = BooleanOptionItem.Create(19109, "CyberKnown", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Cyber]);
         
-        SetupAdtRoleOptions(19130, CustomRoles.Famous, canSetNum: true, tab: TabGroup.Addons);
-        ImpKnowFamous = BooleanOptionItem.Create(19131, "ImpKnowFamous", true, TabGroup.Addons, false)
+        SetupAdtRoleOptions(19130, CustomRoles.Famous, canSetNum: true);
+        ImpKnowFamous = BooleanOptionItem.Create(19132, "ImpKnowFamous", true, TabGroup.Addons, false)
 	    .SetParent(CustomRoleSpawnChances[CustomRoles.Famous]);
-	NeutralKnowFamous = BooleanOptionItem.Create(19132, "NeutralKnowFamous", true, TabGroup.Addons, false)
+	NeutralKnowFamous = BooleanOptionItem.Create(19133, "NeutralKnowFamous", true, TabGroup.Addons, false)
 	    .SetParent(CustomRoleSpawnChances[CustomRoles.Famous]);
 	
         // Double Shot
@@ -2968,7 +2973,7 @@ public static class Options
         GodCanGuess = BooleanOptionItem.Create(25104, "CanGuess", false, TabGroup.OtherRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.God]);
 
-        Briber.SetupCustomOption();
+        //Briber.SetupCustomOption();
         
          /*
          * Exploiter
@@ -3077,7 +3082,7 @@ public static class Options
         MinWaitAutoStart = FloatOptionItem.Create(60170, "MinWaitAutoStart", new(0f, 10f, 0.5f), 1.5f, TabGroup.SystemSettings, false);
         MaxWaitAutoStart = FloatOptionItem.Create(60180, "MaxWaitAutoStart", new(0f, 10f, 0.5f), 1.5f, TabGroup.SystemSettings, false);
         PlayerAutoStart = IntegerOptionItem.Create(60190, "PlayerAutoStart", new(1, 15, 1), 14, TabGroup.SystemSettings, false);
-        AutoStartTimer = IntegerOptionItem.Create(60200, "AutoStartTimer", new(10, 600, 1), 20, TabGroup.SystemSettings, false)
+        AutoStartTimer = IntegerOptionItem.Create(60200, "AutoStartTimer", new(5, 600, 1), 20, TabGroup.SystemSettings, false)
             .SetValueFormat(OptionFormat.Seconds);
         AutoPlayAgain = BooleanOptionItem.Create(60210, "AutoPlayAgain", false, TabGroup.SystemSettings, false);
         AutoPlayAgainCountdown = IntegerOptionItem.Create(60211, "AutoPlayAgainCountdown", new(1, 20, 1), 10, TabGroup.SystemSettings, false)
@@ -3091,8 +3096,12 @@ public static class Options
             .SetColor(Color.green);
 
         EndWhenPlayerBug = BooleanOptionItem.Create(60240, "EndWhenPlayerBug", true, TabGroup.SystemSettings, false)
-            .SetHeader(true)
             .SetColor(Color.blue);
+        
+        HideExileChat = BooleanOptionItem.Create(60292, "HideExileChat", true, TabGroup.SystemSettings, false)
+            .SetColor(Color.blue);
+        RemovePetsAtDeadPlayers = BooleanOptionItem.Create(60294, "RemovePetsAtDeadPlayers", false, TabGroup.SystemSettings, false)
+            .SetColor(Color.magenta);
 
         CheatResponses = StringOptionItem.Create(60250, "CheatResponses", CheatResponsesName, 1, TabGroup.SystemSettings, false)
             .SetHeader(true);
@@ -3104,9 +3113,6 @@ public static class Options
             .SetHeader(true);
         AutoDisplayLastRoles = BooleanOptionItem.Create(60280, "AutoDisplayLastRoles", true, TabGroup.SystemSettings, false);
         AutoDisplayLastResult = BooleanOptionItem.Create(60290, "AutoDisplayLastResult", true, TabGroup.SystemSettings, false);
-	
-	HideExileChat = BooleanOptionItem.Create(60295, "HideExileChat", true, TabGroup.SystemSettings, false)
-            .SetHeader(true);
         
         SuffixMode = StringOptionItem.Create(60300, "SuffixMode", suffixModes, 0, TabGroup.SystemSettings, true)
             .SetHeader(true);
@@ -3257,6 +3263,20 @@ public static class Options
         DoorsResetMode = StringOptionItem.Create(60501, "DoorsResetMode", EnumHelper.GetAllNames<DoorsReset.ResetMode>(), 2, TabGroup.GameSettings, false)
             .SetParent(ResetDoorsEveryTurns)
             .SetColor(new Color32(19, 188, 233, byte.MaxValue));
+        // Change decontamination time on MiraHQ/Polus
+        ChangeDecontaminationTime = BooleanOptionItem.Create(60503, "ChangeDecontaminationTime", false, TabGroup.GameSettings, false)
+            .SetColor(new Color32(19, 188, 233, byte.MaxValue));
+        // Decontamination time on MiraHQ
+        DecontaminationTimeOnMiraHQ = FloatOptionItem.Create(60504, "DecontaminationTimeOnMiraHQ", new(0.5f, 10f, 0.25f), 3f, TabGroup.GameSettings, false)
+            .SetParent(ChangeDecontaminationTime)
+            .SetValueFormat(OptionFormat.Multiplier)
+            .SetColor(new Color32(19, 188, 233, byte.MaxValue));
+        // Decontamination time on Polus
+        DecontaminationTimeOnPolus = FloatOptionItem.Create(60505, "DecontaminationTimeOnPolus", new(0.5f, 10f, 0.25f), 3f, TabGroup.GameSettings, false)
+            .SetParent(ChangeDecontaminationTime)
+            .SetValueFormat(OptionFormat.Multiplier)
+            .SetColor(new Color32(19, 188, 233, byte.MaxValue));
+
 
         // Sabotage
         TextOptionItem.Create(10000026, "MenuTitle.Sabotage", TabGroup.GameSettings)
@@ -3364,7 +3384,7 @@ public static class Options
             .SetGameMode(CustomGameMode.Standard);
 
 
-        //禁用相关设定
+        // Disable
         TextOptionItem.Create(10000027, "MenuTitle.Disable", TabGroup.GameSettings)
             .SetGameMode(CustomGameMode.Standard)
             .SetColor(new Color32(255, 153, 153, byte.MaxValue));
