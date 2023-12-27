@@ -7,6 +7,7 @@ namespace TOHE.Roles.Crewmate
     using System.Linq;
     using System.Text;
     using TOHE.Modules;
+    using TOHE.Roles.Impostor;
     using TOHE.Roles.Neutral;
     using UnityEngine;
     using static TOHE.Options;
@@ -229,8 +230,7 @@ namespace TOHE.Roles.Crewmate
                             player.MarkDirtySettings();
                             target.MarkDirtySettings();
                             BloodlustList.Remove(player.PlayerId);
-                            Utils.NotifyRoles(SpecifySeer: player);
-                            Utils.NotifyRoles(SpecifySeer: target);
+                            Utils.NotifyRoles(SpecifySeer: Utils.GetPlayerById(bloodlustId), SpecifyTarget: player, ForceLoop: true);
                         }
                     }
                 }

@@ -66,7 +66,7 @@ public static class Bomber
     {
         if (shapeshifting)
         {
-            Logger.Info("炸弹爆炸了", "Boom");
+            Logger.Info("The bomb went off", "Bomber");
             CustomSoundsManager.RPCPlayCustomSoundAll("Boom");
             foreach (var tg in Main.AllPlayerControls)
             {
@@ -86,7 +86,7 @@ public static class Bomber
             _ = new LateTask(() =>
             {
                 var totalAlive = Main.AllAlivePlayerControls.Length;
-                //自分が最後の生き残りの場合は勝利のために死なない
+
                 if (BomberDiesInExplosion.GetBool())
                 {
                     if (totalAlive > 0 && !GameStates.IsEnded)

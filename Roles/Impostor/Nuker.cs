@@ -23,7 +23,7 @@ public static class Nuker
     {
         if (shapeshifting)
         {
-            Logger.Info("炸弹爆炸了", "Boom");
+            Logger.Info("The bomb went off", "Nuker");
             CustomSoundsManager.RPCPlayCustomSoundAll("Boom");
             foreach (var tg in Main.AllPlayerControls)
             {
@@ -43,8 +43,8 @@ public static class Nuker
             _ = new LateTask(() =>
             {
                 var totalAlive = Main.AllAlivePlayerControls.Length;
-                //自分が最後の生き残りの場合は勝利のために死なない
-                //    if (Bomber.BomberDiesInExplosion.GetBool())
+                
+                if (totalAlive > 0 && !GameStates.IsEnded)
                 {
                     if (totalAlive > 0 && !GameStates.IsEnded)
                     {
@@ -53,7 +53,7 @@ public static class Nuker
                     }
                 }
                 Utils.NotifyRoles();
-            }, 1.5f, "Nuke");
+            }, 1.5f, "Nuker");
         }
     }
 }

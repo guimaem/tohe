@@ -103,13 +103,8 @@ public static class Briber
                 target.RpcGuardAndKill(killer);
                 target.RpcGuardAndKill(target);
             }
-            else
-                target.SetKillCooldown();
 
             Logger.Info("设置职业:" + target?.Data?.PlayerName + " = " + target.GetCustomRole().ToString() + " + " + CustomRoles.SidekickB.ToString(), "Assign " + CustomRoles.SidekickB.ToString());
-                
-            //if (RecruitLimit[killer.PlayerId] < 0)
-                //HudManager.Instance.KillButton.OverrideText($"{GetString("KillButtonText")}");
 
             //Logger.Info($"{killer.GetNameWithRole()} : 剩余{RecruitLimit[killer.PlayerId]}次招募机会", "Briber");
             return true;
@@ -117,18 +112,19 @@ public static class Briber
         
         killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Briber), GetString("GangsterRecruitmentFailure")));
         //Logger.Info($"{killer.GetNameWithRole()} : 剩余{RecruitLimit[killer.PlayerId]}次招募机会", "Briber");
-        if (!DisableShieldAnimations.GetBool()) killer.RpcGuardAndKill();
+        //if (!DisableShieldAnimations.GetBool()) killer.RpcGuardAndKill();
         return false;
     }
 
     private static bool CanBeRecruited(PlayerControl pc)
     {
-        return pc != null && (pc.GetCustomRole().IsAbleToBeSidekicked() && pc.GetCustomRole().IsCrewmate() && CanRecruitCrewmate.GetBool() || pc.GetCustomRole().IsImpostor() && CanRecruitImpostors.GetBool() || (pc.GetCustomRole().IsMadmate() || pc.GetCustomSubRoles().Contains(CustomRoles.Madmate)) && CanRecruitMadmate.GetBool() || pc.GetCustomRole().IsNeutral() && CanRecruitNeutral.GetBool())
+        return pc != null && (pc.GetCustomRole().IsAbleToBeSidekicked() && pc.GetCustomRole().IsCrewmate() && CanRecruitCrewmate.GetBool() || pc.GetCustomRole().IsImpostor() && CanRecruitImpostors.GetBool() || pc.GetCustomRole().IsAbleToBeSidekicked() && (pc.GetCustomRole().IsMadmate() || pc.GetCustomSubRoles().Contains(CustomRoles.Madmate)) && CanRecruitMadmate.GetBool() || pc.GetCustomRole().IsAbleToBeSidekicked() && pc.GetCustomRole().IsNeutral() && CanRecruitNeutral.GetBool())
             && !pc.Is(CustomRoles.Soulless)&& !pc.Is(CustomRoles.Madmate) && !pc.Is(CustomRoles.Lovers) && !pc.Is(CustomRoles.Loyal)
-	    && !pc.Is(CustomRoles.Admired)
+	        && !pc.Is(CustomRoles.Admired)
             && !((pc.Is(CustomRoles.NiceMini) || pc.Is(CustomRoles.EvilMini)) && Mini.Age < 18)
             && !(pc.GetCustomSubRoles().Contains(CustomRoles.Hurried) && !Hurried.CanBeConverted.GetBool())
 			&& !pc.Is(CustomRoles.God)
+            && !pc.Is(CustomRoles.Briber)
             && !pc.Is(CustomRoles.SidekickB);
     }
 }

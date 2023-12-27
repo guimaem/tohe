@@ -17,6 +17,7 @@ using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
 using TOHE.Roles.Madmate;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 using static TOHE.Translator;
 
 namespace TOHE;
@@ -464,7 +465,7 @@ class CheckMurderPatch
                     if (!Main.isDoused[(killer.PlayerId, target.PlayerId)] && !Main.ArsonistTimer.ContainsKey(killer.PlayerId))
                     {
                         Main.ArsonistTimer.Add(killer.PlayerId, (target, 0f));
-                        Utils.NotifyRoles(SpecifySeer: __instance);
+                        Utils.NotifyRoles(SpecifySeer: killer, SpecifyTarget: target, ForceLoop: true);
                         RPC.SetCurrentDousingTarget(killer.PlayerId, target.PlayerId);
                     }
                     return false;
@@ -473,7 +474,7 @@ class CheckMurderPatch
                     if (!Main.isDraw[(killer.PlayerId, target.PlayerId)] && !Main.RevolutionistTimer.ContainsKey(killer.PlayerId))
                     {
                         Main.RevolutionistTimer.TryAdd(killer.PlayerId, (target, 0f));
-                        Utils.NotifyRoles(SpecifySeer: __instance);
+                        Utils.NotifyRoles(SpecifySeer: killer, SpecifyTarget: target, ForceLoop: true);
                         RPC.SetCurrentDrawTarget(killer.PlayerId, target.PlayerId);
                     }
                     return false;
@@ -599,9 +600,9 @@ class CheckMurderPatch
                     if (target.GetCustomRole().IsCrewmate())
                     {
                         killer.RpcSetCustomRole(CustomRoles.Madmate);
-                        Utils.NotifyRoles();
-                        Utils.MarkEveryoneDirtySettings();
                         killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Madmate), GetString("VigilanteNotify")));
+                        //Utils.NotifyRoles(SpecifySeer: killer);
+                        Utils.MarkEveryoneDirtySettings();
                     }
                     break;
                 case CustomRoles.Pursuer:
@@ -1365,7 +1366,7 @@ class MurderPlayerPatch
 
         if (Main.OverDeadPlayerList.Contains(target.PlayerId)) return;
 
-        PlayerControl killer = __instance; //読み替え変数
+        PlayerControl killer = __instance;
         bool needUpadteNotifyRoles = true;
 
         if (Pelican.IsEnable && target.Is(CustomRoles.Pelican)) 
@@ -1376,7 +1377,6 @@ class MurderPlayerPatch
             else killer.RpcSetCustomRole(CustomRoles.Madmate);
         }
 
-        //実際のキラーとkillerが違う場合の入れ替え処理
         if (Sniper.IsEnable)
         {
             if (Sniper.TryGetSniper(target.PlayerId, ref killer))
@@ -1386,12 +1386,11 @@ class MurderPlayerPatch
         }
         if (killer != __instance)
         {
-            Logger.Info($"Real Killer={killer.GetNameWithRole()}", "MurderPlayer");
+            Logger.Info($"Real Killer => {killer.GetNameWithRole()}", "MurderPlayer");
 
         }
         if (Main.PlayerStates[target.PlayerId].deathReason == PlayerState.DeathReason.etc)
         {
-            //死因が設定されていない場合は死亡判定
             Main.PlayerStates[target.PlayerId].deathReason = PlayerState.DeathReason.Kill;
         }
 
@@ -1401,13 +1400,12 @@ class MurderPlayerPatch
             CustomSoundsManager.RPCPlayCustomSoundAll("Congrats");
             if (!CustomWinnerHolder.CheckForConvertedWinner(target.PlayerId))
             {
-                CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Youtuber); //UP主被首刀了，哈哈哈哈哈
+                CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Youtuber);
                 CustomWinnerHolder.WinnerIds.Add(target.PlayerId);
             }
             //Imagine youtuber is converted
         }
 
-        //记录首刀
         if (Main.FirstDied == "")
             Main.FirstDied = target.GetClient().GetHashedPuid();
 
@@ -1561,7 +1559,7 @@ class MurderPlayerPatch
             
             if (needUpadteNotifyRoles)
             {
-                Utils.NotifyRoles();
+                Utils.NotifyRoles(ForceLoop: true);
             }
         }
     }
@@ -1774,7 +1772,7 @@ class ReportDeadBodyPatch
         if (!CanReport[__instance.PlayerId])
         {
             WaitReport[__instance.PlayerId].Add(target);
-            Logger.Warn($"{__instance.GetNameWithRole()}:通報禁止中のため可能になるまで待機します", "ReportDeadBody");
+            Logger.Warn($"{__instance.GetNameWithRole()}: Reporting is prohibited and will wait until it becomes possible", "ReportDeadBody");
             return false;
         }
 
@@ -2641,7 +2639,7 @@ class FixedUpdatePatch
                             if (!player.IsAlive() || Pelican.IsEaten(playerId))
                             {
                                 Main.ArsonistTimer.Remove(playerId);
-                                Utils.NotifyRoles(SpecifySeer: player);
+                                Utils.NotifyRoles(SpecifySeer: player, SpecifyTarget: arTarget, ForceLoop: true);
                                 RPC.ResetCurrentDousingTarget(playerId);
                             }
                             else
@@ -2714,7 +2712,7 @@ class FixedUpdatePatch
                             Main.RevolutionistTimer.Remove(playerId);
                             Main.isDraw[(playerId, rvTargetId)] = true;
                             player.RpcSetDrawPlayer(rv_target, true);
-                            Utils.NotifyRoles(SpecifySeer: player);
+                            Utils.NotifyRoles(SpecifySeer: player, SpecifyTarget: rv_target, ForceLoop: true);
                             RPC.ResetCurrentDrawTarget(playerId);
                             if (IRandom.Instance.Next(1, 100) <= Options.RevolutionistKillProbability.GetInt())
                             {
@@ -2736,7 +2734,7 @@ class FixedUpdatePatch
                             else
                             {
                                 Main.RevolutionistTimer.Remove(playerId);
-                                Utils.NotifyRoles(SpecifySeer: player);
+                                Utils.NotifyRoles(SpecifySeer: player, SpecifyTarget: rv_target, ForceLoop: true);
                                 RPC.ResetCurrentDrawTarget(playerId);
                                 Logger.Info($"Canceled: {__instance.GetNameWithRole()}", "Revolutionist");
                             }
@@ -2979,7 +2977,7 @@ class FixedUpdatePatch
                                     if (Mini.Age >= 18 || (!Mini.CountMeetingTime.GetBool() && GameStates.IsMeeting)) return;
                                     if (LastFixedUpdate == Utils.GetTimeStamp()) return;
                                     LastFixedUpdate = Utils.GetTimeStamp();
-                                    Mini.GrowUpTime ++;
+                                    Mini.GrowUpTime++;
                                     if (Mini.GrowUpTime >= Mini.GrowUpDuration.GetInt() / 18)
                                     {
                                         Mini.Age += 1;
@@ -2989,8 +2987,11 @@ class FixedUpdatePatch
                                         if (Mini.UpDateAge.GetBool())
                                         {
                                             Mini.SendRPC();
-                                            Utils.NotifyRoles();
-                                            if (player.Is(CustomRoles.NiceMini)) player.Notify(GetString("MiniUp"));
+                                            Utils.NotifyRoles(SpecifyTarget: player, ForceLoop: true);
+                                            if (player.Is(CustomRoles.NiceMini))
+                                            {
+                                                player.Notify(GetString("MiniUp"));
+                                            }
                                         }
                                     }
                                 }
@@ -3016,7 +3017,7 @@ class FixedUpdatePatch
                                 if (Mini.Age >= 18 || (!Mini.CountMeetingTime.GetBool() && GameStates.IsMeeting)) return;
                                 if (LastFixedUpdate == Utils.GetTimeStamp()) return;
                                 LastFixedUpdate = Utils.GetTimeStamp();
-                                Mini.GrowUpTime ++;
+                                Mini.GrowUpTime++;
                                 if (Mini.GrowUpTime >= Mini.GrowUpDuration.GetInt() / 18)
                                 {
                                     Main.EvilMiniKillcooldownf = Main.EvilMiniKillcooldown[player.PlayerId];
@@ -3032,8 +3033,11 @@ class FixedUpdatePatch
                                     if (Mini.UpDateAge.GetBool())
                                     {
                                         Mini.SendRPC();
-                                        Utils.NotifyRoles();
-					if (player.Is(CustomRoles.EvilMini)) player.Notify(GetString("MiniUp"));
+                                        Utils.NotifyRoles(SpecifyTarget: player, ForceLoop: true);
+                                        if (player.Is(CustomRoles.EvilMini))
+                                        {
+                                            player.Notify(GetString("MiniUp"));
+                                        }
                                     }
                                     Logger.Info($"重置击杀冷却{Main.EvilMiniKillcooldownf - 1f}", "Mini");
                                 }
@@ -3050,7 +3054,7 @@ class FixedUpdatePatch
 
 
                     //Local Player only
-                    if (player == PlayerControl.LocalPlayer)
+                    if (player.AmOwner)
                     {
                         DisableDevice.FixedUpdate();
 
@@ -3320,23 +3324,13 @@ class FixedUpdatePatch
                     {
                         AntiAdminer.FixedUpdate();
                         if (target.AmOwner)
-                        {
-                            if (AntiAdminer.IsAdminWatch) Suffix.Append("<color=#ff1919>⚠</color>" + Utils.ColorString(Utils.GetRoleColor(CustomRoles.AntiAdminer), GetString("AdminWarning")));
-                            if (AntiAdminer.IsVitalWatch) Suffix.Append("<color=#ff1919>⚠</color>" + Utils.ColorString(Utils.GetRoleColor(CustomRoles.AntiAdminer), GetString("VitalsWarning")));
-                            if (AntiAdminer.IsDoorLogWatch) Suffix.Append("<color=#ff1919>⚠</color>" + Utils.ColorString(Utils.GetRoleColor(CustomRoles.AntiAdminer), GetString("DoorlogWarning")));
-                            if (AntiAdminer.IsCameraWatch) Suffix.Append("<color=#ff1919>⚠</color>" + Utils.ColorString(Utils.GetRoleColor(CustomRoles.AntiAdminer), GetString("CameraWarning")));
-                        }
+                            Suffix.Append(AntiAdminer.GetSuffix());
                     }
                     if (seer.Is(CustomRoles.Monitor))
                     {
                         Monitor.FixedUpdate();
                         if (target.AmOwner)
-                        {
-                            if (Monitor.IsAdminWatch) Suffix.Append("<color=#7223DA>★</color>" + Utils.ColorString(Utils.GetRoleColor(CustomRoles.Monitor), GetString("AdminWarning")));
-                            if (Monitor.IsVitalWatch) Suffix.Append("<color=#7223DA>★</color>" + Utils.ColorString(Utils.GetRoleColor(CustomRoles.Monitor), GetString("VitalsWarning")));
-                            if (Monitor.IsDoorLogWatch) Suffix.Append("<color=#7223DA>★</color>" + Utils.ColorString(Utils.GetRoleColor(CustomRoles.Monitor), GetString("DoorlogWarning")));
-                            if (Monitor.IsCameraWatch) Suffix.Append("<color=#7223DA>★</color>" + Utils.ColorString(Utils.GetRoleColor(CustomRoles.Monitor), GetString("CameraWarning")));
-                        }
+                            Suffix.Append(Monitor.GetSuffix());
                     }
                     if (player.Is(CustomRoles.TimeMaster))
                     {
@@ -3510,7 +3504,7 @@ class EnterVentPatch
             {
                 if (!CustomWinnerHolder.CheckForConvertedWinner(pc.PlayerId))
                 {
-                    CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Mario); //马里奥这个多动症赢了
+                    CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Mario);
                     CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
                 }
             }
@@ -3834,7 +3828,7 @@ class GameDataCompleteTaskPatch
     {
         Logger.Info($"Task Complete: {pc.GetNameWithRole()}", "CompleteTask");
         Main.PlayerStates[pc.PlayerId].UpdateTask(pc);
-        Utils.NotifyRoles();
+        Utils.NotifyRoles(SpecifySeer: pc);
     }
 }
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CompleteTask))]
@@ -3880,7 +3874,7 @@ class PlayerControlCompleteTaskPatch
             {
                 NameColorManager.Add(impostor.PlayerId, pc.PlayerId, "#ff1919");
             }
-            Utils.NotifyRoles(SpecifySeer: pc);
+            Utils.NotifyRoles(SpecifySeer: pc, ForceLoop: true);
         }
         if ((isTaskFinish &&
             pc.GetCustomRole() is CustomRoles.Doctor or CustomRoles.Sunnyboy) ||
