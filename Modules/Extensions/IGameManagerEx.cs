@@ -5,7 +5,6 @@ namespace TOHE.Modules.Extensions;
 public static class IGameManagerEx
 {
     public static void Set(this BoolOptionNames name, bool value, IGameOptions opt) => opt.SetBool(name, value);
-    public static void Set(this BoolOptionNames name, bool value, NormalGameOptionsV07 opt) => opt.SetBool(name, value);
     public static void Set(this BoolOptionNames name, bool value, NormalGameOptionsV07 opt)
     {
         if (name != BoolOptionNames.GhostsDoTasks) opt.SetBool(name, value);
