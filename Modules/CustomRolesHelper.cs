@@ -284,6 +284,7 @@ static class CustomRolesHelper
         return vanillaSideHasKillButton;
     }
     //This is a overall check for vanilla clients to see if they are imp basis
+    
     public static bool IsAdditionRole(this CustomRoles role)
     {
         return role is

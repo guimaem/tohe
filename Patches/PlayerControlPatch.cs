@@ -292,6 +292,29 @@ class CheckMurderPatch
                 case CustomRoles.SerialKiller:
                     SerialKiller.OnCheckMurder(killer);
                     break;
+                case CustomRoles.Burster:
+                target.SetRealKiller(killer);
+                Main.BursterIdList.Add(target.PlayerId);
+                if (target.PlayerId != killer.PlayerId && !target.Is(CustomRoles.Pestilence))
+                {
+                    target.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Impostor), GetString("BursterNotify")));
+                    _ = new LateTask(() =>
+                    {
+                        if (!target.inVent && !target.MyPhysics.Animations.IsPlayingEnterVentAnimation() && !target.Data.IsDead && !GameStates.IsMeeting)
+                        {
+                            Main.PlayerStates[target.PlayerId].deathReason = PlayerState.DeathReason.Bombed;
+                            killer.RpcMurderPlayerV3(target);
+                            target.SetRealKiller(killer);
+                        }
+                        else
+                        {
+                            RPC.PlaySoundRPC(target.PlayerId, Sounds.TaskComplete);
+                            target.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Impostor), GetString("BursterFailed")));                        
+                        }
+                        Main.BursterIdList.Remove(target.PlayerId);
+                    }, Options.BursterDelay.GetFloat(), "Burster Kill");
+                }
+                    break;
                 case CustomRoles.Vampire:
                     if (!Vampire.OnCheckMurder(killer, target)) return false;
                     break;
@@ -1428,12 +1451,12 @@ class MurderPlayerPatch
         {
             target.SetRealKiller(killer);
             Main.BurstBodies.Add(target.PlayerId);
-            if (killer.PlayerId != target.PlayerId && !killer.Is(CustomRoles.Pestilence))
+            if (killer.PlayerId != target.PlayerId && !killer.Is(CustomRoles.Pestilence) && !(killer.Is(CustomRoles.Burster) && Options.BursterImmuneBurst.GetBool()))
             {
                 killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Burst), GetString("BurstNotify")));
                 _ = new LateTask(() =>
                 {
-                    if (!killer.inVent && !killer.Data.IsDead && !GameStates.IsMeeting)
+                    if (!killer.inVent&& !killer.MyPhysics.Animations.IsPlayingEnterVentAnimation() && !killer.Data.IsDead && !GameStates.IsMeeting)
                     {
                         Main.PlayerStates[killer.PlayerId].deathReason = PlayerState.DeathReason.Bombed;
                         target.RpcMurderPlayerV3(killer);
@@ -1448,7 +1471,7 @@ class MurderPlayerPatch
                     Main.BurstBodies.Remove(target.PlayerId);
                 }, Options.BurstKillDelay.GetFloat(), "Burst Suicide");
             }
-        } 
+        }
 
 
         if (target.Is(CustomRoles.Trapper) && killer != target)

@@ -2772,6 +2772,8 @@
   "NeutralCanBeBurst": "<color=#7f8c8d>Neutrals</color> can become Burst",
   "BurstFailed": "Burst failed to bomb you",
   "BursterImmune": "Burster is Immune to Burst",
+  "BursterNotify": "The Burster is trying to burst you! Get in a vent or <color=#ff1919>die</color>.",
+  "BursterFailed": "Burster failed to bomb you",
   "ShroudButtonText": "Shroud",
   "ShroudAlertMessage": "The Shroud shrouded you but you didn't kill anyone.\n\nKill the Shroud before the meeting ends or you'll <b><color=#ff1919>die</color></b>!",
   "ShroudCooldown": "Shroud Cooldown",

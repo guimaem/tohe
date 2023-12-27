@@ -1034,7 +1034,7 @@ static class ExtendedPlayerControl
                 break;
             case CustomRoles.Burster:
 		        Main.AllPlayerKillCooldown[player.PlayerId] = Options.BursterKillCooldown.GetFloat();
-		    break;
+		        break;
             case CustomRoles.SwordsMan:
                 SwordsMan.SetKillCooldown(player.PlayerId);
                 break;

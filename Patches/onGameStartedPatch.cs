@@ -74,6 +74,7 @@ internal class ChangeRoleSettings
             Main.KillerOfBoobyTrapBody = new();
             Main.CleanerBodies = new();
             Main.BurstBodies = new();
+            Main.BursterIdList = new();
             Main.MedusaBodies = new();
             Main.InfectedBodies = new();
             Main.VirusNotify = new();

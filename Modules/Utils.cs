@@ -2668,6 +2668,7 @@ public static class Utils
         Main.ShamanTarget = byte.MaxValue;
         Main.ShamanTargetChoosen = false;
         Main.BurstBodies.Clear();
+        Main.BursterIdList.Clear();
         OverKiller.MurderTargetLateTask = new();
 
 

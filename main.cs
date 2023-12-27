@@ -145,6 +145,7 @@ public class Main : BasePlugin
     public static List<int> BombedVents = new();
     //public static List<byte> WorkaholicAlive = new();
     public static List<byte> BurstBodies = new();
+    public static List<byte> BursterIdList = new();
     public static List<byte> BaitAlive = new();
     public static List<byte> TasklessCrewmate = new();
     public static List<byte> BoobyTrapBody = new();
