@@ -228,7 +228,7 @@ public class GameOptionsMenuUpdatePatch
             float numItems = __instance.Children.Length;
             var offset = 2.7f;
 
-            foreach (var option in OptionItem.AllOptions.ToArray().Where(opt => tab == opt.Tab && opt.OptionBehaviour != null && opt.OptionBehaviour.gameObject != null).)
+            foreach (var option in OptionItem.AllOptions.ToArray().Where(opt => tab == opt.Tab && opt.OptionBehaviour != null && opt.OptionBehaviour.gameObject != null))
             {
                 var enabled = true;
                 var parent = option.Parent;
