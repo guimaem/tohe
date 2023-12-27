@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static TOHE.Translator;
 using TOHE.Modules;
+using TOHE.Roles.AddOns.Common;
 using TOHE.Roles.Crewmate;
 using TOHE.Roles.Neutral;
 using UnityEngine;
@@ -107,7 +108,20 @@ public class PlayerState
             AllReplace = true;
         }
         if (AllReplace)
-            SubRoles.ToArray().Do(role => SubRoles.Remove(role));
+        {
+            var sync = false;
+            foreach (var subRole in SubRoles.ToArray())
+            {
+                if (pc.Is(CustomRoles.Flash))
+                {
+                    Flash.SetSpeed(pc.PlayerId, true);
+                    sync = true;
+                }
+                SubRoles.Remove(subRole);
+
+                if (sync) Utils.MarkEveryoneDirtySettings();
+            }
+        }
 
         if (!SubRoles.Contains(role))
             SubRoles.Add(role);
