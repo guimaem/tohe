@@ -663,6 +663,7 @@ static class CustomRolesHelper
             CustomRoles.Vigilante or
             CustomRoles.Jailer;
     }
+    public static bool IsCrewmateWithKillButton(this CustomRoles role) => role.IsCK() && role.HasImpKillButton(true);
     public static bool IsMini(this CustomRoles role) // �Ƿ��ڹ�
     {
         return role is
@@ -1739,7 +1740,7 @@ static class CustomRolesHelper
     public static bool IsImpostorTeam(this CustomRoles role) => role.IsImpostor() || role == CustomRoles.Madmate;
     public static bool IsCrewmate(this CustomRoles role) => !role.IsImpostor() && !role.IsNeutral() && !role.IsMadmate();
     public static bool IsImpostorTeamV2(this CustomRoles role) => (role.IsImpostorTeamV3() && role != CustomRoles.Trickster && !role.IsConverted()) || role == CustomRoles.Rascal;
-    public static bool IsNeutralTeamV2(this CustomRoles role) => (role.IsConverted() || role.IsNeutral() && role != CustomRoles.Madmate);
+    public static bool IsNeutralTeamV2(this CustomRoles role) => (role.IsConverted() || role.IsNeutral() && !role.IsMadmate() && role != CustomRoles.Madmate);
 
     public static bool IsCrewmateTeamV2(this CustomRoles role) => ((!role.IsImpostorTeamV2() && !role.IsNeutralTeamV2()) || (role == CustomRoles.Trickster && !role.IsConverted()));
 
@@ -1750,7 +1751,7 @@ static class CustomRolesHelper
                 role is CustomRoles.Infected ||
                 role is CustomRoles.Contagious ||
                 role is CustomRoles.Lovers ||
-                (role is CustomRoles.Egoist && Options.EgoistCountAsConverted.GetBool()));
+                (role is CustomRoles.Egoist && Options.EgoistCountAsConverted.GetBool()));    
     }
     public static bool IsRevealingRole(this CustomRoles role, PlayerControl target)
     {
@@ -1995,7 +1996,7 @@ static class CustomRolesHelper
             //CountTypes.Rogue => throw new System.NotImplementedException(),
             _ => throw new System.NotImplementedException()
         };
-    public static bool HasSubRole(this PlayerControl pc) => Main.PlayerStates[pc.PlayerId].SubRoles.Any();
+    public static bool HasSubRole(this PlayerControl pc) => Main.PlayerStates[pc.PlayerId].SubRoles.Count > 0;
 }
 public enum CustomRoleTypes
 {
@@ -2015,6 +2016,7 @@ public enum CountTypes
     Doppelganger,
     Bandit,
     Briber,
+    //Exploiter,
     Pelican,
     Gamer,
     BloodKnight,

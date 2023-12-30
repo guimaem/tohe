@@ -2420,7 +2420,7 @@
   "InvalidArgs": "Invalid Args",
   "On": "ON",
   "Off": "OFF",
-  "ColoredOn": "<color=#008000>ON</color>",
+  "ColoredOn": "<color=##00f700>ON</color>",
   "ColoredOff": "<color=#ff0000>OFF</color>",
   "CurrentActiveSettingsHelp": "Current Active Settings Help",
   "WitchCurrentMode": "Current Mode",

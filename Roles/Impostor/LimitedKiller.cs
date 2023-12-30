@@ -3,7 +3,6 @@ using Hazel;
 using TOHE.Modules;
 using UnityEngine;
 using static TOHE.Translator;
-using static TOHE.Options;
 
 namespace TOHE.Roles.Impostor;
 
@@ -18,11 +17,11 @@ public static class LimitedKiller
 
     public static void SetupCustomOption()
     {
-        SetupRoleOptions(Id, TabGroup.ImpostorRoles, CustomRoles.LimitedKiller);
-        KillLimit = IntegerOptionItem.Create(Id + 2, "KillLimit", new(1, 15, 1), 8, TabGroup.ImpostorRoles, false)
-            .SetParent(CustomRoleSpawnChances[CustomRoles.LimitedKiller]);
-        KillCooldown = FloatOptionItem.Create(Id + 3, "KillCooldown", new(0f, 180f, 2.5f), 30f, TabGroup.ImpostorRoles,  false)
-            .SetParent(CustomRoleSpawnChances[CustomRoles.LimitedKiller])
+        Options.SetupRoleOptions(Id, TabGroup.ImpostorRoles, CustomRoles.LimitedKiller);
+        KillLimit = IntegerOptionItem.Create(Id + 10, "KillLimit", new(1, 15, 1), 6, TabGroup.ImpostorRoles, false)
+            .SetParent(Options.CustomRoleSpawnChances[CustomRoles.LimitedKiller]);
+        KillCooldown = FloatOptionItem.Create(Id + 11, "KillCooldown", new(0f, 180f, 2.5f), 30f, TabGroup.ImpostorRoles,  false)
+            .SetParent(Options.CustomRoleSpawnChances[CustomRoles.LimitedKiller])
             .SetValueFormat(OptionFormat.Seconds);
     }
 
@@ -39,7 +38,7 @@ public static class LimitedKiller
 
     public static void SetKillCooldown(PlayerControl player) => Main.AllPlayerKillCooldown[player.PlayerId] = CanKill(player.PlayerId) ? KillCooldown.GetFloat() : 300f;
     private static bool CanKill(byte playerId) => AbilityLimit[playerId] > 0;
-    public static bool CanUseKillButton(this PlayerControl player) => !player.Data.IsDead && CanKill(player.PlayerId);
+    public static bool CanUseKillButton(this PlayerControl player) => player.IsAlive() && CanKill(player.PlayerId);
 
     public static string GetKillLimit(byte playerId) => Utils.ColorString(AbilityLimit.ContainsKey(playerId) && CanKill(playerId) ? Utils.GetRoleColor(CustomRoles.Impostor).ShadeColor(0.25f) : Color.gray, AbilityLimit.TryGetValue(playerId, out var kLimit) ? $"({KillLimit.GetInt() - kLimit}/{KillLimit.GetInt()})" : "Invalid");
 

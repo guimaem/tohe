@@ -118,8 +118,8 @@ public static class Briber
 
     private static bool CanBeRecruited(PlayerControl pc)
     {
-        return pc != null && (pc.GetCustomRole().IsAbleToBeSidekicked() && pc.GetCustomRole().IsCrewmate() && CanRecruitCrewmate.GetBool() || pc.GetCustomRole().IsImpostor() && CanRecruitImpostors.GetBool() || pc.GetCustomRole().IsAbleToBeSidekicked() && (pc.GetCustomRole().IsMadmate() || pc.GetCustomSubRoles().Contains(CustomRoles.Madmate)) && CanRecruitMadmate.GetBool() || pc.GetCustomRole().IsAbleToBeSidekicked() && pc.GetCustomRole().IsNeutral() && CanRecruitNeutral.GetBool())
-            && !pc.Is(CustomRoles.Soulless)&& !pc.Is(CustomRoles.Madmate) && !pc.Is(CustomRoles.Lovers) && !pc.Is(CustomRoles.Loyal)
+        return pc != null && (pc.GetCustomRole().IsCrewmateWithKillButton() && CanRecruitCrewmate.GetBool() || pc.GetCustomRole().IsImpostor() && CanRecruitImpostors.GetBool() || pc.GetCustomRole().HasImpKillButton(true) && (pc.GetCustomRole().IsMadmate() || pc.GetCustomSubRoles().Contains(CustomRoles.Madmate)) && CanRecruitMadmate.GetBool() || pc.GetCustomRole().IsAbleToBeSidekicked() && pc.GetCustomRole().IsNeutralTeamV2() && CanRecruitNeutral.GetBool())
+            && !pc.Is(CustomRoles.Soulless) && !pc.Is(CustomRoles.Lovers) && !pc.Is(CustomRoles.Loyal)
 	        && !pc.Is(CustomRoles.Admired)
             && !((pc.Is(CustomRoles.NiceMini) || pc.Is(CustomRoles.EvilMini)) && Mini.Age < 18)
             && !(pc.GetCustomSubRoles().Contains(CustomRoles.Hurried) && !Hurried.CanBeConverted.GetBool())

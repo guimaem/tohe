@@ -1,5 +1,4 @@
 using AmongUs.GameOptions;
-using TOHE.Modules;
 using Hazel;
 using UnityEngine;
 using System.Linq;
@@ -50,8 +49,9 @@ public static class Venter
     public static void Init()
     {
         //playerIdList = new();
-        KillLimit = new();
         IsEnable = false;
+        if (HasSkillLimit.GetBool())
+	    KillLimit = new();
     }
     public static void Add(byte playerId)
     {
@@ -59,7 +59,6 @@ public static class Venter
         IsEnable = true;
         if (HasSkillLimit.GetBool())
             KillLimit.Add(playerId, SkillLimit.GetInt());
-	        //KillLimit.Add(playerId, 0);
     }
     private static void SendRPC(byte playerId)
     {
