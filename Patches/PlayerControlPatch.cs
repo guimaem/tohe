@@ -462,6 +462,9 @@ class CheckMurderPatch
                 case CustomRoles.Lurker:
                     Lurker.OnCheckMurder(killer);
                     break;
+                case CustomRoles.Stealth:
+                    Stealth.OnCheckMurder(killer, target);
+                    break;
                 case CustomRoles.Briber:
                     Briber.OnCheckRecruit(killer, target);
                     return false;
@@ -2345,6 +2348,7 @@ class ReportDeadBodyPatch
         if (Vampire.IsEnable) Vampire.OnStartMeeting();
         if (Poisoner.IsEnable) Poisoner.OnStartMeeting();
         if (Vampiress.IsEnable) Vampiress.OnStartMeeting();
+        if (Stealth.IsEnable) Stealth.OnStartMeeting();
         if (Bloodhound.IsEnable) Bloodhound.Clear();
         if (Vulture.IsEnable) Vulture.Clear();
         if (Pelican.IsEnable) Pelican.OnReportDeadBody();
@@ -2624,6 +2628,10 @@ class FixedUpdatePatch
                     case CustomRoles.PlagueBearer:
                         PlagueBearer.OnFixedUpdate(player);
                         break;
+                    
+                    case CustomRoles.Stealth when !lowLoad:
+                        Stealth.OnFixedUpdate(player);
+                    break;
 
                     case CustomRoles.Farseer:
                         Farseer.OnFixedUpdate(player);
@@ -3335,16 +3343,21 @@ class FixedUpdatePatch
                 }
 
 
-                Suffix.Append(Snitch.GetSnitchArrow(seer, target));
-                Suffix.Append(BountyHunter.GetTargetArrow(seer, target));
-                Suffix.Append(Mortician.GetTargetArrow(seer, target));
-                Suffix.Append(EvilTracker.GetTargetArrow(seer, target));
-                Suffix.Append(Bloodhound.GetTargetArrow(seer, target));
-                Suffix.Append(Tracker.GetTrackerArrow(seer, target));
-                Suffix.Append(Deathpact.GetDeathpactPlayerArrow(seer, target));
-                Suffix.Append(Deathpact.GetDeathpactMark(seer, target));
-                Suffix.Append(Spiritualist.GetSpiritualistArrow(seer, target));
-                Suffix.Append(Tracefinder.GetTargetArrow(seer, target));
+                if (Snitch.IsEnable) Suffix.Append(Snitch.GetSnitchArrow(seer, target));
+                if (BountyHunter.IsEnable) Suffix.Append(BountyHunter.GetTargetArrow(seer, target));
+                if (Mortician.IsEnable) Suffix.Append(Mortician.GetTargetArrow(seer, target));
+                if (EvilTracker.IsEnable) Suffix.Append(EvilTracker.GetTargetArrow(seer, target));
+                if (Bloodhound.IsEnable) Suffix.Append(Bloodhound.GetTargetArrow(seer, target));
+                if (Stealth.IsEnable) Suffix.Append(Stealth.GetSuffix(seer, target));
+                if (Tracker.IsEnable) Suffix.Append(Tracker.GetTrackerArrow(seer, target));
+                if (Spiritualist.IsEnable) Suffix.Append(Spiritualist.GetSpiritualistArrow(seer, target));
+                if (Tracefinder.IsEnable) Suffix.Append(Tracefinder.GetTargetArrow(seer, target));
+
+                if (Deathpact.IsEnable)
+                {
+                    Suffix.Append(Deathpact.GetDeathpactPlayerArrow(seer, target));
+                    Suffix.Append(Deathpact.GetDeathpactMark(seer, target));
+                }
 
                 if (Vulture.ArrowsPointingToDeadBody.GetBool())
                     Suffix.Append(Vulture.GetTargetArrow(seer, target));

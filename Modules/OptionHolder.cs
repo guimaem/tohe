@@ -1323,6 +1323,11 @@ public static class Options
         Instigator.SetupCustomOption();
 
         /*
+         * Stealth
+         */
+        Stealth.SetupCustomOption();
+
+        /*
          * Ludopath
          */
         SetupRoleOptions(1800, TabGroup.ImpostorRoles, CustomRoles.Ludopath);

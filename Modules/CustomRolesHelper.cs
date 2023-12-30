@@ -168,6 +168,7 @@ static class CustomRolesHelper
                 CustomRoles.Randomizer => CustomRoles.Crewmate,
                 CustomRoles.Enigma => CustomRoles.Crewmate,
                 CustomRoles.Instigator => CustomRoles.Impostor,
+                CustomRoles.Stealth => CustomRoles.Impostor,
 
                 _ => role.IsImpostor() ? CustomRoles.Impostor : CustomRoles.Crewmate,
             };
@@ -743,6 +744,7 @@ static class CustomRolesHelper
             CustomRoles.EvilMini or
             CustomRoles.Blackmailer or
             CustomRoles.Pitfall or
+            CustomRoles.Stealth or
             CustomRoles.Instigator;
     }
     public static bool IsNeutral(this CustomRoles role)
@@ -1229,6 +1231,7 @@ static class CustomRolesHelper
                     || pc.Is(CustomRoles.Doctor) && !Options.DoctorVisibleToEveryone.GetBool()
                     || pc.Is(CustomRoles.SuperStar) && !Options.EveryOneKnowSuperStar.GetBool()
                     || pc.Is(CustomRoles.Marshall)
+                    || pc.Is(CustomRoles.Mayor)
                     || pc.Is(CustomRoles.Captain)) 
                     return false;
                 if (!pc.GetCustomRole().IsCrewmate() || pc.GetCustomRole().Contains(CustomRoles.Madmate))

@@ -1034,8 +1034,8 @@ static class ExtendedPlayerControl
                 Main.AllPlayerKillCooldown[player.PlayerId] = Options.MNKillCooldown.GetFloat();
                 break;
             case CustomRoles.Burster:
-		        Main.AllPlayerKillCooldown[player.PlayerId] = Options.BursterKillCooldown.GetFloat();
-		        break;
+                Main.AllPlayerKillCooldown[player.PlayerId] = Options.BursterKillCooldown.GetFloat();
+                break;
             case CustomRoles.SwordsMan:
                 SwordsMan.SetKillCooldown(player.PlayerId);
                 break;
@@ -1197,6 +1197,9 @@ static class ExtendedPlayerControl
                 break;
             case CustomRoles.Lurker:
                 Lurker.SetKillCooldown(player.PlayerId);
+                break;
+            case CustomRoles.Stealth:
+                Stealth.SetKillCooldown(player.PlayerId);
                 break;
             case CustomRoles.Crusader:
                 Crusader.SetKillCooldown(player.PlayerId);

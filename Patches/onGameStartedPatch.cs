@@ -342,6 +342,7 @@ internal class ChangeRoleSettings
             Oiiai.Init();
             FFF.Init();
             Instigator.Init();
+            Stealth.Init();
             OverKiller.Init();
             
             SabotageSystemPatch.SabotageSystemTypeRepairDamagePatch.Initialize();
@@ -569,6 +570,9 @@ internal class SelectRolesPatch
                         break;
                     case CustomRoles.Vampiress:
                         Vampiress.Add(pc.PlayerId);
+                        break;
+                    case CustomRoles.Stealth:
+                        Stealth.Add(pc.PlayerId);
                         break;
                     case CustomRoles.SwordsMan:
                         SwordsMan.Add(pc.PlayerId);

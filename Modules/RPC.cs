@@ -36,6 +36,7 @@ enum CustomRPC
     SetSheriffShotLimit,
     SetVenterKillLimit,
     SetLimitedKillLimit,
+    StealthSync,
     //SetCopyCatMiscopyLimit,
     SetCaptainTargetSpeed,
     RevertCaptainTargetSpeed,
@@ -377,6 +378,10 @@ internal class RPCHandlerPatch
                 break;
             case CustomRPC.SetLimitedKillLimit:
                 LimitedKiller.ReceiveRPC(reader);
+                break;
+            
+            case CustomRPC.StealthSync:
+                Stealth.ReceiveRPC(reader);
                 break;
             
             case CustomRPC.SetCaptainTargetSpeed:
@@ -1441,6 +1446,9 @@ internal static class RPC
                 break;
             case CustomRoles.Instigator:
                 Instigator.Add(targetId);
+                break;
+            case CustomRoles.Stealth:
+                Stealth.Add(targetId);
                 break;
         }
         HudManager.Instance.SetHudActive(true);
