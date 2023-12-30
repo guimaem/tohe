@@ -123,7 +123,7 @@ public class GameStartManagerPatch
                         {
                             var invalidColor = Main.AllPlayerControls.Where(p => p.Data.DefaultOutfit.ColorId < 0 || Palette.PlayerColors.Length <= p.Data.DefaultOutfit.ColorId).ToArray();
                             
-                            if (invalidColor.Any())
+                            if (invalidColor.Length > 0)
                             {
                                 invalidColor.Do(p => AmongUsClient.Instance.KickPlayer(p.GetClientId(), false));
                                 Logger.SendInGame(GetString("Error.InvalidColorPreventStart"));
@@ -240,7 +240,7 @@ public class GameStartRandomMap
     public static bool Prefix(GameStartManager __instance)
     {
         var invalidColor = Main.AllPlayerControls.Where(p => p.Data.DefaultOutfit.ColorId < 0 || Palette.PlayerColors.Length <= p.Data.DefaultOutfit.ColorId).ToArray();
-        if (invalidColor.Any())
+        if (invalidColor.Length > 0)
         {
             Logger.SendInGame(GetString("Error.InvalidColorPreventStart"));
             var msg = GetString("Error.InvalidColor");
@@ -311,7 +311,7 @@ public class GameStartRandomMap
             if (tempRand <= Options.FungleChance.GetInt()) randomMaps.Add(5);
         }
 
-        if (randomMaps.Any())
+        if (randomMaps.Count > 0)
         {
             var mapsId = randomMaps[0];
 

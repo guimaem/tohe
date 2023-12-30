@@ -293,27 +293,29 @@ class CheckMurderPatch
                     SerialKiller.OnCheckMurder(killer);
                     break;
                 case CustomRoles.Burster:
-                target.SetRealKiller(killer);
-                Main.BursterIdList.Add(target.PlayerId);
-                if (target.PlayerId != killer.PlayerId && !target.Is(CustomRoles.Pestilence))
-                {
-                    target.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Impostor), GetString("BursterNotify")));
-                    _ = new LateTask(() =>
+                    target.SetRealKiller(killer);
+                    Main.BursterIdList.Add(target.PlayerId);
+                    if (target.PlayerId != killer.PlayerId && !target.Is(CustomRoles.Pestilence))
                     {
-                        if (!target.inVent && !target.MyPhysics.Animations.IsPlayingEnterVentAnimation() && !target.Data.IsDead && !GameStates.IsMeeting)
+                        target.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Impostor), GetString("BursterNotify")));
+                        _ = new LateTask(() =>
                         {
-                            Main.PlayerStates[target.PlayerId].deathReason = PlayerState.DeathReason.Bombed;
-                            killer.RpcMurderPlayerV3(target);
-                            target.SetRealKiller(killer);
-                        }
-                        else
-                        {
-                            RPC.PlaySoundRPC(target.PlayerId, Sounds.TaskComplete);
-                            target.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Impostor), GetString("BursterFailed")));                        
-                        }
-                        Main.BursterIdList.Remove(target.PlayerId);
-                    }, Options.BursterDelay.GetFloat(), "Burster Kill");
-                }
+                            if (!target.inVent && !target.MyPhysics.Animations.IsPlayingEnterVentAnimation() && !target.Data.IsDead && !GameStates.IsMeeting)
+                            {
+                                Main.PlayerStates[target.PlayerId].deathReason = PlayerState.DeathReason.Bombed;
+                                target.RpcMurderPlayerV3(target);
+                                killer.SetKillCooldown();
+                                killer.ResetKillCooldown();
+                                target.SetRealKiller(killer);
+                            }
+                            else
+                            {
+                                RPC.PlaySoundRPC(target.PlayerId, Sounds.TaskComplete);
+                                target.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Impostor), GetString("BursterFailed")));                        
+                            }
+                            Main.BursterIdList.Remove(target.PlayerId);
+                        }, Options.BursterDelay.GetFloat(), "Burster Kill");
+                    }
                     break;
                 case CustomRoles.Vampire:
                     if (!Vampire.OnCheckMurder(killer, target)) return false;
@@ -1185,11 +1187,11 @@ class CheckMurderPatch
                 break;
                 //return true;
             case CustomRoles.SuperStar:
-                if (Main.AllAlivePlayerControls.Where(x =>
+                if (Main.AllAlivePlayerControls.Any(x =>
                     x.PlayerId != killer.PlayerId &&
                     x.PlayerId != target.PlayerId &&
-                    Vector2.Distance(x.transform.position, target.transform.position) < 2f
-                    ).Any()) return false;
+                    Vector2.Distance(x.transform.position, target.transform.position) < 2f)) 
+                    return false;
                 break;
             //玩家被击杀事件
             case CustomRoles.Gamer:
@@ -1324,11 +1326,10 @@ class CheckMurderPatch
                 }
                 if (target.Is(CustomRoles.Cyber))
                 {
-                    if (Main.AllAlivePlayerControls.Where(x =>
+                    if (Main.AllAlivePlayerControls.Any(x =>
                     x.PlayerId != killer.PlayerId &&
                     x.PlayerId != target.PlayerId &&
-                    Vector2.Distance(x.transform.position, target.transform.position) < 2f
-                    ).Any()) 
+                    Vector2.Distance(x.transform.position, target.transform.position) < 2f)) 
                     return false;
 
                 }
@@ -1517,7 +1518,7 @@ class MurderPlayerPatch
         {
             var pcArray = Main.AllAlivePlayerControls.Where(x => x.PlayerId != target.PlayerId && !Pelican.IsEaten(x.PlayerId) && !Medic.ProtectList.Contains(x.PlayerId)
             && !x.Is(CustomRoles.Pestilence) && !x.Is(CustomRoles.Masochist) && !x.Is(CustomRoles.Solsticer) && !((x.Is(CustomRoles.NiceMini) || x.Is(CustomRoles.EvilMini)) && Mini.Age < 18)).ToArray();
-            if (pcArray.Any())
+            if (pcArray.Length > 0)
             {
                 PlayerControl rp = pcArray[IRandom.Instance.Next(0, pcArray.Length)];
                 Main.PlayerStates[rp.PlayerId].deathReason = PlayerState.DeathReason.Revenge;
@@ -2267,7 +2268,7 @@ class ReportDeadBodyPatch
     public static void AfterReportTasks(PlayerControl player, GameData.PlayerInfo target)
     {
         //=============================================
-        //以下、ボタンが押されることが確定したものとする。
+        // Hereinafter, it is assumed that the button is confirmed to be pressed
         //=============================================
 
         if (target == null) //ボタン
@@ -2323,6 +2324,7 @@ class ReportDeadBodyPatch
         Main.AllKillers.Clear();
         Main.GodfatherTarget.Clear();
         OverKiller.MurderTargetLateTask.Clear();
+        Solsticer.patched = false;
 
         if (Options.BombsClearAfterMeeting.GetBool())
         {
@@ -2368,7 +2370,6 @@ class ReportDeadBodyPatch
         if (Jailer.IsEnable) Jailer.OnReportDeadBody();
         if (Romantic.IsEnable) Romantic.OnReportDeadBody();
         if (Captain.IsEnable) Captain.OnReportDeadBody();
-        Solsticer.patched = false;
 
 
         // if (Councillor.IsEnable) Councillor.OnReportDeadBody();
@@ -2390,7 +2391,7 @@ class ReportDeadBodyPatch
                         rolelist = string.Join(", ", Main.AwareInteracted[pid]);
                     Utils.SendMessage(string.Format(GetString("AwareInteracted"), rolelist), pid, Utils.ColorString(Utils.GetRoleColor(CustomRoles.Aware), GetString("AwareTitle")));
                     Main.AwareInteracted[pid] = new();
-                }, 0.5f, "AwareCheckMsg");
+                }, 0.5f, "Aware Check Msg");
             }
         }
 
@@ -2408,10 +2409,16 @@ class ReportDeadBodyPatch
         Main.RevolutionistStart.Clear();
         Main.RevolutionistLastTime.Clear();
 
-        Main.AllPlayerControls
-            .Where(pc => Main.CheckShapeshift.ContainsKey(pc.PlayerId) && !Doppelganger.DoppelVictim.ContainsKey(pc.PlayerId))
-            .Do(pc => Camouflage.RpcSetSkin(pc, RevertToDefault: true));
+        // Check shapeshift and revert skin to default
+        foreach (var pc in Main.AllPlayerControls)
+        {
+            if (Main.CheckShapeshift.ContainsKey(pc.PlayerId) && !Doppelganger.DoppelVictim.ContainsKey(pc.PlayerId))
+            {
+                Camouflage.RpcSetSkin(pc, RevertToDefault: true);
+            }
+        }
 
+        // Set meeting time
         MeetingTimeManager.OnReportDeadBody();
         
         // Clear all Notice players
@@ -2421,6 +2428,7 @@ class ReportDeadBodyPatch
 
         Utils.DoNotifyRoles(isForMeeting: true, NoCache: true, CamouflageIsForMeeting: true);
 
+        // Sync all settings on meeting start
         _ = new LateTask(Utils.SyncAllSettings, 3f, "Sync all settings after report");
     }
     public static async void ChangeLocalNameAndRevert(string name, int time)
@@ -2540,7 +2548,7 @@ class FixedUpdatePatch
                     }
                 }
                 
-                if (KickPlayerPatch.AttemptedKickPlayerList.Any())
+                if (KickPlayerPatch.AttemptedKickPlayerList.Count > 0)
                 {
                     foreach (var item in KickPlayerPatch.AttemptedKickPlayerList)
                     {
@@ -2552,7 +2560,7 @@ class FixedUpdatePatch
                 }
             }
 
-            if (DoubleTrigger.FirstTriggerTimer.Any()) 
+            if (DoubleTrigger.FirstTriggerTimer.Count > 0) 
                 DoubleTrigger.OnFixedUpdate(player);
 
             var playerRole = player.GetCustomRole();

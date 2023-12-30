@@ -162,7 +162,7 @@ class GameEndChecker
                 {
                     var egoistCrewArray = Main.AllAlivePlayerControls.Where(x => x != null && x.GetCustomRole().IsCrewmate() && x.Is(CustomRoles.Egoist)).ToArray();
 
-                    if (egoistCrewArray.Any())
+                    if (egoistCrewArray.Count > 0)
                     {
                         reason = GameOverReason.ImpostorByKill;
                         CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Egoist);
@@ -179,7 +179,7 @@ class GameEndChecker
                 {
                     var egoistImpArray = Main.AllAlivePlayerControls.Where(x => x != null && x.GetCustomRole().IsImpostor() && x.Is(CustomRoles.Egoist)).ToArray();
 
-                    if (egoistImpArray.Any())
+                    if (egoistImpArray.Count > 0)
                     {
                         reason = GameOverReason.ImpostorByKill;
                         CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Egoist);
@@ -533,11 +533,9 @@ class GameEndChecker
         public override bool CheckForEndGame(out GameOverReason reason)
         {
             reason = GameOverReason.ImpostorByKill;
-            if (CustomWinnerHolder.WinnerTeam != CustomWinner.Default) return false;
-            if (CheckGameEndBySabotage(out reason)) return true;
-            if (CheckGameEndByTask(out reason)) return true;
+            
+            if (CustomWinnerHolder.WinnerIds.Count > 0) return false;
             if (CheckGameEndByLivingPlayers(out reason)) return true;
-
             return false;
         }
 
@@ -582,7 +580,7 @@ class GameEndChecker
 
             int totalNKAlive = neutralRoleCounts.Sum(kvp => kvp.Value);
 
-            if (Main.AllAlivePlayerControls.Any() && Main.AllAlivePlayerControls.All(p => p.Is(CustomRoles.Lovers))) // if lover is alive lover wins
+            if (Main.AllAlivePlayerControls.Length > 0 && Main.AllAlivePlayerControls.All(p => p.Is(CustomRoles.Lovers))) // if lover is alive lover wins
             {
                 reason = GameOverReason.ImpostorByKill;
                 CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Lovers);

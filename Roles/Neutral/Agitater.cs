@@ -6,6 +6,7 @@ using UnityEngine;
 using static TOHE.Translator;
 
 namespace TOHE.Roles.Neutral;
+
 public static class Agitater
 {
     private static readonly int Id = 15800;
@@ -146,7 +147,7 @@ public static class Agitater
                 }
             }
 
-            if (targetDistance.Any())
+            if (targetDistance.Count > 0)
             {
                 var min = targetDistance.OrderBy(c => c.Value).FirstOrDefault();
                 var target = Utils.GetPlayerById(min.Key);

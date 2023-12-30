@@ -63,9 +63,9 @@ class ExileControllerWrapUpPatch
             
             var role = exiled.GetCustomRole();
 
-            //判断冤罪师胜利
+            // Innocent is dead
             var pcArray = Main.AllPlayerControls.Where(x => x.Is(CustomRoles.Innocent) && !x.IsAlive() && x.GetRealKiller()?.PlayerId == exiled.PlayerId).ToArray();
-            if (pcArray.Any())
+            if (pcArray.Length > 0)
             {
                 if (!Options.InnocentCanWinByImp.GetBool() && role.IsImpostor())
                 {
@@ -180,7 +180,7 @@ class ExileControllerWrapUpPatch
         HexMaster.RemoveHexedPlayer();
         //Occultist.RemoveCursedPlayer();
 
-        if (Swapper.Vote.Any() && Swapper.VoteTwo.Any())
+        if (Swapper.Vote.Count > 0 && Swapper.VoteTwo.Count > 0)
         {
             foreach (var swapper in Main.AllAlivePlayerControls)
             {
@@ -228,7 +228,7 @@ class ExileControllerWrapUpPatch
                     break;
 
                 case CustomRoles.Swapper:
-                    if (Swapper.Vote.Any() && Swapper.VoteTwo.Any())
+                    if (Swapper.Vote.Count > 0 && Swapper.VoteTwo.Count > 0)
                     {
                         Swapper.Swappermax[player.PlayerId]--;
                         Swapper.Vote.Clear();

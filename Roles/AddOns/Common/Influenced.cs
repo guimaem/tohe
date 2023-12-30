@@ -23,7 +23,7 @@ namespace TOHE.Roles.AddOns.Common
             List<byte> playerIdList = new();
             Main.AllAlivePlayerControls.Where(x => x.Is(CustomRoles.Influenced))
                 .Do(x => playerIdList.Add(x.PlayerId));
-            if (!playerIdList.Any()) return false;
+            if (playerIdList.Count == 0) return false;
             int max = 0;
             bool tie = false;
             byte exileId = byte.MaxValue;

@@ -2471,10 +2471,10 @@ public static class Options
         CyberKnown = BooleanOptionItem.Create(19109, "CyberKnown", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Cyber]);
         
-        SetupAdtRoleOptions(19130, CustomRoles.Famous, canSetNum: true);
-        ImpKnowFamous = BooleanOptionItem.Create(19132, "ImpKnowFamous", true, TabGroup.Addons, false)
+        SetupAdtRoleOptions(19130, CustomRoles.Famous, canSetNum: true, tab: TabGroup.Addons);
+        ImpKnowFamous = BooleanOptionItem.Create(19133, "ImpKnowFamous", true, TabGroup.Addons, false)
 	    .SetParent(CustomRoleSpawnChances[CustomRoles.Famous]);
-	NeutralKnowFamous = BooleanOptionItem.Create(19133, "NeutralKnowFamous", true, TabGroup.Addons, false)
+	    NeutralKnowFamous = BooleanOptionItem.Create(19134, "NeutralKnowFamous", true, TabGroup.Addons, false)
 	    .SetParent(CustomRoleSpawnChances[CustomRoles.Famous]);
 	
         // Double Shot
