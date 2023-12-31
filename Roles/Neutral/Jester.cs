@@ -1,6 +1,4 @@
 using AmongUs.GameOptions;
-using System.Collections.Generic;
-using static TOHE.Options;
 
 namespace TOHE.Roles.Neutral;
 
@@ -17,20 +15,20 @@ public static class Jester
 
     public static void SetupCustomOption()
     {
-        SetupRoleOptions(Id, TabGroup.NeutralRoles, CustomRoles.Jester);
+        Options.SetupRoleOptions(Id, TabGroup.NeutralRoles, CustomRoles.Jester);
         CanUseButton = BooleanOptionItem.Create(Id + 2, "JesterCanUseButton", false, TabGroup.NeutralRoles, false)
-            .SetParent(CustomRoleSpawnChances[CustomRoles.Jester]);
+            .SetParent(Options.CustomRoleSpawnChances[CustomRoles.Jester]);
         CanVent = BooleanOptionItem.Create(Id + 3, "CanVent", true, TabGroup.NeutralRoles, false)
-            .SetParent(CustomRoleSpawnChances[CustomRoles.Jester]);
+            .SetParent(Options.CustomRoleSpawnChances[CustomRoles.Jester]);
         ImpostorVision = BooleanOptionItem.Create(Id + 4, "ImpostorVision", true, TabGroup.NeutralRoles, false)
-            .SetParent(CustomRoleSpawnChances[CustomRoles.Jester]);
+            .SetParent(Options.CustomRoleSpawnChances[CustomRoles.Jester]);
         HideVote = BooleanOptionItem.Create(Id + 5, "HideJesterVote", true, TabGroup.NeutralRoles, false)
-            .SetParent(CustomRoleSpawnChances[CustomRoles.Jester]);
+            .SetParent(Options.CustomRoleSpawnChances[CustomRoles.Jester]);
         MeetingsNeededForWin = IntegerOptionItem.Create(Id + 6, "MeetingsNeededForWin", new(0, 10, 1), 2, TabGroup.NeutralRoles, false)
-            .SetParent(CustomRoleSpawnChances[CustomRoles.Jester])
+            .SetParent(Options.CustomRoleSpawnChances[CustomRoles.Jester])
             .SetValueFormat(OptionFormat.Times);
         SunnyboyChance = IntegerOptionItem.Create(Id + 7, "SunnyboyChance", new(0, 100, 5), 0, TabGroup.NeutralRoles, false)
-            .SetParent(CustomRoleSpawnChances[CustomRoles.Jester])
+            .SetParent(Options.CustomRoleSpawnChances[CustomRoles.Jester])
             .SetValueFormat(OptionFormat.Percent);
     }
 

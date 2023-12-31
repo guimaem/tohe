@@ -1,10 +1,6 @@
-using AmongUs.GameOptions;
-using System.Collections.Generic;
 using TOHE.Modules;
 using TOHE.Roles.Crewmate;
-using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
-using static TOHE.Translator;
 using static TOHE.Options;
 using UnityEngine;
 

@@ -162,7 +162,7 @@ class GameEndChecker
                 {
                     var egoistCrewArray = Main.AllAlivePlayerControls.Where(x => x != null && x.GetCustomRole().IsCrewmate() && x.Is(CustomRoles.Egoist)).ToArray();
 
-                    if (egoistCrewArray.Count > 0)
+                    if (egoistCrewArray.Length > 0)
                     {
                         reason = GameOverReason.ImpostorByKill;
                         CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Egoist);
@@ -179,7 +179,7 @@ class GameEndChecker
                 {
                     var egoistImpArray = Main.AllAlivePlayerControls.Where(x => x != null && x.GetCustomRole().IsImpostor() && x.Is(CustomRoles.Egoist)).ToArray();
 
-                    if (egoistImpArray.Count > 0)
+                    if (egoistImpArray.Length > 0)
                     {
                         reason = GameOverReason.ImpostorByKill;
                         CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Egoist);

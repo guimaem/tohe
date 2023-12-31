@@ -102,7 +102,7 @@ namespace TOHE.Roles.Crewmate
             if (!Main.isRevealed[(killer.PlayerId, target.PlayerId)] && !FarseerTimer.ContainsKey(killer.PlayerId))
             {
                 FarseerTimer.TryAdd(killer.PlayerId, (target, 0f));
-                NotifyRoles(SpecifySeer: __instance, SpecifyTarget: farTarget, ForceLoop: true);
+                NotifyRoles(SpecifySeer: __instance);
                 RPC.SetCurrentRevealTarget(killer.PlayerId, target.PlayerId);
             }
         }
@@ -146,7 +146,7 @@ namespace TOHE.Roles.Crewmate
                     else
                     {
                         FarseerTimer.Remove(playerId);
-                        NotifyRoles(SpecifySeer: player);
+                        NotifyRoles(SpecifySeer: player, SpecifyTarget: farTarget, ForceLoop: true);
                         RPC.ResetCurrentRevealTarget(playerId);
 
                         Logger.Info($"Canceled: {player.GetNameWithRole()}", "Farseer");

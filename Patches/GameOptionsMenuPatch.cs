@@ -190,7 +190,7 @@ public static class GameOptionsMenuPatch
                         highlights[j].enabled = j == copiedIndex;
                     }
                 }
-                button.OnClick.AddListener(value);
+                button.OnClick.AddListener((Action)value);
             }
         }
     }

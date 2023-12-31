@@ -34,7 +34,6 @@ public static class Stealth
     private static float darkenTimer;
     private static PlayerControl[] darkenedPlayers;
     private static SystemTypes? darkenedRoom;
-
     public static void Init()
     {
         playerIdList = new();
@@ -52,7 +51,7 @@ public static class Stealth
     public static void OnCheckMurder(PlayerControl killer, PlayerControl target)
     {
         if (!IsEnable) return;
-        if (!killer.CanUseKillButton() || killer == null || target == null) return;
+        if (killer == null || target == null) return;
         var playersToDarken = FindPlayersInSameRoom(target);
         if (playersToDarken == null)
         {
@@ -69,10 +68,7 @@ public static class Stealth
     private static PlayerControl[] FindPlayersInSameRoom(PlayerControl killedPlayer)
     {
         var room = killedPlayer.GetPlainShipRoom();
-        if (room == null)
-        {
-            return null;
-        }
+        if (room == null) return null;
         var roomArea = room.roomArea;
         var roomName = room.RoomId;
         RpcDarken(roomName);

@@ -580,7 +580,7 @@ public class TaskState
 
             }
 
-            //工作狂做完了
+            // Workaholic Win
             if (player.Is(CustomRoles.Workaholic) && (CompletedTasksCount + 1) >= AllTasksCount
                 && !(Workaholic.WorkaholicCannotWinAtDeath.GetBool() && !player.IsAlive()))
             {

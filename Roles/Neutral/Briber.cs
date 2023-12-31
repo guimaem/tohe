@@ -1,10 +1,8 @@
 using AmongUs.GameOptions;
-using Hazel;
+//using Hazel; for RecruitLimit
 using System.Collections.Generic;
-using TOHE.Roles.Neutral;
 using TOHE.Roles.Double;
 using TOHE.Roles.AddOns.Crewmate;
-using UnityEngine;
 using static TOHE.Options;
 using static TOHE.Translator;
 
@@ -118,7 +116,7 @@ public static class Briber
 
     private static bool CanBeRecruited(PlayerControl pc)
     {
-        return pc != null && (pc.GetCustomRole().IsCrewmateWithKillButton() && CanRecruitCrewmate.GetBool() || pc.GetCustomRole().IsImpostor() && CanRecruitImpostors.GetBool() || pc.GetCustomRole().HasImpKillButton(true) && (pc.GetCustomRole().IsMadmate() || pc.GetCustomSubRoles().Contains(CustomRoles.Madmate)) && CanRecruitMadmate.GetBool() || pc.GetCustomRole().IsAbleToBeSidekicked() && pc.GetCustomRole().IsNeutralTeamV2() && CanRecruitNeutral.GetBool())
+        return pc != null && (pc.IsCrewmateWithKillButton() && CanRecruitCrewmate.GetBool() || pc.GetCustomRole().IsImpostor() && CanRecruitImpostors.GetBool() || pc.HasImpKillButton(true) && (pc.GetCustomRole().IsMadmate() || pc.GetCustomSubRoles().Contains(CustomRoles.Madmate)) && CanRecruitMadmate.GetBool() || pc.GetCustomRole().IsAbleToBeSidekicked() && pc.GetCustomRole().IsNeutralTeamV2() && CanRecruitNeutral.GetBool())
             && !pc.Is(CustomRoles.Soulless) && !pc.Is(CustomRoles.Lovers) && !pc.Is(CustomRoles.Loyal)
 	        && !pc.Is(CustomRoles.Admired)
             && !((pc.Is(CustomRoles.NiceMini) || pc.Is(CustomRoles.EvilMini)) && Mini.Age < 18)

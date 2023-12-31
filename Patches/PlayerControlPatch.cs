@@ -2678,7 +2678,7 @@ class FixedUpdatePatch
                             if (!player.IsAlive() || Pelican.IsEaten(playerId))
                             {
                                 Main.ArsonistTimer.Remove(playerId);
-                                Utils.NotifyRoles(SpecifySeer: player, SpecifyTarget: arTarget, ForceLoop: true);
+                                Utils.NotifyRoles(SpecifySeer: player);
                                 RPC.ResetCurrentDousingTarget(playerId);
                             }
                             else
@@ -2695,7 +2695,7 @@ class FixedUpdatePatch
                                     Main.ArsonistTimer.Remove(playerId);
                                     Main.isDoused[(playerId, arTarget.PlayerId)] = true;
                                     player.RpcSetDousedPlayer(arTarget, true);
-                                    Utils.NotifyRoles(SpecifySeer: player);
+                                    Utils.NotifyRoles(SpecifySeer: player, SpecifyTarget: arTarget, ForceLoop: true);
                                     RPC.ResetCurrentDousingTarget(playerId);
                                 }
                                 else

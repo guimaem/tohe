@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using Hazel;
-using TOHE.Modules;
 using UnityEngine;
-using static TOHE.Translator;
 
 namespace TOHE.Roles.Impostor;
 
@@ -51,12 +49,12 @@ public static class LimitedKiller
     }
     public static void ReceiveRPC(MessageReader reader)
     {
-        byte LimitedId = reader.ReadByte();
+        byte playerId = reader.ReadByte();
         int Limit = reader.ReadInt32();
-        if (AbilityLimit.ContainsKey(LimitedId))
-            AbilityLimit[LimitedId] = Limit;
+        if (AbilityLimit.ContainsKey(playerId))
+            AbilityLimit[playerId] = Limit;
         else
-            AbilityLimit.Add(LimitedId, KillLimit.GetInt());
+            AbilityLimit.Add(playerId, KillLimit.GetInt());
     }
 
     public static void UpdateLimit(byte killerId) // on check murder

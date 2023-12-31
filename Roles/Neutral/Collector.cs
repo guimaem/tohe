@@ -58,7 +58,7 @@ public static class Collector
     public static bool CollectorWin(bool check = true)
     {
         var pcArray = Main.AllPlayerControls.Where(x => x.Is(CustomRoles.Collector) && x.IsAlive() && CollectDone(x)).ToArray();
-        if (pcArray.Count > 0)
+        if (pcArray.Length > 0)
         {
             bool isWinConverted = false;
             foreach (var x in pcArray)

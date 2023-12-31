@@ -664,7 +664,6 @@ static class CustomRolesHelper
             CustomRoles.Vigilante or
             CustomRoles.Jailer;
     }
-    public static bool IsCrewmateWithKillButton(this CustomRoles role) => role.IsCK() && role.HasImpKillButton(true);
     public static bool IsMini(this CustomRoles role) // �Ƿ��ڹ�
     {
         return role is
@@ -1234,7 +1233,7 @@ static class CustomRolesHelper
                     || pc.Is(CustomRoles.Mayor)
                     || pc.Is(CustomRoles.Captain)) 
                     return false;
-                if (!pc.GetCustomRole().IsCrewmate() || pc.GetCustomRole().Contains(CustomRoles.Madmate))
+                if (!pc.GetCustomRole().IsCrewmate() || pc.GetCustomSubRoles().Contains(CustomRoles.Madmate))
                     return false;
                 break;
 

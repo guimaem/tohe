@@ -1273,6 +1273,7 @@ static class ExtendedPlayerControl
             || sheriff.Is(CustomRoles.Contagious)
             || sheriff.Is(CustomRoles.Egoist);
     }
+    public static bool IsCrewmateWithKillButton(this PlayerControl player) => player.GetCustomRole().IsCK() && player.HasImpKillButton(true);
     public static bool IsEvilAddons(this PlayerControl target)
     {
         return target.Is(CustomRoles.Madmate)

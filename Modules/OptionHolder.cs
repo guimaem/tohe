@@ -3654,7 +3654,7 @@ public static class Options
         DisableUnlockSafe = BooleanOptionItem.Create(60642, "DisableUnlockSafeTask", false, TabGroup.TaskSettings, false)
             .SetParent(DisableLongTasks)
             .SetGameMode(CustomGameMode.Standard);
-        DisableStartReactor = BooleanOpFtionItem.Create(60643, "DisableStartReactorTask", false, TabGroup.TaskSettings, false)
+        DisableStartReactor = BooleanOptionItem.Create(60643, "DisableStartReactorTask", false, TabGroup.TaskSettings, false)
             .SetParent(DisableLongTasks)
             .SetGameMode(CustomGameMode.Standard);
         DisableResetBreaker = BooleanOptionItem.Create(60644, "DisableResetBreakerTask", false, TabGroup.TaskSettings, false)
