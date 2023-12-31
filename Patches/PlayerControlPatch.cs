@@ -303,9 +303,8 @@ class CheckMurderPatch
                             if (!target.inVent && !target.MyPhysics.Animations.IsPlayingEnterVentAnimation() && !target.Data.IsDead && !GameStates.IsMeeting)
                             {
                                 Main.PlayerStates[target.PlayerId].deathReason = PlayerState.DeathReason.Bombed;
-                                target.RpcMurderPlayerV3(target);
+                                killer.RpcMurderPlayerV3(target);
                                 killer.SetKillCooldown();
-                                killer.ResetKillCooldown();
                                 target.SetRealKiller(killer);
                             }
                             else
@@ -874,8 +873,8 @@ class CheckMurderPatch
             return false;
 
         //Bribed can't kill Briber
-	if (killer.Is(CustomRoles.SidekickB) && (target.Is(CustomRoles.Briber) || target.Is(CustomRoles.SidekickB)))
-	    return false;
+        if (killer.Is(CustomRoles.SidekickB) && (target.Is(CustomRoles.Briber) || target.Is(CustomRoles.SidekickB)))
+            return false;
 
         // Friendly Fire: OFF
         if (killer.Is(CustomRoles.NSerialKiller) && target.Is(CustomRoles.NSerialKiller))

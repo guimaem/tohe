@@ -51,7 +51,7 @@ public static class Venter
         //playerIdList = new();
         IsEnable = false;
         if (HasSkillLimit.GetBool())
-	    KillLimit = new();
+	        KillLimit = new();
     }
     public static void Add(byte playerId)
     {

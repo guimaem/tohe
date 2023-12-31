@@ -161,7 +161,7 @@ public static class Pelican
                 Main.PlayerStates[tar].SetDead();
                 Utils.AfterPlayerDeathTasks(target, true);
                 
-                Logger.Info($"{Utils.GetPlayerById(pc.Value).GetRealName()} dead, player return back: {target.GetRealName()}", "Pelican");
+                Logger.Info($"{killer.GetRealName()} dead, player return back: {target.GetRealName()}", "Pelican");
             }
         }
         eatenList.Clear();
