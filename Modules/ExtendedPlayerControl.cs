@@ -182,7 +182,7 @@ static class ExtendedPlayerControl
         if (killer.AmOwner)
         {
             killer.ProtectPlayer(target, colorId);
-            killer.MurderPlayer(target, MurderResultFlags.FailedProtected);
+            killer.MurderPlayer(target, MurderResultFlags.FailedProtected | MurderResultFlags.DecisionByHost);
         }
         // Other Clients
         if (killer.PlayerId != 0)
@@ -195,7 +195,7 @@ static class ExtendedPlayerControl
                 .EndRpc();
             sender.StartRpc(killer.NetId, (byte)RpcCalls.MurderPlayer)
                 .WriteNetObject(target)
-                .Write((int)MurderResultFlags.FailedProtected)
+                .Write((int)(MurderResultFlags.FailedProtected | MurderResultFlags.DecisionByHost))
                 .EndRpc();
             sender.EndMessage();
             sender.SendMessage();
@@ -405,7 +405,7 @@ static class ExtendedPlayerControl
     }
     public static string GetNameWithRole(this PlayerControl player, bool forUser = false)
     {
-        return $"{player?.Data?.PlayerName}" + (GameStates.IsInGame ? $"({player?.GetAllRoleName(forUser)})" : string.Empty);
+        return $"{player?.Data?.PlayerName}" + (GameStates.IsInGame && Options.CurrentGameMode != CustomGameMode.FFA ? $"({player?.GetAllRoleName(forUser)})" : string.Empty);
     }
     public static string GetRoleColorCode(this PlayerControl player)
     {
@@ -479,6 +479,8 @@ static class ExtendedPlayerControl
 
         return pc.GetCustomRole() switch
         {
+            //FFA
+            CustomRoles.Killer => pc.IsAlive(),
             //Standard
             CustomRoles.FireWorks => FireWorks.CanUseKillButton(pc),
             CustomRoles.Mafia => Utils.CanMafiaKill(),
@@ -670,6 +672,9 @@ static class ExtendedPlayerControl
             CustomRoles.EvilMini => true,
             CustomRoles.Doppelganger => true,
 
+            //FFA
+            CustomRoles.Killer => true,
+
             _ => pc.Is(CustomRoleTypes.Impostor),
         };
     }
@@ -764,6 +769,9 @@ static class ExtendedPlayerControl
 
             CustomRoles.Arsonist => pc.IsDouseDone() || (Options.ArsonistCanIgniteAnytime.GetBool() && (Utils.GetDousedPlayerCount(pc.PlayerId).Item1 >= Options.ArsonistMinPlayersToIgnite.GetInt() || pc.inVent)),
             CustomRoles.Revolutionist => pc.IsDrawDone(),
+            //FFA
+            CustomRoles.Killer => true,
+
 
             _ => pc.Is(CustomRoleTypes.Impostor),
         };
@@ -1122,6 +1130,10 @@ static class ExtendedPlayerControl
                 break;
             case CustomRoles.Hacker:
                 Hacker.SetKillCooldown(player.PlayerId);
+                break;
+            //FFA
+            case CustomRoles.Killer:
+                FFAManager.SetKillerCooldown(player.PlayerId);
                 break;
             case CustomRoles.BloodKnight:
                 BloodKnight.SetKillCooldown(player.PlayerId);

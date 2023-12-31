@@ -8,6 +8,7 @@ public static class Medusa
 {
     private static readonly int Id = 17000;
     public static List<byte> playerIdList = new();
+    public static List<byte> Bodies = new();
     public static bool IsEnable = false;
 
     private static OptionItem KillCooldown;
@@ -29,6 +30,7 @@ public static class Medusa
     public static void Init()
     {
         playerIdList = new();
+        Bodies = new();
         IsEnable = false;
     }
     public static void Add(byte playerId)
@@ -47,5 +49,16 @@ public static class Medusa
         bool Medusa_canUse = CanVent.GetBool();
         DestroyableSingleton<HudManager>.Instance.ImpostorVentButton.ToggleVisible(Medusa_canUse && !player.Data.IsDead);
         player.Data.Role.CanVent = Medusa_canUse;
+    }
+    public static bool OnReportDeadBody(PlayerControl pc, GameData.PlayerInfo target)
+    {
+        
+        Bodies.Remove(target.PlayerId);
+        Bodies.Add(target.PlayerId);
+        pc.Notify(Translator.GetString("MedusaStoneBody"));
+    //      pc.ResetKillCooldown();
+        pc.SetKillCooldownV3(KillCooldownAfterStoneGazing.GetFloat(), forceAnime: true);
+        Logger.Info($"{pc.GetRealName()} stoned {target.PlayerName} body", "Medusa");
+        return false;
     }
 }

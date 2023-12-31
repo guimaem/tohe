@@ -193,6 +193,8 @@ static class CustomRolesHelper
     {
         return role switch
         {
+            //FFA
+            CustomRoles.Killer => RoleTypes.Impostor,
             //Standard
             CustomRoles.Sheriff => RoleTypes.Impostor,
             CustomRoles.Vigilante => RoleTypes.Impostor,
@@ -749,6 +751,9 @@ static class CustomRolesHelper
     public static bool IsNeutral(this CustomRoles role)
     {
         return role is
+            //FFA
+            CustomRoles.Killer or
+            //Standard
             CustomRoles.Jester or
             CustomRoles.JesterKiller or
             CustomRoles.Opportunist or
@@ -910,6 +915,9 @@ static class CustomRolesHelper
     public static bool IsNeutralWithGuessAccess(this CustomRoles role)
     {
         return role is
+            //FFA
+            CustomRoles.Killer or
+            //Standard
             CustomRoles.Jester or
             CustomRoles.JesterKiller or
             CustomRoles.Opportunist or
@@ -1577,6 +1585,7 @@ static class CustomRolesHelper
                     || pc.Is(CustomRoles.Swooper)
                     || pc.Is(CustomRoles.Wildling)
                     || pc.Is(CustomRoles.Minimalism)
+                    || pc.Is(CustomRoles.Miner)
                     || pc.Is(CustomRoles.Lurker))
                     return false;
                 if (!pc.GetCustomRole().IsImpostor())

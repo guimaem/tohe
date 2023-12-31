@@ -164,6 +164,10 @@ enum CustomRPC
     SyncMiniCrewAge,
     SyncSabotageMasterSkill,
     SyncSolsticerNotify,
+
+    // FFA
+    SyncFFAPlayer,
+    SyncFFANameNotify,
 }
 public enum Sounds
 {
@@ -769,6 +773,12 @@ internal class RPCHandlerPatch
                 break;
             case CustomRPC.SyncSolsticerNotify:
                 Solsticer.ReceiveRPC(reader);
+                break;
+            case CustomRPC.SyncFFAPlayer:
+                FFAManager.ReceiveRPCSyncFFAPlayer(reader);
+                break;
+            case CustomRPC.SyncFFANameNotify:
+                FFAManager.ReceiveRPCSyncFFANameNotify(reader);
                 break;
             case CustomRPC.SyncMiniCrewAge:
                 Mini.ReceiveRPC(reader);
