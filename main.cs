@@ -167,14 +167,14 @@ public class Main : BasePlugin
     public static Dictionary<byte, float> AllPlayerSpeed = new();
     public const float MinSpeed = 0.0001f;
     public static List<byte> CleanerBodies = new();
-    //public static List<byte> MedusaBodies = new();
+    //public static List<byte> MedusaBodies = new(); use Medusa.Bodies
     public static List<byte> InfectedBodies = new();
     public static List<byte> BrakarVoteFor = new();
     public static Dictionary<byte, (byte, float)> BitPlayers = new();
-    public static Dictionary<byte, float> WarlockTimer = new();
+    //public static Dictionary<byte, float> WarlockTimer = new(); use Warlock.Timer
     public static Dictionary<byte, float> AssassinTimer = new();
-    public static Dictionary<byte, PlayerControl> CursedPlayers = new();
-    public static Dictionary<byte, bool> isCurseAndKill = new();
+    //public static Dictionary<byte, PlayerControl> CursedPlayers = new(); use Warlock.CursedPlayers
+    //public static Dictionary<byte, bool> isCurseAndKill = new(); use Warlock.isCurseAndKill
     public static Dictionary<byte, int> MafiaRevenged = new();
     public static Dictionary<byte, int> RetributionistRevenged = new();
     public static Dictionary<byte, int> GuesserGuessed = new();
@@ -205,7 +205,7 @@ public class Main : BasePlugin
     public static Dictionary<byte, int> CursedWolfSpellCount = new();
     public static Dictionary<byte, int> JinxSpellCount = new();
     public static int AliveImpostorCount;
-    public static bool isCursed;
+    //public static bool isCursed; use Warlock.isCursed
     public static Dictionary<byte, bool> CheckShapeshift = new();
     public static Dictionary<byte, byte> ShapeshiftTarget = new();
     public static Dictionary<(byte, byte), string> targetArrows = new();

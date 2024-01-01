@@ -223,8 +223,8 @@ class ExileControllerWrapUpPatch
                     break;
 
                 case CustomRoles.Warlock:
-                    Main.CursedPlayers[player.PlayerId] = null;
-                    Main.isCurseAndKill[player.PlayerId] = false;
+                    Warlock.CursedPlayers[player.PlayerId] = null;
+                    Warlock.isCurseAndKill[player.PlayerId] = false;
                     break;
 
                 case CustomRoles.Swapper:

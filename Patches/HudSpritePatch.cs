@@ -184,7 +184,7 @@ public static class HudSpritePatch
                 if (!shapeshifting)
                 {
                     newKillButton = CustomButton.Get("Curse");
-                    if (Main.isCurseAndKill.TryGetValue(player.PlayerId, out bool curse) && curse)
+                    if (Warlock.isCurseAndKill.TryGetValue(player.PlayerId, out bool curse) && curse)
                         newAbilityButton = CustomButton.Get("CurseKill");
                 }
                 break;

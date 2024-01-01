@@ -1589,14 +1589,15 @@ public static class Options
         /*
          * Warlock
          */
-        SetupRoleOptions(5100, TabGroup.ImpostorRoles, CustomRoles.Warlock);
+        /*SetupRoleOptions(5100, TabGroup.ImpostorRoles, CustomRoles.Warlock);
         WarlockCanKillAllies = BooleanOptionItem.Create(5102, "CanKillAllies", true, TabGroup.ImpostorRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Warlock]);
         WarlockCanKillSelf = BooleanOptionItem.Create(5103, "CanKillSelf", false, TabGroup.ImpostorRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Warlock]);
         WarlockShiftDuration = FloatOptionItem.Create(5104, "ShapeshiftDuration", new(1, 180, 1), 1, TabGroup.ImpostorRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Warlock])
-            .SetValueFormat(OptionFormat.Seconds);
+            .SetValueFormat(OptionFormat.Seconds);*/
+        Warlock.SetupCustomOption();
 
         /*
          * Wildling

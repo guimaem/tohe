@@ -167,8 +167,7 @@ public class PlayerGameOptionsSender : GameOptionsSender
                 opt.SetFloat(FloatOptionNames.ImpostorLightMod, Options.ExploiterVision.GetFloat());
                 break;
             case CustomRoles.Warlock:
-                AURoleOptions.ShapeshifterCooldown = Main.isCursed ? 1f : Options.DefaultKillCooldown;
-                AURoleOptions.ShapeshifterDuration = Options.WarlockShiftDuration.GetFloat();
+                Warlock.ApplyGameOptions();
                 break;
             case CustomRoles.Escapee:
                 AURoleOptions.ShapeshifterCooldown = Options.EscapeeSSCD.GetFloat();

@@ -42,7 +42,7 @@ internal class ChangeRoleSettings
             Main.AllPlayerKillCooldown = new();
             Main.AllPlayerSpeed = new();
             Main.AllPlayerCustomRoles = new Dictionary<byte, CustomRoles>();
-            Main.WarlockTimer = new();
+            //Main.WarlockTimer = new(); warlock.init
             Main.AssassinTimer = new();
             Main.isDoused = new();
             Main.isDraw = new();
@@ -54,11 +54,9 @@ internal class ChangeRoleSettings
             Main.RevolutionistCountdown = new();
             Main.TimeMasterBackTrack = new();
             Main.TimeMasterNum = new();
-            Main.CursedPlayers = new();
             Main.MafiaRevenged = new();
             Main.RetributionistRevenged = new();
-            Main.isCurseAndKill = new();
-            Main.isCursed = false;
+            //Main.isCursed = false; warlock.init
             Main.DetectiveNotify = new();
             Main.SleuthNotify = new();
             Main.ForCrusade = new();
@@ -204,6 +202,7 @@ internal class ChangeRoleSettings
             TimeThief.Init();
             Puppeteer.Init();
             Mastermind.Init();
+            Warlock.Init();
             Witch.Init();
             HexMaster.Init();
             Workaholic.Init();
@@ -553,8 +552,7 @@ internal class SelectRolesPatch
                         Crusader.CrusaderLimit[pc.PlayerId] = Crusader.SkillLimitOpt.GetInt();
                         break;
                     case CustomRoles.Warlock:
-                        Main.CursedPlayers.Add(pc.PlayerId, null);
-                        Main.isCurseAndKill.Add(pc.PlayerId, false);
+                        Warlock.Add(pc.PlayerId);
                         break;
                     case CustomRoles.FireWorks:
                         FireWorks.Add(pc.PlayerId);

@@ -120,7 +120,7 @@ public static class PlagueBearer
         return Puppeteer.PuppeteerList.ContainsKey(killer.PlayerId) ||
             NWitch.TaglockedList.ContainsKey(killer.PlayerId) ||
             Shroud.ShroudList.ContainsKey(killer.PlayerId) ||
-            Main.CursedPlayers.ContainsValue(killer) ||
+            Warlock.CursedPlayers.ContainsValue(killer) ||
             Sniper.snipeTarget.ContainsValue(killer.PlayerId);
     }
 
