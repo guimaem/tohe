@@ -280,6 +280,9 @@ public class PlayerGameOptionsSender : GameOptionsSender
             case CustomRoles.Huntsman:
                 Huntsman.ApplyGameOptions(opt);
                 break;
+            case CustomRoles.Reckless:
+                Reckless.ApplyGameOptions(opt);
+                break;
             case CustomRoles.Vulture:
                 Vulture.ApplyGameOptions(opt);
                 AURoleOptions.EngineerCooldown = 0f;

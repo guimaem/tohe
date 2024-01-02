@@ -500,6 +500,7 @@ static class ExtendedPlayerControl
             CustomRoles.Revolutionist => !pc.IsDrawDone(),
             CustomRoles.Pyromaniac => pc.IsAlive(),
             CustomRoles.Huntsman => pc.IsAlive(),
+            CustomRoles.Reckless => pc.IsAlive(),
             CustomRoles.SwordsMan => pc.IsAlive(),
             CustomRoles.Exploiter => pc.IsAlive(),
             CustomRoles.JesterKiller => pc.IsAlive(),
@@ -601,6 +602,7 @@ static class ExtendedPlayerControl
             CustomRoles.Revolutionist =>true,
             CustomRoles.Pyromaniac => true,
             CustomRoles.Huntsman => true,
+            CustomRoles.Reckless => true,
             CustomRoles.SwordsMan => true,
             CustomRoles.Jackal => true,
             CustomRoles.Bandit => true,
@@ -696,6 +698,7 @@ static class ExtendedPlayerControl
         if (Necromancer.Killer && !pc.Is(CustomRoles.Necromancer)) return false;
         if (pc.Is(CustomRoles.Nimble)) return true;
         if (pc.Is(CustomRoles.Circumvent)) return false;
+
         return pc.GetCustomRole() switch
         {
             CustomRoles.Minimalism or
@@ -728,6 +731,7 @@ static class ExtendedPlayerControl
             CustomRoles.Glitch => Glitch.CanVent.GetBool(),
             CustomRoles.RuthlessRomantic => Romantic.RuthlessCanVent.GetBool(),
             CustomRoles.Huntsman => Huntsman.CanVent.GetBool(),
+            CustomRoles.Reckless => Reckless.CanVent.GetBool(),
             CustomRoles.Sidekick => Jackal.CanVentSK.GetBool(),
             CustomRoles.SidekickB => true,
             CustomRoles.Doppelganger => Doppelganger.DoppelgangerCanVent.GetBool(),
@@ -790,6 +794,7 @@ static class ExtendedPlayerControl
             CustomRoles.CursedSoul or
             CustomRoles.Admirer or
             CustomRoles.Huntsman or
+            CustomRoles.Reckless or
             CustomRoles.Amnesiac or
             CustomRoles.Investigator or
             CustomRoles.Monarch or
@@ -1015,6 +1020,9 @@ static class ExtendedPlayerControl
                 break;
             case CustomRoles.Huntsman:
                 Main.AllPlayerKillCooldown[player.PlayerId] = Huntsman.KCD;
+                break;
+            case CustomRoles.Reckless:
+                Reckless.SetKillCooldown(player.PlayerId);
                 break;
             case CustomRoles.NWitch:
                 NWitch.SetKillCooldown(player.PlayerId);

@@ -209,6 +209,7 @@ static class CustomRolesHelper
             CustomRoles.CopyCat => RoleTypes.Impostor,
             CustomRoles.Imitator => RoleTypes.Impostor,
             CustomRoles.Huntsman => RoleTypes.Impostor,
+            CustomRoles.Reckless => RoleTypes.Impostor,
             CustomRoles.Investigator => RoleTypes.Impostor,
             CustomRoles.CursedSoul => RoleTypes.Impostor,
             CustomRoles.Shaman => RoleTypes.Impostor,
@@ -399,6 +400,7 @@ static class CustomRolesHelper
             CustomRoles.Opportunist or
             CustomRoles.Masochist or
             CustomRoles.Huntsman or
+            CustomRoles.Reckless or
             CustomRoles.Executioner or
             CustomRoles.Mario or
             CustomRoles.Shaman or
@@ -485,6 +487,7 @@ static class CustomRolesHelper
             CustomRoles.Sidekick or
             CustomRoles.SidekickB or
             CustomRoles.Huntsman or
+            CustomRoles.Reckless or
             //CustomRoles.Occultist or
             CustomRoles.Infectious or
             CustomRoles.Medusa or
@@ -762,6 +765,7 @@ static class CustomRolesHelper
             CustomRoles.Masochist or
             CustomRoles.Amnesiac or
             CustomRoles.Huntsman or
+            CustomRoles.Reckless or
             CustomRoles.Medusa or
             CustomRoles.HexMaster or
             //CustomRoles.Occultist or
@@ -1884,6 +1888,7 @@ static class CustomRolesHelper
            CustomRoles.Medusa => CountTypes.Medusa,
            CustomRoles.Refugee => CountTypes.Impostor,
            CustomRoles.Huntsman => CountTypes.Huntsman,
+           CustomRoles.Reckless => CountTypes.Reckless,
            CustomRoles.Glitch => CountTypes.Glitch,
            CustomRoles.Convict => CountTypes.Impostor,
           // CustomRoles.Phantom => CountTypes.OutOfGame,
@@ -1932,6 +1937,7 @@ static class CustomRolesHelper
             CustomRoles.Werewolf => CustomWinner.Werewolf,
             CustomRoles.Necromancer => CustomWinner.Necromancer,
             CustomRoles.Huntsman => CustomWinner.Huntsman,
+            CustomRoles.Reckless => CustomWinner.Reckless,
             CustomRoles.NWitch => CustomWinner.Witch,
             CustomRoles.Juggernaut => CustomWinner.Juggernaut,
             CustomRoles.Infectious => CustomWinner.Infectious,
@@ -1996,6 +2002,7 @@ static class CustomRolesHelper
             CountTypes.Medusa => CustomRoles.Medusa,
             //           CustomRoles.Refugee => CountTypes.Impostor,
             CountTypes.Huntsman => CustomRoles.Huntsman,
+            CountTypes.Reckless => CustomRoles.Reckless
             CountTypes.Glitch => CustomRoles.Glitch,
             CountTypes.DarkHide => CustomRoles.DarkHide,
             CountTypes.Spiritcaller => CustomRoles.Spiritcaller,
@@ -2055,6 +2062,7 @@ public enum CountTypes
     Glitch,
     Arsonist,
     Huntsman,
+    Reckless,
     Pyromaniac,
     Shroud,
     Werewolf,

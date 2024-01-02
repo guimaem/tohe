@@ -2352,11 +2352,13 @@ public static class Options
 
         Huntsman.SetupCustomOption();
 
+        Reckless.SetupCustomOption();
+
         Infectious.SetupCustomOption();
 
         Jackal.SetupCustomOption();
 
-	Briber.SetupCustomOption();
+	    Briber.SetupCustomOption();
 
         Jinx.SetupCustomOption();
 
