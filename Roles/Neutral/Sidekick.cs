@@ -28,10 +28,10 @@ public static class Sidekick
         __instance.SabotageButton.ToggleVisible(isActive && Jackal.CanUseSabotageSK.GetBool());
     }
 
-    public static void CanUseVent(PlayerControl player)
+    /*public static void CanUseVent(PlayerControl player) ExtendedPlayerControl.CanUseImpostorVentButton
     {
         bool Sidekick_canUse = Jackal.CanVentSK.GetBool();
         DestroyableSingleton<HudManager>.Instance.ImpostorVentButton.ToggleVisible(Sidekick_canUse && !player.Data.IsDead);
         player.Data.Role.CanVent = Sidekick_canUse;
-    }
+    }*/
 }

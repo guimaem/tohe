@@ -13,7 +13,7 @@ public static class Briber
     private static readonly int Id = 3950;
 
     //private static Dictionary<byte, int> RecruitLimit = new();
-    public static List<byte> playerIdList = new();
+    //public static List<byte> playerIdList = new();
 
     private static OptionItem RecruitCooldown;
     public static bool IsEnable = false;
@@ -25,7 +25,6 @@ public static class Briber
     private static OptionItem HasImpostorVision;
     public static OptionItem RecruitedCanSabotage;
     //private static OptionItem CanKill;
-    //private static bool CanKillBool = false;
     public static OptionItem CanSabotage;
     private static OptionItem CanRecruitNeutral;
     private static OptionItem CanRecruitCrewmate;
@@ -55,14 +54,13 @@ public static class Briber
 	}
     public static void Init()
     {
-        playerIdList = new();
+        //playerIdList = new();
         IsEnable = false;
-        //CanKillBool = CanKill.GetBool();
         //RecruitLimit = new();
     }
     public static void Add(byte playerId)
     {
-        playerIdList.Add(playerId);
+        //playerIdList.Add(playerId);
         IsEnable = true;
         //RecruitLimit.TryAdd(playerId, RecruitLimitOpt.GetInt());
     }
@@ -71,6 +69,7 @@ public static class Briber
     public static void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision.GetBool());
     public static bool OnCheckRecruit(PlayerControl killer, PlayerControl target)
     {
+        if (!IsEnable) return false;
         if (Mini.Age < 18 && (target.Is(CustomRoles.NiceMini) || target.Is(CustomRoles.EvilMini)))
         {
             killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Briber), GetString("CantRecruit")));
@@ -110,7 +109,6 @@ public static class Briber
         
         killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Briber), GetString("GangsterRecruitmentFailure")));
         //Logger.Info($"{killer.GetNameWithRole()} : 剩余{RecruitLimit[killer.PlayerId]}次招募机会", "Briber");
-        //if (!DisableShieldAnimations.GetBool()) killer.RpcGuardAndKill();
         return false;
     }
 
