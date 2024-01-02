@@ -136,10 +136,6 @@ public class PlayerGameOptionsSender : GameOptionsSender
                 break;
             case CustomRoles.EngineerTOHE:
                 AURoleOptions.EngineerCooldown = Options.EngineerTOHEVentCooldown.GetFloat();
-		/*if (Options.EngineerHasLimitedTime.GetBool())
-		    AURoleOptions.EngineerInVentMaxTime = Options.EngineerVentTime.GetFloat();
-		else
-                    AURoleOptions.EngineerInVentMaxTime = 0f;*/
                 AURoleOptions.EngineerInVentMaxTime = Options.EngineerHasLimitedTime.GetBool() ? Options.EngineerVentTime.GetFloat() : 0f;
                 break;
             case CustomRoles.Venter:
@@ -159,7 +155,7 @@ public class PlayerGameOptionsSender : GameOptionsSender
                 AURoleOptions.ShapeshifterDuration = Options.ShapeMasterShapeshiftDuration.GetFloat();
                 break;
             case CustomRoles.Exploiter:
-                /*AURoleOptions.ShapeshifterCooldown = Options.ExploiterShapeshiftCooldown.GetFloat();
+                /*AURoleOptions.ShapeshifterCooldown = Options.ExploiterShapeshiftCooldown.GetFloat(); neutral cant be shapeshifter
                 AURoleOptions.ShapeshifterLeaveSkin = false;
                 AURoleOptions.ShapeshifterDuration = Options.ExploiterShapeshiftDuration.GetFloat();*/
 		        opt.SetVision(true);

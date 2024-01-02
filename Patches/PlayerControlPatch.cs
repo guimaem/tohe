@@ -3277,7 +3277,7 @@ class FixedUpdatePatch
                     Suffix.Append(Bloodhound.GetTargetArrow(seer, target));
 
                 if (Stealth.IsEnable) 
-                    Suffix.Append(Stealth.GetSuffix(seer, target, isHUD: true));
+                    Suffix.Append(Stealth.GetSuffix(seer, target));
 
                 if (Tracker.IsEnable) 
                     Suffix.Append(Tracker.GetTrackerArrow(seer, target));

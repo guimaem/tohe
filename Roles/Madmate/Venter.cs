@@ -115,15 +115,15 @@ public static class Venter
                 
                 target.SetRealKiller(pc);
                 target.RpcCheckAndMurder(target);
-                pc.RpcGuardAndKill();
-                pc.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Impostor), GetString("VampireTargetDead")));
+                if (!DisableShieldAnimations.GetBool()) pc.RpcGuardAndKill();
+                //pc.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Impostor), GetString("VampireTargetDead")));
                 Logger.Info($"Venter vented to kill：{pc.GetNameWithRole()} => {target.GetNameWithRole()}", "Venter");
             }
             else
             {
                 pc.SetRealKiller(target);
                 target.RpcMurderPlayerV3(pc);
-                pc.RpcGuardAndKill();
+                if (!DisableShieldAnimations.GetBool()) pc.RpcGuardAndKill();
                 Logger.Info($"Venter tried to kill pestilence (reflected back)：{target.GetNameWithRole()} => {pc.GetNameWithRole()}", "Pestilence Reflect");
             }
         }

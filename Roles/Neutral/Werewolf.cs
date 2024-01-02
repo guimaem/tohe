@@ -43,10 +43,10 @@ public static class Werewolf
     }
     public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = KillCooldown.GetFloat();
     public static void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision.GetBool());
-    public static void CanUseVent(PlayerControl player)
+    /*public static void CanUseVent(PlayerControl player) Unused because of ExtendedPlayerControl.CanUseImpostorVentButton
     {
         bool Werewolf_canUse = CanVent.GetBool();
         DestroyableSingleton<HudManager>.Instance.ImpostorVentButton.ToggleVisible(Werewolf_canUse && !player.Data.IsDead);
         player.Data.Role.CanVent = Werewolf_canUse;
-    }
+    }*/
 }

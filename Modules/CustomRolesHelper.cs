@@ -5,7 +5,6 @@ using TOHE.Roles.AddOns.Crewmate;
 using TOHE.Roles.Crewmate;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
-using TOHE.Roles.Madmate;
 
 namespace TOHE;
 
@@ -1088,7 +1087,7 @@ static class CustomRolesHelper
 
             case CustomRoles.Repairman:
                 if (pc.Is(CustomRoles.SabotageMaster) 
-                || pc.Is(CustomRoles.Fool))
+                    || pc.Is(CustomRoles.Fool))
                     return false;
                 if ((pc.GetCustomRole().IsCrewmate() && !Repairman.CanBeOnCrew.GetBool()) || (pc.GetCustomRole().IsNeutral() && !Repairman.CanBeOnNeutral.GetBool()) || (pc.GetCustomRole().IsImpostor() && !Repairman.CanBeOnImp.GetBool())) 
                     return false;
@@ -1143,7 +1142,6 @@ static class CustomRolesHelper
                 break;
             
             case CustomRoles.Mundane:
-                if (pc.CanUseKillButton() || pc.Is(CustomRoleTypes.Impostor)) return false;
                 if (pc.CanUseKillButton() || pc.GetCustomRole().IsTasklessCrewmate() || pc.Is(CustomRoleTypes.Impostor))
                     return false;
                 if ((pc.GetCustomRole().IsCrewmate() && !Mundane.CanBeOnCrew.GetBool()) || (pc.GetCustomRole().IsNeutral() && !Mundane.CanBeOnNeutral.GetBool()))
@@ -1738,6 +1736,7 @@ static class CustomRolesHelper
 
         return true;
     }
+
     public static RoleTypes GetRoleTypes(this CustomRoles role)
         => GetVNRole(role) switch
         {

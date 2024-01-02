@@ -472,6 +472,7 @@ class HudManagerPatch
                         {
                             CustomRoles.BountyHunter => BountyHunter.GetTargetText(player, true),
                             CustomRoles.Witch => Witch.GetSpellModeText(player, true),
+                            CustomRoles.Stealth => Stealth.GetSuffix(player, isHUD: true),
                             CustomRoles.HexMaster => HexMaster.GetHexModeText(player, true),
                             CustomRoles.FireWorks => FireWorks.GetStateText(player),
                             CustomRoles.Swooper => Swooper.GetHudText(player),

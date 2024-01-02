@@ -1,10 +1,10 @@
-using static TOHE.Translator;
 using System.Collections.Generic;
 using System.Linq;
 using TOHE.Roles.Crewmate;
 using TOHE.Modules;
 using TOHE.Roles.Neutral;
 using UnityEngine;
+using static TOHE.Translator;
 
 namespace TOHE.Roles.Impostor;
 
@@ -57,6 +57,7 @@ public static class Warlock
 
     public static bool OnCheckMurder(PlayerControl killer, PlayerControl target)
     {
+        // if (!IsEnable) return false;
         if (!Main.CheckShapeshift[killer.PlayerId] && !isCurseAndKill[killer.PlayerId])
         { //Warlockが変身時以外にキルしたら、呪われる処理
             if (target.Is(CustomRoles.Needy) || target.Is(CustomRoles.Lazy)) return false;

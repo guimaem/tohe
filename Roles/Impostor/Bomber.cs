@@ -50,7 +50,7 @@ public static class Bomber
     }
 
     public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = CanKill.GetBool() ? KillCooldown.GetFloat() : 300f;
-    public static bool CanUseKillButton(this PlayerControl pc) => CanKill.GetBool() && pc.IsAlive();
+    public static bool CanUseKillButton(PlayerControl pc) => CanKill.GetBool() && pc.IsAlive();
 
     public static void ApplyGameOptions()
     {
