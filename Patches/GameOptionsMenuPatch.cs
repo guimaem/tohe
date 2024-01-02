@@ -20,6 +20,18 @@ public static class GameSettingMenuPatch
         // オンラインモードで部屋を立て直さなくてもマップを変更できるように変更
         __instance.HideForOnline = new Il2CppReferenceArray<Transform>(0);
     }
+
+    // add dleks to map selection
+    public static void Postfix([HarmonyArgument(0)] Il2CppReferenceArray<Transform> items)
+    {
+        items
+            .FirstOrDefault(
+                i => i.gameObject.activeSelf && i.name.Equals("MapName", StringComparison.OrdinalIgnoreCase))?
+            .GetComponent<KeyValueOption>()?
+            .Values?
+            // using .Insert will convert managed values and break the struct resulting in crashes
+            .System_Collections_IList_Insert((int)MapNames.Dleks, new Il2CppSystem.Collections.Generic.KeyValuePair<string, int>(Constants.MapNames[(int)MapNames.Dleks], (int)MapNames.Dleks));
+    }
 }
 
 [HarmonyPatch(typeof(GameOptionsMenu), nameof(GameOptionsMenu.Start))]
@@ -57,11 +69,12 @@ public static class GameOptionsMenuPatch
 
         var gameSettings = GameObject.Find("Game Settings");
         if (gameSettings == null) return;
+
         gameSettings.transform.Find("GameGroup").GetComponent<Scroller>().ScrollWheelSpeed = 1.2f;
 
         var gameSettingMenu = Object.FindObjectOfType<GameSettingMenu>();
         if (gameSettingMenu == null) return;
-        
+
         var regularGameSettings = gameSettingMenu.RegularGameSettings;
         var rolesSettings = gameSettingMenu.RolesSettings.gameObject;
         List<GameObject> menus = new() { regularGameSettings, rolesSettings };
@@ -88,11 +101,13 @@ public static class GameOptionsMenuPatch
             if (!modeForSmallScreen)
             {
                 tohSettingsTransform.Find("BackPanel").transform.localScale =
-                tohSettingsTransform.Find("Bottom Gradient").transform.localScale = new Vector3(1.2f, 1f, 1f);
-                tohSettingsTransform.Find("Background").transform.localScale = new Vector3(1.3f, 1f, 1f);
-                tohSettingsTransform.Find("UI_Scrollbar").transform.localPosition += new Vector3(0.35f, 0f, 0f);
-                tohSettingsTransform.Find("UI_ScrollbarTrack").transform.localPosition += new Vector3(0.35f, 0f, 0f);
-                tohSettingsTransform.Find("GameGroup/SliderInner").transform.localPosition += new Vector3(-0.15f, 0f, 0f);
+                tohSettingsTransform.Find("Bottom Gradient").transform.localScale = new Vector3(1.6f, 1f, 1f);
+                tohSettingsTransform.Find("Bottom Gradient").transform.localPosition += new Vector3(0.2f, 0f, 0f);
+                tohSettingsTransform.Find("BackPanel").transform.localPosition += new Vector3(0.2f, 0f, 0f);
+                tohSettingsTransform.Find("Background").transform.localScale = new Vector3(1.8f, 1f, 1f);
+                tohSettingsTransform.Find("UI_Scrollbar").transform.localPosition += new Vector3(1.4f, 0f, 0f);
+                tohSettingsTransform.Find("UI_ScrollbarTrack").transform.localPosition += new Vector3(1.4f, 0f, 0f);
+                tohSettingsTransform.Find("GameGroup/SliderInner").transform.localPosition += new Vector3(-0.3f, 0f, 0f);
             }
             else
             {
@@ -126,8 +141,7 @@ public static class GameOptionsMenuPatch
                     stringOption.Value = stringOption.oldValue = option.CurrentValue;
                     stringOption.ValueText.text = option.GetString();
                     stringOption.name = option.Name;
-                    
-                    
+
                     var stringOptionTransform = stringOption.transform;
                     if (!modeForSmallScreen)
                     {
@@ -228,7 +242,7 @@ public class GameOptionsMenuUpdatePatch
             float numItems = __instance.Children.Length;
             var offset = 2.7f;
 
-            foreach (var option in OptionItem.AllOptions.ToArray().Where(opt => tab == opt.Tab && opt.OptionBehaviour != null && opt.OptionBehaviour.gameObject != null))
+            foreach (var option in OptionItem.AllOptions.Where(opt => tab == opt.Tab && opt.OptionBehaviour != null && opt.OptionBehaviour.gameObject != null).ToArray())
             {
                 var enabled = true;
                 var parent = option.Parent;
@@ -436,7 +450,6 @@ public static class SetRecommendationsPatch
             __instance.NumShortTasks = 0;
             __instance.KillCooldown = 0f;
         }
-
 
         return false;
     }
