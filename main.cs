@@ -41,8 +41,8 @@ public class Main : BasePlugin
     public static readonly string MainMenuText = " ";
 
     public const string PluginGuid = "com.0xdrmoe.townofhostenhanced";
-    public const string PluginVersion = "1.3.1.2";
-    public const string PluginDisplayVersion = "1.3.1 Canary 2";
+    public const string PluginVersion = "1.3.1.3";
+    public const string PluginDisplayVersion = "1.3.1 Canary 3 (Pre-Release)";
     public static readonly string SupportedVersionAU = "2023.10.24"; // also 2023.11.28
     public const bool Canary = false; // Unused variable?
 
@@ -459,7 +459,7 @@ public class Main : BasePlugin
 
         Logger = BepInEx.Logging.Logger.CreateLogSource("TOHE");
         TOHE.Logger.Enable();
-        TOHE.Logger.Disable("NotifyRoles");
+        //TOHE.Logger.Disable("NotifyRoles");
         TOHE.Logger.Disable("SwitchSystem");
         TOHE.Logger.Disable("ModNews");
         if (!DebugModeManager.AmDebugger)
@@ -586,6 +586,7 @@ public enum CustomRoles
     Capitalism,
     Gangster,
     Cleaner,
+    Kamikaze,
     BallLightning,
     Greedier,
     CursedWolf,

@@ -984,6 +984,9 @@ public static class Utils
                 case CustomRoles.Masochist:
                     ProgressText.Append(ColorString(GetRoleColor(CustomRoles.Masochist).ShadeColor(0.25f), $"({(Main.MasochistKillMax.TryGetValue(playerId, out var count3) ? count3 : 0)}/{Options.MasochistKillMax.GetInt()})"));
                     break;
+                case CustomRoles.Kamikaze:
+                    ProgressText.Append(Kamikaze.GetMarkedLimit(playerId));
+                    break;
                 case CustomRoles.QuickShooter:
                     ProgressText.Append(QuickShooter.GetShotLimit(playerId));
                     break;
@@ -2018,7 +2021,7 @@ public static class Utils
         //var callerMethod = caller.GetMethod();
         //string callerMethodName = callerMethod.Name;
         //string callerClassName = callerMethod.DeclaringType.FullName;
-        //Logger.Info($" Was called from: {callerClassName}.{callerMethodName}", "NotifyRoles", force: true);
+        //Logger.Info($" Was called from: {callerClassName}.{callerMethodName}", "NotifyRoles");
 
         await DoNotifyRoles(isForMeeting, SpecifySeer, SpecifyTarget, NoCache, ForceLoop, CamouflageIsForMeeting, MushroomMixupIsActive);
     }
@@ -2030,7 +2033,7 @@ public static class Utils
         //Do not update NotifyRoles during meetings
         if (GameStates.IsMeeting) return Task.CompletedTask;
 
-        Logger.Info($" START", "DoNotifyRoles", force: true);
+        Logger.Info($" START", "DoNotifyRoles");
 
         //var logger = Logger.Handler("DoNotifyRoles");
 
@@ -2646,7 +2649,7 @@ public static class Utils
                 }
         }
         //Logger.Info($" Loop for Targets: {}", "DoNotifyRoles", force: true);
-        Logger.Info($" END", "DoNotifyRoles", force: true);
+        Logger.Info($" END", "DoNotifyRoles");
         return Task.CompletedTask;
     }
     public static void MarkEveryoneDirtySettings()

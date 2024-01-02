@@ -250,6 +250,7 @@ internal class ChangeRoleSettings
             Benefactor.Init();
             Taskinator.Init();
             QuickShooter.Init();
+            Kamikaze.Init();
             Camouflager.Init();
             Divinator.Init();
             Jailer.Init();
@@ -895,6 +896,9 @@ internal class SelectRolesPatch
                         break;
                     case CustomRoles.Pyromaniac:
                         Pyromaniac.Add(pc.PlayerId);
+                        break;
+                    case CustomRoles.Kamikaze:
+                        Kamikaze.Add(pc.PlayerId);
                         break;
                     case CustomRoles.Werewolf:
                         Werewolf.Add(pc.PlayerId);

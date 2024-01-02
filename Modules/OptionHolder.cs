@@ -1063,7 +1063,7 @@ public static class Options
     public static void Load()
     {
         //#######################################
-        // 26800 lasted id for roles/add-ons (Next use 26900)
+        // 26900 lasted id for roles/add-ons (Next use 27000)
         // Limit id for  roles/add-ons --- "59999"
         //#######################################
         // Start Load Settings
@@ -1478,6 +1478,12 @@ public static class Options
         MafiaShapeshiftDur = FloatOptionItem.Create(3605, "ShapeshiftDuration", new(1f, 180f, 1f), 30f, TabGroup.ImpostorRoles, false)
             .SetParent(LegacyMafia)
             .SetValueFormat(OptionFormat.Seconds);
+
+        /*
+         * Kamikaze
+         */
+        Kamikaze.SetupCustomOption();
+
 
         /*
          * Time Thief

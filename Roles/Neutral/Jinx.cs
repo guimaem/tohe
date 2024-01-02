@@ -47,10 +47,10 @@ public static class Jinx
     }
     public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = KillCooldown.GetFloat();
     public static void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision.GetBool());
-    public static void CanUseVent(PlayerControl player)
+    /*public static void CanUseVent(PlayerControl player) unused because of ExtendedPlayerControl.CanUseImpostorVentButton
     {
         bool Jinx_canUse = CanVent.GetBool();
         DestroyableSingleton<HudManager>.Instance.ImpostorVentButton.ToggleVisible(Jinx_canUse && !player.Data.IsDead);
         player.Data.Role.CanVent = Jinx_canUse;
-    }
+    }*/
 }

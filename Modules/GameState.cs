@@ -337,6 +337,7 @@ public class PlayerState
         Drained,
         Shattered,
         Trap,
+        Targeted,
         Retribution,
 
         etc = -1,

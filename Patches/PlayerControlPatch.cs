@@ -332,6 +332,9 @@ class CheckMurderPatch
                 case CustomRoles.Pyromaniac:
                     if (!Pyromaniac.OnCheckMurder(killer, target)) return false;
                     break;
+                case CustomRoles.Kamikaze:
+                    if (!Kamikaze.OnCheckMurder(killer, target)) return false;
+                    break;
                 case CustomRoles.Poisoner:
                     if (!Poisoner.OnCheckMurder(killer, target)) return false;
                     break;
@@ -2746,6 +2749,10 @@ class FixedUpdatePatch
                     Main.AllKillers.Remove(player.PlayerId);
 
                 playerRole = player.GetCustomRole();
+
+                if (Kamikaze.IsEnable)
+                    Kamikaze.MurderKamikazedPlayers(player);
+
 
                 switch (playerRole)
                 {
