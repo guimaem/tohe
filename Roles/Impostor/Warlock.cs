@@ -25,7 +25,7 @@ public static class Warlock
     public static void SetupCustomOption()
     {
         Options.SetupRoleOptions(Id, TabGroup.ImpostorRoles, CustomRoles.Warlock);
-        CanKillAllies = BooleanOptionItem.Create(Id + 2, "CanKillAlies", true, TabGroup.ImpostorRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Warlock]);
+        CanKillAllies = BooleanOptionItem.Create(Id + 2, "CanKillAllies", true, TabGroup.ImpostorRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Warlock]);
         CanKillSelf = BooleanOptionItem.Create(Id + 3, "CanKillSelf", true, TabGroup.ImpostorRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Warlock]);
         ShapeshiftDur = FloatOptionItem.Create(Id + 4, "ShapeshiftDuration", new(1f, 180f, 1f), 1f, TabGroup.ImpostorRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Warlock])
             .SetValueFormat(OptionFormat.Seconds);
