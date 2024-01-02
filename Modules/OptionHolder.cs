@@ -1094,7 +1094,7 @@ public static class Options
         // 各职业的总体设定
         ImpKnowAlliesRole = BooleanOptionItem.Create(60002, "ImpKnowAlliesRole", true, TabGroup.ImpostorRoles, false)
             .SetGameMode(CustomGameMode.Standard)
-           .SetHeader(true);
+            .SetHeader(true);
         ImpKnowWhosMadmate = BooleanOptionItem.Create(60003, "ImpKnowWhosMadmate", true, TabGroup.ImpostorRoles, false)
             .SetGameMode(CustomGameMode.Standard);
         ImpCanKillMadmate = BooleanOptionItem.Create(60004, "ImpCanKillMadmate", true, TabGroup.ImpostorRoles, false)

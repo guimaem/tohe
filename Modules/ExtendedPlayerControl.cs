@@ -12,7 +12,6 @@ using TOHE.Roles.Crewmate;
 using TOHE.Roles.Double;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
-using TOHE.Roles.Madmate;
 using UnityEngine;
 using static TOHE.Translator;
 

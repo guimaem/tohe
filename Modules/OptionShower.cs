@@ -87,7 +87,7 @@ public static class OptionShower
         }
         //1ページにつき35行までにする処理
         List<string> tmpList = new(sb.ToString().Split("\n\n"));
-        foreach(var tmp in tmpList.ToArray())
+        foreach (var tmp in tmpList.ToArray())
         {
             if (pages[^1].Count(c => c == '\n') + 1 + tmp.Count(c => c == '\n') + 1 > 35)
                 pages.Add(tmp + "\n\n");

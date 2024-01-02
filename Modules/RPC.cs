@@ -778,7 +778,7 @@ internal class RPCHandlerPatch
                 FFAManager.ReceiveRPCSyncFFAPlayer(reader);
                 break;
             case CustomRPC.SyncFFANameNotify:
-                FFAManager.ReceiveRPCSyncFFANameNotify(reader);
+                FFAManager.ReceiveRPCSyncNameNotify(reader);
                 break;
             case CustomRPC.SyncMiniCrewAge:
                 Mini.ReceiveRPC(reader);

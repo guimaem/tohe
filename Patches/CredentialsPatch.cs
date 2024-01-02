@@ -70,14 +70,14 @@ public static class Credentials
         private static void Postfix(VersionShower __instance)
         {
             Main.credentialsText = $"\r\n<color={Main.ModColor}>{Main.ModName}</color> v{Main.PluginDisplayVersion}";
-            var buildtype = "";
+            //var buildtype = "";
 #if RELEASE
             if (Main.ShowCredentials.Value)
             {
                 if (TranslationController.Instance.currentLanguage.languageID == SupportedLangs.Brazilian) Main.credentialsText += $"\r\n<color=#a54aff>Por <color=#ffc0cb>KARPED1EM</color> e </color><color=#f34c50>Moe</color>";
                 else Main.credentialsText += $"\r\n<color=#a54aff>By <color=#ffc0cb>KARPED1EM</color> & </color><color=#f34c50>Moe</color>";
             }
-            buildtype = "Release";
+            //buildtype = "Release";
             
 #endif
 
@@ -85,21 +85,23 @@ public static class Credentials
             if (Main.ShowCredentials.Value)
             {
                 Main.credentialsText += $"\r\n<color=#ffc0cb>Canary:</color><color=#f34c50>{ThisAssembly.Git.Branch}</color>(<color=#ffc0cb>{ThisAssembly.Git.Commit}</color>)";
-                Main.credentialsText += $"\r\n<color=#a54aff>By <color=#ffc0cb>KARPED1EM</color> & </color><color=#f34c50>Moe</color>";
+                if (TranslationController.Instance.currentLanguage.languageID == SupportedLangs.Brazilian) Main.credentialsText += $"\r\n<color=#a54aff>Por <color=#ffc0cb>KARPED1EM</color> e </color><color=#f34c50>Moe</color>";
+                else Main.credentialsText += $"\r\n<color=#a54aff>By <color=#ffc0cb>KARPED1EM</color> & </color><color=#f34c50>Moe</color>";
             }
-            buildtype = "Canary";
+            //buildtype = "Canary";
 #endif
 
 #if DEBUG
             if (Main.ShowCredentials.Value)
             {
                 Main.credentialsText += $"\r\n<color=#ffc0cb>Debug:</color><color=#f34c50>{ThisAssembly.Git.Branch}</color>(<color=#ffc0cb>{ThisAssembly.Git.Commit}</color>)";
-                Main.credentialsText += $"\r\n<color=#a54aff>By <color=#ffc0cb>KARPED1EM</color> & </color><color=#f34c50>Moe</color>";
+                if (TranslationController.Instance.currentLanguage.languageID == SupportedLangs.Brazilian) Main.credentialsText += $"\r\n<color=#a54aff>Por <color=#ffc0cb>KARPED1EM</color> e </color><color=#f34c50>Moe</color>";
+                else Main.credentialsText += $"\r\n<color=#a54aff>By <color=#ffc0cb>KARPED1EM</color> & </color><color=#f34c50>Moe</color>";
             }
-            buildtype = "Debug";
+            //buildtype = "Debug";
 #endif
 
-            if (Main.IsAprilFools && !Main.ShowCredentials.Value)
+            if (Main.IsAprilFools && Main.ShowCredentials.Value)
                 Main.credentialsText = $"\r\n<color=#00bfff>Town Of Host</color> v11.45.14";
 
             var credentials = Object.Instantiate(__instance.text);
