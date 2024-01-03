@@ -1529,6 +1529,7 @@ static class CustomRolesHelper
                 if (pc.Is(CustomRoles.Underdog)
                     || pc.Is(CustomRoles.Inhibitor)
                     || pc.Is(CustomRoles.Saboteur)
+                    || pc.Is(CustomRoles.Berserker)
                     || pc.Is(CustomRoles.Swift)
                     || pc.Is(CustomRoles.Mafia)
                     || pc.Is(CustomRoles.Sniper)
@@ -2002,7 +2003,7 @@ static class CustomRolesHelper
             CountTypes.Medusa => CustomRoles.Medusa,
             //           CustomRoles.Refugee => CountTypes.Impostor,
             CountTypes.Huntsman => CustomRoles.Huntsman,
-            CountTypes.Reckless => CustomRoles.Reckless
+            CountTypes.Reckless => CustomRoles.Reckless,
             CountTypes.Glitch => CustomRoles.Glitch,
             CountTypes.DarkHide => CustomRoles.DarkHide,
             CountTypes.Spiritcaller => CustomRoles.Spiritcaller,

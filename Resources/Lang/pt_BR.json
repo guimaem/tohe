@@ -3026,6 +3026,8 @@
   "LostAddonByCleanser": "Todos os seus atributos foram removidos pelo Limpador",
   "MaxProtections": "Proteções máximas",
   "KeeperHideVote": "Esconder o voto do Salva-Vidas",
+  "KeeperProtect": "Você escolheu proteger <b>{0}</b>, seu votoo foi removido",
+  "KeeperTitle": "Salva-Vidas",
   "MaulKillButtonText": "Espancar",
   "MaulRadius": "Alcance do Ataque",
   "KillCooldownAfterKilling": "Recarga para matar após matar",
